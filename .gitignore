@@ -39,4 +39,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+<<<<<<< HEAD
 /.vscode
+=======
+>>>>>>> d4100506456243d92d559b22eba20056fa731997
