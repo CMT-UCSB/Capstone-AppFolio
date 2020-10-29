@@ -1,0 +1,27 @@
+/ TODO: Change dialog to modal, add form /
+/ TODO: Add Sign Up button with same stuff as login (modal, form) /
+/ TODO: Beautify page???, maybe look into authentications??? /
+
+<%= link_to 'Home', root_path %>
+
+<h1 style="text-align:center">Synergi</h1>
+
+<dialog>
+    <h3>Login</h3>
+
+    <button id="submit">Submit</button>
+</dialog>
+
+<button id="login">Login</button>
+
+<script>
+    var dialog = document.querySelector('dialog');
+    document.querySelector('#login').onclick = function()
+    {
+        dialog.show();
+    };
+    document.querySelector('#submit').onclick = function()
+    {
+        dialog.close();
+    };
+</script>
