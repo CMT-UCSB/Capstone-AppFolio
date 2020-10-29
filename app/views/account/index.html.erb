@@ -1,0 +1,174 @@
+<h1 style="text-align: center">Account</h1>
+<button id="create_survey">Create New Survey</button>
+<br /><br /><br /><br />
+<h4>Analytics</h4>
+<br />
+<select id="week" onchange="changeAnalytics()">
+  <option value="9/28/20-10/4/20">Week of 9/28/20-10/4/20</option>
+  <option value="10/5/20-10/11/20">Week of 10/5/20-10/11/20</option>
+  <option value="10/12/20-10/18/20">Week of 10/12/20-10/18/20</option>
+  <option value="10/19/20-10/25/20">Week of 10/19/20-10/25/20</option>
+  <option selected="selected" value="10/26/20-11/1/20">Week of 10/26/20-11/1/20</option>
+</select>
+<br />
+<p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
+<div id="createSurveyModal" class="modal">
+  <div class="modal-content">
+    <span class="close"> &times;</span>
+    <h2 style="text-align: center">Enter Survey Details:</h2>
+    <div class="modal-body">
+      <form>
+        Survey Name: <input name="name" type="text" /> <br />
+        <br />
+        Remind employees every:<br />
+        <input checked="checked" name="days" type="radio" value="Monday" /> Monday<br />
+        <input name="days" type="radio" value="weekly" /> Tuesday<br />
+        <input name="days" type="radio" value="weekly" /> Wednesday<br />
+        <input name="days" type="radio" value="weekly" /> Thursday<br />
+        <input name="days" type="radio" value="weekly" /> Friday<br />
+        <input name="days" type="radio" value="weekly" /> Saturday<br />
+        <input name="days" type="radio" value="weekly" /> Sunday<br />
+        <br />
+        <select name="hour">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option selected="selected" value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+        <select name="minute">
+          <option selected="selected" value="00">00</option>
+          <option value="05">05</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+        </select>
+        <select name="ampm">
+          <option selected="selected" value="am">AM</option>
+          <option value="PM">PM</option>
+        </select>
+        <br />
+        <br />Question 1: <input name="q1" type="text"></input><br />
+        <br />Question 2: <input name="q2" type="text"></input><br />
+        <br />Question 3: <input name="q3" type="text"></input><br />
+        <br />Question 4: <input name="q4" type="text"></input><br />
+        <br />
+        <button id="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+  }
+
+  .modal-body {
+    padding: 5%;
+  }
+
+  @-webkit-keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  var modal = document.getElementById('createSurveyModal');
+
+  var btn = document.getElementById('create_survey');
+
+  var span = document.getElementsByClassName('close')[0];
+
+  btn.onclick = function () {
+    modal.style.display = 'block';
+  };
+
+  span.onclick = function () {
+    modal.style.display = 'none';
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  };
+
+  function changeAnalytics() {
+    document.getElementById("analytics_data").innerHTML = "Showing data for week of " + document.getElementById("week").value
+  }
+</script>
