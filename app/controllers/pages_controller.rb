@@ -11,4 +11,7 @@ class PagesController < ApplicationController
 
     def account
     end
+
+    def faq
+    end
 end
