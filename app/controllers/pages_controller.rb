@@ -4,4 +4,7 @@ class PagesController < ApplicationController
 
     def team
     end
+
+    def account
+    end
 end
