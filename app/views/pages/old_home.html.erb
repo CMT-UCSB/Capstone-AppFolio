@@ -1,0 +1,78 @@
+<%= link_to 'Home', root_path %>
+<%= link_to 'Team', "/team" %>
+<%= link_to 'Account', "/account" %>
+<%= link_to 'FAQ', "/faq" %>
+<%= link_to 'About', "/about" %>
+
+<h1 style="text-align:center">Synergi</h1>
+
+<button id="login">Login</button>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close"> &times;</span>
+        <h2 style="text-align:center">Login</h2>
+        <button id="submit">Submit</button>
+    </div>
+</div>
+
+<button id="signup">Sign Up</button>
+
+<style>
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    }
+
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    }
+</style>
+
+<script>
+    var modal = document.getElementById("loginModal");
+
+    var btn = document.getElementById("login");
+    
+    var span = document.getElementsByClassName("close")[0];
+    
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+</script>
