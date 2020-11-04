@@ -1,78 +1,99 @@
-<%= link_to 'Home', root_path %>
-<%= link_to 'Team', "/team" %>
-<%= link_to 'Account', "/account" %>
-<%= link_to 'FAQ', "/faq" %>
-<%= link_to 'About', "/about" %>
+<!DOCTTYPE html>
+<html>
+<title>Synergi</title>
 
-<h1 style="text-align:center">Synergi</h1>
+<head><script src="https://kit.fontawesome.com/c55eb39a6d.js" crossorigin="anonymous"></script></head>
 
-<button id="login">Login</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close"> &times;</span>
-        <h2 style="text-align:center">Login</h2>
-        <button id="submit">Submit</button>
+
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+/* Set the width of the sidebar to 120px */
+.w3-sidebar {width: 120px;background: #222;}
+/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+#main {margin-left: 120px}
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+
+</style>
+
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center w3-dark-gray">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+        <i class="fa fa-home w3-xxlarge"></i>
+        <p>HOME</p>
+    </a>
+    <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+        <i class="fas fa-info-circle w3-xxlarge"></i>
+        <p>ABOUT</p>
+      </a>
+      <a href="#teams" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+        <i class="fa fa-users w3-xxlarge"></i>
+        <p>TEAM</p>
+      </a>
+      <a href="#faq" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+        <i class="fa fa-question-circle w3-xxlarge"></i>
+        <p>FAQ</p>
+      </a>
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium " id="myNavbar">
+    <div class="w3-bar w3-black w3-hover-opacity-off w3-center w3-small">
+      <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
+      <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
+      <a href="#teams" class="w3-bar-item w3-button" style="width:25% !important">TEAMS</a>
+      <a href="#faq" class="w3-bar-item w3-button" style="width:25% !important">FAQ</a>
     </div>
 </div>
 
-<button id="signup">Sign Up</button>
+<div class="w3-padding-large w3-black" id="main">
+    <!-- Home -->
+    <div class="w3-container w3-center w3-black" id="home" style="padding: 20%;">
+        <h1 class="w3-jumbo">Synergi</h1>
+        <p>Tracker for Manager</p>
+        <div class="w3-container w3-padding-large w3-center">
+            <a href="#" class="w3-button w3-black">Log In</a>
+            <a href="#" class="w3-button w3-black">Sign Up</a>
+        </div>
+    </div>
 
-<style>
-    .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-    }
+    <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+        <h2 class="w3-text-light-grey">Our Mission</h2>
+        <hr style="width:200px" class="w3-opacity">
+        <p> We are creating an application that will allow managers to have simple and meaningful insight into their teams’ synergy and performance. 
+            Employees will be able to provide both identified and anonymized feedback about how well they’re working with their fellow team members. 
+            As a manager, you will be able to send your teams reminders at regular intervals so you can monitor their trends over time. 
+            You can observe these trends and use them to make decisions regarding the division of labor or redistribute members if needed.
+        </p>
+    </div>
 
-    .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    }
+    <div class="w3-padding-64 w3-content" id="teams">
+        <h3 class="w3-text-light-grey">Our Teams</h3> 
+        <hr style="width:150px" class="w3-opacity"> 
+        <p><span class="w3-large w3-margin-right">Cambria Tolsma</span><i>Team Lead</i></p>
+        <p><span class="w3-large w3-margin-right">Rucha Kolhatkar</span><i>Team Scribe</i></p>
+        <p><span class="w3-large w3-margin-right">Rain Wang</span></p>
+        <p><span class="w3-large w3-margin-right">Kyle Gusdorf</span></p>
+        <p><span class="w3-large w3-margin-right">Hill Xiong</span></p>
+    </div>
 
-    .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
+    <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="faq">
+        <h2 class="w3-text-light-grey">FAQ</h2>
+        <hr style="width:200px" class="w3-opacity">
+        <h3>Q1. What is Synergi?</h3>
+        <p> Synergi is a platform where managers can send out surveys/quiz to employees, 
+            and collect meaningful insight into their teams&apos; synergy and performance. 
+        </p>
+    </div>
 
-    .close:hover,
-    .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-    }
-</style>
-
-<script>
-    var modal = document.getElementById("loginModal");
-
-    var btn = document.getElementById("login");
     
-    var span = document.getElementsByClassName("close")[0];
-    
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-    
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-</script>
+</div>
+
+
+</html>
