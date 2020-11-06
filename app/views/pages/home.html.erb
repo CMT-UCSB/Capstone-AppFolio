@@ -2,7 +2,10 @@
 <html>
 <title>Synergi</title>
 
-<head><script src="https://kit.fontawesome.com/c55eb39a6d.js" crossorigin="anonymous"></script></head>
+<head>
+    <script src="https://kit.fontawesome.com/c55eb39a6d.js" crossorigin="anonymous"></script>
+    <script src="../../javascript/forms/forms.js"></script>
+</head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,6 +23,11 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 #main {margin-left: 120px}
 /* Remove margins from "page content" on small screens */
 @media only screen and (max-width: 600px) {#main {margin-left: 0}}
+
+.popup{
+    display:none;
+}
+
 
 </style>
 
@@ -58,10 +66,12 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
         <h1 class="w3-jumbo">Synergi</h1>
         <p>Tracker for Manager</p>
         <div class="w3-container w3-padding-large w3-center">
-            <a href="#" class="w3-button w3-black">Log In</a>
-            <a href="#" class="w3-button w3-black">Sign Up</a>
+            <%= link_to 'Sign in', new_user_session_path, class: 'button' %>
+            <%= link_to 'Register', new_user_registration_path, class: 'button' %>
         </div>
     </div>
+
+    <iframe src="" height="300px" width="300px" id="popup" class="popup"></iframe>
 
     <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
         <h2 class="w3-text-light-grey">Our Mission</h2>

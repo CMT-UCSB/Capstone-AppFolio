@@ -1,3 +1,16 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<nav class="w3-dark-gray">
+    <% if user_signed_in? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Sign in', new_user_session_path, class: 'button' %>
+      <%= link_to 'Register', new_user_registration_path %>
+    <% end %>
+</nav>
+
 <h1 style="text-align: center">Account</h1>
 <button id="create_survey">Create New Survey</button>
 <br /><br /><br /><br />
