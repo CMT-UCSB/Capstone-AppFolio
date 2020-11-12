@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get '/faq' => 'pages#faq'
   get '/team' => 'pages#team'
   get '/account' => 'pages#account', :as => :user_root
+  get '/survey_user/:id' => 'survey_user#show'
+
 end
