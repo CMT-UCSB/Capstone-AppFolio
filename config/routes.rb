@@ -9,4 +9,8 @@ Rails.application.routes.draw do
   get '/account' => 'pages#account', :as => :user_root
   get '/survey_user/:id' => 'survey_user#show'
 
+  devise_scope :user do
+    get '/users/sign_in' => "devise/sessions#new", :as => :login
+  end
+
 end

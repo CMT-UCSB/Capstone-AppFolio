@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees
   # GET /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.where(user: current_user)
   end
 
   # GET /employees/1
@@ -25,6 +25,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @employee.user = current_user
 
     respond_to do |format|
       if @employee.save
