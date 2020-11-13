@@ -28,6 +28,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
+        UserMailer.survey_notify(@employee).deliver
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
