@@ -28,7 +28,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
-        UserMailer.survey_notify(@employee).deliver
+        # UserMailer.survey_notify(@employee).deliver Placeholder - this would trigger survey_notify when a manager adds a new employee to their list so this should be moved
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
