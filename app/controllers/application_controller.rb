@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       super
     else
-      redirect_to login_path
+      redirect_to new_user_session_path
     end
   end
 end
