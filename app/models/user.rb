@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :employees
-  has_many :notes
+  has_many :notes, dependent: :destroy      #notes destroyed upon account deletion
 end
