@@ -6,6 +6,7 @@
     <% if user_signed_in? %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
       <%= link_to 'Employees', employees_path %>
+      <%= link_to 'Notes', notes_path %>
     <% else %>
       <%= link_to 'Sign in', new_user_session_path, class: 'button' %>
       <%= link_to 'Register', new_user_registration_path %>
