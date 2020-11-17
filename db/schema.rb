@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
     t.string "manager_email", default: "", null: false
     t.string "user_email", default: "", null: false
     t.datetime "remember_created_at"
-    t.string "response", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -57,9 +56,13 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
     t.text "question"
     t.text "response"
     t.bigint "survey_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_id"], name: "index_questions_on_survey_id"
+  end
+
+  create_table "moods", force: :cascade do |t|
+    t.bigint "mood"
+    t.bigint "survey_id", null: false
+    t.index ["survey_id"], name: "index_moods_on_survey_id"
   end
 
   add_foreign_key "notes", "users", "survey_users"
