@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_15_225432) do
+ActiveRecord::Schema.define(version: 2020_11_17_010205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
   create_table "employees", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -28,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_notes_on_created_at"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
@@ -39,6 +42,20 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
     t.string "response", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.uuid "survey_id"
+    t.datetime "completion_time"
+    t.datetime "deadline"
+    t.bigint "employee_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "filled"
+    t.boolean "anonymous"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_surveys_on_employee_id"
+    t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,4 +71,6 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
   end
 
   add_foreign_key "notes", "users"
+  add_foreign_key "surveys", "employees"
+  add_foreign_key "surveys", "users"
 end

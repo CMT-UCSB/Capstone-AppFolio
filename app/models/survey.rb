@@ -1,5 +1,5 @@
 class Survey < ApplicationRecord
-  belongs_to :employee, class_name: "Employee", foreign_key: "email", primary_key: "email"
+  belongs_to :employee
   belongs_to :user
 
   after_initialize :generate_survey_id, if: :new_record?
