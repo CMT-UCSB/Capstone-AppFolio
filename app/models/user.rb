@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :employees
   has_many :notes, dependent: :destroy      #notes destroyed upon account deletion
+  has_many :surveys, dependent: :destroy
 end
