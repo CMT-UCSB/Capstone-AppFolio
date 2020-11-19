@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_11_15_225432) do
   end
 
   create_table "moods", force: :cascade do |t|
-    t.bigint "mood"
+    t.integer "mood"
     t.bigint "survey_id", null: false
     t.index ["survey_id"], name: "index_moods_on_survey_id"
   end
