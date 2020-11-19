@@ -8,17 +8,18 @@
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
-# It's strongly recommended that you check this file into your version control system
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_025645) do
+ActiveRecord::Schema.define(version: 2020_11_17_010205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "employees", force: :cascade do |t|
+    t.uuid "employee_id"
     t.string "name"
     t.string "email"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_employees_on_user_id"
@@ -46,15 +47,11 @@ ActiveRecord::Schema.define(version: 2020_11_17_025645) do
 
   create_table "surveys", force: :cascade do |t|
     t.uuid "survey_id"
-    t.datetime "completion_time"
     t.datetime "deadline"
-    t.bigint "employee_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "filled"
     t.boolean "anonymous"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["employee_id"], name: "index_surveys_on_employee_id"
     t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
@@ -70,7 +67,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_025645) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "employees", "users"
   add_foreign_key "notes", "users"
-  add_foreign_key "surveys", "employees"
   add_foreign_key "surveys", "users"
 end

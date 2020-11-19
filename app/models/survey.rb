@@ -1,5 +1,4 @@
 class Survey < ApplicationRecord
-  belongs_to :employee
   belongs_to :user
 
   after_initialize :generate_survey_id, if: :new_record?
