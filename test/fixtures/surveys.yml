@@ -5,7 +5,7 @@ one:
   creation: 2020-11-16 17:02:05
   deadline: 2020-11-16 17:02:05
   employee_email: one
-  user_id: one
+  manager_id: one
   filled: false
   anonymous: false
 
@@ -14,6 +14,6 @@ two:
   creation: 2020-11-16 17:02:05
   deadline: 2020-11-16 17:02:05
   employee_email: two
-  user_id: two
+  manager_id: two
   filled: false
   anonymous: false

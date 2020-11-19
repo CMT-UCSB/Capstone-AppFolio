@@ -10,52 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_010205) do
+ActiveRecord::Schema.define(version: 2020_11_19_181129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "employees", force: :cascade do |t|
-    t.uuid "employee_id"
-    t.string "name"
-    t.string "email"
-    t.bigint "user_id", null: false
+  create_table "employees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.bigint "manager_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_employees_on_user_id"
+    t.index ["manager_id"], name: "index_employees_on_manager_id"
   end
 
-  create_table "notes", force: :cascade do |t|
-    t.date "date"
-    t.text "content"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at"], name: "index_notes_on_created_at"
-    t.index ["user_id"], name: "index_notes_on_user_id"
-  end
-
-  create_table "survey_users", force: :cascade do |t|
-    t.uuid "survey_id"
-    t.string "manager_email", default: "", null: false
-    t.string "user_email", default: "", null: false
-    t.datetime "remember_created_at"
-    t.string "response", default: "", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "surveys", force: :cascade do |t|
-    t.uuid "survey_id"
-    t.datetime "deadline"
-    t.bigint "user_id", null: false
-    t.boolean "anonymous"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_surveys_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
+  create_table "managers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -63,11 +33,27 @@ ActiveRecord::Schema.define(version: 2020_11_17_010205) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_managers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_managers_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "employees", "users"
-  add_foreign_key "notes", "users"
-  add_foreign_key "surveys", "users"
+  create_table "notes", force: :cascade do |t|
+    t.date "date"
+    t.text "content"
+    t.bigint "manager_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_notes_on_created_at"
+    t.index ["manager_id"], name: "index_notes_on_manager_id"
+  end
+
+  create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "deadline"
+    t.bigint "manager_id"
+    t.boolean "anonymous"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["manager_id"], name: "index_surveys_on_manager_id"
+  end
+
 end

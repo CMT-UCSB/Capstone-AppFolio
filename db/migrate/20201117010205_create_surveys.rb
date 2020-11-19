@@ -1,11 +1,9 @@
 class CreateSurveys < ActiveRecord::Migration[6.0]
   def change
-    create_table :surveys do |t|
-      t.uuid :survey_id
+    create_table :surveys, id: :uuid do |t|
       t.datetime :deadline
-      t.references :user, null: false, foreign_key: true
+      t.references :manager
       t.boolean :anonymous 
-
       t.timestamps
     end
   end

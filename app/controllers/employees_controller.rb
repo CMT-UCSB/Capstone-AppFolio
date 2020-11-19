@@ -1,11 +1,11 @@
 class EmployeesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_manager!
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
 
   # GET /employees
   # GET /employees.json
   def index
-    @employees = Employee.where(user: current_user)
+    @employees = Employee.where(manager: current_manager)
   end
 
   # GET /employees/1
@@ -26,7 +26,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
-    @employee.user = current_user
+    @employee.manager = current_manager
 
     respond_to do |format|
       if @employee.save
@@ -72,6 +72,6 @@ class EmployeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def employee_params
-      params.require(:employee).permit(:name, :email)
+      params.require(:employee).permit(:first_name, :last_name, :email)
     end
 end

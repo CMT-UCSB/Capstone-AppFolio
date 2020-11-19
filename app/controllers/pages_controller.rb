@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-    before_action :authenticate_user!, :only => [:account]
+    before_action :authenticate_manager!, :only => [:account]
     def home
     end
 end

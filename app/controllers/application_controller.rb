@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
   protected
-  def authenticate_user!
-    if user_signed_in?
+  def authenticate_manager!
+    if manager_signed_in?
       super
     else
-      redirect_to new_user_session_path
+      redirect_to new_manager_session_path
     end
   end
 end
