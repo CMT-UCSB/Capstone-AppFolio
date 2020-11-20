@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   create_table "questions", force: :cascade do |t|
     t.string "prompt"
-    t.string "type"
+    t.integer "type"
     t.bigint "survey_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
