@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_204155) do
+ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "employee_surveys", force: :cascade do |t|
+    t.bigint "employee_id"
+    t.bigint "survey_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_employee_surveys_on_employee_id"
+    t.index ["survey_id"], name: "index_employee_surveys_on_survey_id"
+  end
 
   create_table "employees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
@@ -38,6 +47,16 @@ ActiveRecord::Schema.define(version: 2020_11_19_204155) do
     t.index ["reset_password_token"], name: "index_managers_on_reset_password_token", unique: true
   end
 
+  create_table "mood_responses", force: :cascade do |t|
+    t.integer "response"
+    t.bigint "question_id"
+    t.bigint "employee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_mood_responses_on_employee_id"
+    t.index ["question_id"], name: "index_mood_responses_on_question_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.date "date"
     t.text "content"
@@ -46,6 +65,26 @@ ActiveRecord::Schema.define(version: 2020_11_19_204155) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_notes_on_created_at"
     t.index ["manager_id"], name: "index_notes_on_manager_id"
+  end
+
+  create_table "open_ended_responses", force: :cascade do |t|
+    t.string "response"
+    t.bigint "question_id"
+    t.bigint "employee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_open_ended_responses_on_employee_id"
+    t.index ["question_id"], name: "index_open_ended_responses_on_question_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "prompt"
+    t.string "type"
+    t.bigint "survey_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_questions_on_created_at"
+    t.index ["survey_id"], name: "index_questions_on_survey_id"
   end
 
   create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
