@@ -3,9 +3,9 @@
 one:
   date: MyString
   content: MyText
-  user: one
+  manager: one
 
 two:
   date: MyString
   content: MyText
-  user: two
+  manager: two

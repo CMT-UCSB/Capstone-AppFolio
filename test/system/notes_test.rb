@@ -16,7 +16,7 @@ class NotesTest < ApplicationSystemTestCase
 
     fill_in "Content", with: @note.content
     fill_in "Date", with: @note.date
-    fill_in "User", with: @note.user_id
+    fill_in "Manager", with: @note.manager_id
     click_on "Create Note"
 
     assert_text "Note was successfully created"
@@ -29,7 +29,7 @@ class NotesTest < ApplicationSystemTestCase
 
     fill_in "Content", with: @note.content
     fill_in "Date", with: @note.date
-    fill_in "User", with: @note.user_id
+    fill_in "Manager", with: @note.manager_id
     click_on "Update Note"
 
     assert_text "Note was successfully updated"

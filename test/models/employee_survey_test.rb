@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SurveyUserControllerTest < ActionDispatch::IntegrationTest
+class EmployeeSurveyTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
