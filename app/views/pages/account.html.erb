@@ -17,6 +17,7 @@
 <br /><br /><br /><br />
 <h4>Analytics</h4>
 <br />
+<br />
 <select id="week" onchange="changeAnalytics()">
   <option value="9/28/20-10/4/20">Week of 9/28/20-10/4/20</option>
   <option value="10/5/20-10/11/20">Week of 10/5/20-10/11/20</option>
@@ -26,6 +27,16 @@
 </select>
 <br />
 <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
+<div id="display" style="height: 300px; text-align: center; color: #999; line-height: 300px; 
+font-size: 14px; font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, 
+sans-serif; margin-bottom: 20px;">
+<canvas width="1162" height="375" class="chartjs-render-monitor"
+style="display: block; height: 300px; width: 930px;">
+</div>
+<script>
+  new Chartkick.PieChart(document.getElementById("display"), [["Good",44],["Okay/Fine",23],
+  ["Bad",13]], {});
+</script>
 <div id="createSurveyModal" class="modal">
   <div class="modal-content">
     <span class="close"> &times;</span>
