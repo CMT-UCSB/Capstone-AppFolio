@@ -1,16 +1,15 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
 <nav class="w3-dark-gray">
-    <% if manager_signed_in? %>
-      <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete %>
-      <%= link_to 'Employees', employees_path %>
-      <%= link_to 'Notes', notes_path %>
-    <% else %>
-      <%= link_to 'Sign in', new_manager_session_path, class: 'button' %>
-      <%= link_to 'Register', new_manager_registration_path %>
-    <% end %>
+  <% if manager_signed_in? %> <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete
+  %> <%= link_to 'Employees', employees_path %> <%= link_to 'Notes', notes_path %> <% else %> <%=
+  link_to 'Sign in', new_manager_session_path, class: 'button' %> <%= link_to 'Register',
+  new_manager_registration_path %> <% end %>
 </nav>
 
 <h1 style="text-align: center">Account</h1>
@@ -33,7 +32,13 @@
     <h2 style="text-align: center">Enter Survey Details:</h2>
     <div class="modal-body">
       <form>
-        Survey Name: <input name="name" type="text" /> <br />
+        Prompt: <input name="prompt" type="text" /> <br />
+        <br />
+        Type:
+        <select name="type">
+          <option selected="selected" value="mood">Mood</option>
+        </select>
+        <br />
         <br />
         Remind employees every:<br />
         <input checked="checked" name="days" type="radio" value="Monday" /> Monday<br />
@@ -77,10 +82,6 @@
           <option value="PM">PM</option>
         </select>
         <br />
-        <br />Question 1: <input name="q1" type="text"></input><br />
-        <br />Question 2: <input name="q2" type="text"></input><br />
-        <br />Question 3: <input name="q3" type="text"></input><br />
-        <br />Question 4: <input name="q4" type="text"></input><br />
         <br />
         <button id="submit">Submit</button>
       </form>
@@ -126,7 +127,8 @@
   }
 
   a:visited {
-  color: rgb(255, 255, 255); }
+    color: rgb(255, 255, 255);
+  }
 
   @-webkit-keyframes animatetop {
     from {
@@ -187,6 +189,7 @@
   };
 
   function changeAnalytics() {
-    document.getElementById("analytics_data").innerHTML = "Showing data for week of " + document.getElementById("week").value
+    document.getElementById('analytics_data').innerHTML =
+      'Showing data for week of ' + document.getElementById('week').value;
   }
 </script>
