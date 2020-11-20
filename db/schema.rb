@@ -88,9 +88,10 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
   end
 
   create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "deadline"
+    t.integer "interval"
+    t.time "time_of_day"
+    t.boolean "isAnonymous"
     t.bigint "manager_id"
-    t.boolean "anonymous"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["manager_id"], name: "index_surveys_on_manager_id"
