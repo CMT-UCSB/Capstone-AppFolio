@@ -1,4 +1,4 @@
 class EmployeeSurvey < ApplicationRecord
-    has_many :employees
-    has_many :surveys
+    belongs_to :employees
+    belongs_to :surveys
 end
