@@ -10,26 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_184154) do
+ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "employees", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
+  create_table "employee_surveys", force: :cascade do |t|
+    t.bigint "employee_id"
+    t.bigint "survey_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_employee_surveys_on_employee_id"
+    t.index ["survey_id"], name: "index_employee_surveys_on_survey_id"
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
+  create_table "employees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.bigint "manager_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["manager_id"], name: "index_employees_on_manager_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "managers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -81,16 +87,6 @@ ActiveRecord::Schema.define(version: 2020_11_11_184154) do
     t.index ["survey_id"], name: "index_questions_on_survey_id"
   end
 
-  create_table "survey_users", force: :cascade do |t|
-    t.uuid "survey_id"
-    t.string "manager_email", default: "", null: false
-    t.string "user_email", default: "", null: false
-    t.datetime "remember_created_at"
-    t.string "response", default: "", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "interval"
     t.time "time_of_day"
@@ -99,18 +95,6 @@ ActiveRecord::Schema.define(version: 2020_11_11_184154) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["manager_id"], name: "index_surveys_on_manager_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

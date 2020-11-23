@@ -1,10 +1,11 @@
 class EmployeesController < ApplicationController
+  before_action :authenticate_manager!
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
 
   # GET /employees
   # GET /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.where(manager: current_manager)
   end
 
   # GET /employees/1
@@ -25,9 +26,11 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @employee.manager = current_manager
 
     respond_to do |format|
       if @employee.save
+        # UserMailer.survey_notify(@employee).deliver Placeholder - this would trigger survey_notify when a manager adds a new employee to their list so this should be moved
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
@@ -69,6 +72,6 @@ class EmployeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def employee_params
-      params.require(:employee).permit(:name, :email)
+      params.require(:employee).permit(:first_name, :last_name, :email)
     end
 end

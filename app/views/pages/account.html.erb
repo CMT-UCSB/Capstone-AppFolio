@@ -1,21 +1,23 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
 <nav class="w3-dark-gray">
-    <% if user_signed_in? %>
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-      <%= link_to 'Employees', employees_path %>
-    <% else %>
-      <%= link_to 'Sign in', new_user_session_path, class: 'button' %>
-      <%= link_to 'Register', new_user_registration_path %>
-    <% end %>
+  <% if manager_signed_in? %> <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete
+  %> <%= link_to 'Employees', employees_path %> <%= link_to 'Notes', notes_path %> <% else %> <%=
+  link_to 'Sign in', new_manager_session_path, class: 'button' %> <%= link_to 'Register',
+  new_manager_registration_path %> <% end %>
 </nav>
 
 <h1 style="text-align: center">Account</h1>
 <button id="create_survey">Create New Survey</button>
+<%= button_to 'Send Reminders', pages_send_emails_path, method: :send_emails %>
 <br /><br /><br /><br />
 <h4>Analytics</h4>
+<br />
 <br />
 <select id="week" onchange="changeAnalytics()">
   <option value="9/28/20-10/4/20">Week of 9/28/20-10/4/20</option>
@@ -26,15 +28,31 @@
 </select>
 <br />
 <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
+<div id="display" style="height: 300px; text-align: center; color: #999; line-height: 300px; 
+font-size: 14px; font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, 
+sans-serif; margin-bottom: 20px;">
+<canvas width="1162" height="375" class="chartjs-render-monitor"
+style="display: block; height: 300px; width: 930px;">
+</div>
+<script>
+  new Chartkick.PieChart(document.getElementById("display"), [["Good",44],["Okay/Fine",23],
+  ["Bad",13]], {});
+</script>
 <div id="createSurveyModal" class="modal">
   <div class="modal-content">
     <span class="close"> &times;</span>
     <h2 style="text-align: center">Enter Survey Details:</h2>
     <div class="modal-body">
+      <b>Queston 1:</b>
       <form>
-        Survey Name: <input name="name" type="text" /> <br />
+        Prompt: <input name="prompt" type="text" /> <br />
+        Type:
+        <select name="type">
+          <option selected="selected" value="mood">Mood</option>
+        </select>
         <br />
-        Remind employees every:<br />
+        <br />
+        <b>Remind employees every:</b><br />
         <input checked="checked" name="days" type="radio" value="Monday" /> Monday<br />
         <input name="days" type="radio" value="weekly" /> Tuesday<br />
         <input name="days" type="radio" value="weekly" /> Wednesday<br />
@@ -76,10 +94,6 @@
           <option value="PM">PM</option>
         </select>
         <br />
-        <br />Question 1: <input name="q1" type="text"></input><br />
-        <br />Question 2: <input name="q2" type="text"></input><br />
-        <br />Question 3: <input name="q3" type="text"></input><br />
-        <br />Question 4: <input name="q4" type="text"></input><br />
         <br />
         <button id="submit">Submit</button>
       </form>
@@ -125,7 +139,8 @@
   }
 
   a:visited {
-  color: rgb(255, 255, 255); }
+    color: rgb(255, 255, 255);
+  }
 
   @-webkit-keyframes animatetop {
     from {
@@ -186,6 +201,7 @@
   };
 
   function changeAnalytics() {
-    document.getElementById("analytics_data").innerHTML = "Showing data for week of " + document.getElementById("week").value
+    document.getElementById('analytics_data').innerHTML =
+      'Showing data for week of ' + document.getElementById('week').value;
   }
 </script>
