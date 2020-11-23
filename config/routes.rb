@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get '/team' => 'pages#team'
   get '/account' => 'pages#account', :as => :manager_root
   get '/survey/:id' => 'survey#show'
+  post 'pages/send_emails'
 end
