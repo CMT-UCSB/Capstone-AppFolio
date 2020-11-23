@@ -8,7 +8,7 @@
 <% if @survey.present? %>
   <div class="w3-center">
     <form action="/users" class="new_user" id="new_user" method="post">
-      <h1>Survey from {Manager names}</h1> <br>
+      <h1>Survey from <%= @survey.manager.email %></h1> <br>
       <h8>Created on <%= @survey.created_at %></h8>
       <br>
       <h8>This survey is identifiable (Manager will able to identify your response)</h8>
