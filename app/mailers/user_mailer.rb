@@ -11,6 +11,7 @@ class UserMailer < ApplicationMailer
     def survey_notify(employee, manager)
         @employee = employee
         @manager = manager
+        @survey = Survey.first
         mail(:to => @employee.email, :subject => "New Survey to Complete")
     end
 end
