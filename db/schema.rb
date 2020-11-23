@@ -22,18 +22,9 @@ ActiveRecord::Schema.define(version: 2020_11_11_184154) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-<<<<<<< Updated upstream
-  create_table "survey_users", force: :cascade do |t|
-    t.uuid "survey_id"
-    t.string "manager_email", default: "", null: false
-    t.string "user_email", default: "", null: false
-    t.datetime "remember_created_at"
-    t.string "response", default: "", null: false
-=======
   create_table "employees", force: :cascade do |t|
     t.string "name"
     t.string "email"
->>>>>>> Stashed changes
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -46,10 +37,6 @@ ActiveRecord::Schema.define(version: 2020_11_11_184154) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-<<<<<<< Updated upstream
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-=======
     t.index ["email"], name: "index_managers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_managers_on_reset_password_token", unique: true
   end
@@ -112,7 +99,6 @@ ActiveRecord::Schema.define(version: 2020_11_11_184154) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["manager_id"], name: "index_surveys_on_manager_id"
->>>>>>> Stashed changes
   end
 
   create_table "users", force: :cascade do |t|
