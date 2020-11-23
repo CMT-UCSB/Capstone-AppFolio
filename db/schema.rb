@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
   enable_extension "plpgsql"
 
   create_table "employee_surveys", force: :cascade do |t|
-    t.bigint "employee_id"
-    t.bigint "survey_id"
+    t.uuid "employee_id"
+    t.uuid "survey_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employee_id"], name: "index_employee_surveys_on_employee_id"
