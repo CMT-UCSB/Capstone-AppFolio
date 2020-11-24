@@ -7,4 +7,8 @@ class PagesController < ApplicationController
     def send_emails
         UserMailer.bulk_email(current_manager)
     end
+
+    def account
+        @surveys = Survey.where(manager: current_manager)
+    end
 end
