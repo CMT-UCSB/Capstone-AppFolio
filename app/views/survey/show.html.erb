@@ -8,21 +8,17 @@
 <% if @survey.present? %>
   <div class="w3-center">
     <form action="/users" class="new_user" id="new_user" method="post">
-      <h1>Survey from {Manager names}</h1> <br>
+      <h1>Survey from <%= @survey.manager.email %></h1> <br>
       <h8>Created on <%= @survey.created_at %></h8>
       <br>
       <h8>This survey is identifiable (Manager will able to identify your response)</h8>
       <br><br>
       <h2>Q1. How are you feeling today? </h2>
       <br>
-      <div class="w3-third">
-        <input type="button" class="w3-button w3-white" value="Good">
-      </div>
-      <div class="w3-third">
-        <input type="button" class="w3-button w3-white" value="Average">
-      </div>
-      <div class="w3-third">
-        <input type="button" class="w3-button w3-white" value="Bad">
+      <div style="padding: 10px; font-size: 50pt; background">
+        <a href="http://synergi.herokuapp.com/survey/success"><input type="button" class="w3-button" value="😃"></a>
+        <a href="http://synergi.herokuapp.com/survey/success"><input type="button" class="w3-button" value="😐"></a>
+        <a href="http://synergi.herokuapp.com/survey/success"><input type="button" class="w3-button" value="😟"></a>
       </div>
     </form>
   </div>

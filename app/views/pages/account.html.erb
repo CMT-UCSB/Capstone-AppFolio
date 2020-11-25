@@ -13,7 +13,9 @@
 </nav>
 
 <h1 style="text-align: center">Account</h1>
+<div style="margin-left: 20px">
 <button id="create_survey">Create New Survey</button>
+<br /><br />
 <%= button_to 'Send Reminders', pages_send_emails_path, method: :send_emails %>
 <br /><br /><br /><br />
 <h4>Analytics</h4>
@@ -39,6 +41,7 @@ style="display: block; height: 300px; width: 930px;">
   ["Bad",13]], {});
 </script>
 <br /><br />
+</div>
 <h4 style="margin-left: 20px">Surveys</h4>
 <div style="margin-left: 20px">
   <div style="display: flex;grid-template-columns: 1fr 1fr;grid-gap: 20px;">
@@ -228,5 +231,7 @@ style="display: block; height: 300px; width: 930px;">
   function changeAnalytics() {
     document.getElementById('analytics_data').innerHTML =
       'Showing data for week of ' + document.getElementById('week').value;
+    new Chartkick.PieChart(document.getElementById("display"), [["Good",Math.floor(Math.random()*44)],["Okay/Fine",Math.floor(Math.random()*23)],
+    ["Bad",Math.floor(Math.random()*13)]], {});
   }
 </script>
