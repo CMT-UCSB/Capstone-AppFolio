@@ -16,9 +16,11 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react_ujs": "^2.6.1",
+    "reactstrap": "^8.7.1",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",

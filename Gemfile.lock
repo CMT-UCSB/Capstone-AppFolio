@@ -236,7 +236,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
-  bootstrap (~> 4.5)
+  bootstrap (~> 4.5.3)
   byebug
   capybara (>= 2.15)
   devise
