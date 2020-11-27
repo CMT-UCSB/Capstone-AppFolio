@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/survey/success' => 'survey#success'
   get '/survey/:id' => 'survey#show'
   post 'pages/send_emails'
+
+  match '*path', to: 'react_home#reactHome', via: :all
 end
