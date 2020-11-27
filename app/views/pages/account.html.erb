@@ -62,60 +62,8 @@ style="display: block; height: 300px; width: 930px;">
     <span class="close"> &times;</span>
     <h2 style="text-align: center">Enter Survey Details:</h2>
     <div class="modal-body">
-      <b>Queston 1:</b>
-      <form>
-        Prompt: <input name="prompt" type="text" /> <br />
-        Type:
-        <select name="type">
-          <option selected="selected" value="mood">Mood</option>
-        </select>
-        <br />
-        <br />
-        <b>Remind employees every:</b><br />
-        <input checked="checked" name="days" type="radio" value="Monday" /> Monday<br />
-        <input name="days" type="radio" value="weekly" /> Tuesday<br />
-        <input name="days" type="radio" value="weekly" /> Wednesday<br />
-        <input name="days" type="radio" value="weekly" /> Thursday<br />
-        <input name="days" type="radio" value="weekly" /> Friday<br />
-        <input name="days" type="radio" value="weekly" /> Saturday<br />
-        <input name="days" type="radio" value="weekly" /> Sunday<br />
-        <br />
-        <select name="hour">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option selected="selected" value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-        <select name="minute">
-          <option selected="selected" value="00">00</option>
-          <option value="05">05</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
-          <option value="50">50</option>
-          <option value="55">55</option>
-        </select>
-        <select name="ampm">
-          <option selected="selected" value="am">AM</option>
-          <option value="PM">PM</option>
-        </select>
-        <br />
-        <br />
-        <button id="submit">Submit</button>
-      </form>
+      <b>Question 1:</b>
+      <%= render 'survey/form' %>
     </div>
   </div>
 </div>
