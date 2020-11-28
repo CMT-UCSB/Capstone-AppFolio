@@ -1,4 +1,14 @@
 import React from 'react';
-import Routes from "../routes/Index";
+import { Route, Switch } from 'react-router-dom'
+import Home from './reactHome/reactHome'
 
-export default props => <>{Routes}</>;
+const App = () => {
+    return (
+        /* Set up an exact path which we want to route the component to*/
+        <Switch>
+            <Route exact path="/reactHome" component={Home} /> 
+        </Switch>
+    )
+}
+
+export default App

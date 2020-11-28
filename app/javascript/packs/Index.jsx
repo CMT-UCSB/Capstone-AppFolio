@@ -1,14 +1,15 @@
-import React from "react";
-import { render } from "react-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import App from "../components/App";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import App from '../components/App'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-document.addEventListener("DOMContentLoaded", () => {
-  render(
-    <App />,
-    document.body.appendChild(document.createElement("div"))
-  );
-});
+document.addEventListener('DOMContentLoaded', () => {
+  ReactDOM.render (
+    /* set indirect path to point to the component */
+    <Router>
+      <Route path="/reactHome" component={App}/> 
+    </Router>,
+    document.body.appendChild(document.createElement('div')),
+  )
+})
