@@ -6,7 +6,7 @@ const App = () => {
     return (
         /* Set up an exact path which we want to route the component to*/
         <Switch>
-            <Route exact path="/reactHome" component={Home} /> 
+            <Route exact path="/" component={Home} /> 
         </Switch>
     )
 }

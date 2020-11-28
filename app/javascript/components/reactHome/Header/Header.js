@@ -4,13 +4,13 @@ import { Nav, NavbarContainer, NavLogo, MobileIcon, NavMenu, NavItem, NavLinks, 
 
 
 
-const Header = () => {
+const Header = ( {toggle} ) => {
     return (
         <>
             <Nav>
                 <NavbarContainer>
-                    <NavLogo to='/reactHome'>Synergi</NavLogo>
-                    <MobileIcon>
+                    <NavLogo to='home'>Synergi</NavLogo>
+                    <MobileIcon onClick={toggle}>
                         <FaBars />
                     </MobileIcon>
                     <NavMenu>
@@ -27,10 +27,10 @@ const Header = () => {
                     <NavBtnList>
                         {/* change a href to NavBtnLink once signin/signup.js is created */}
                         <NavBtn>
-                            <a href='/managers/sign_in'>Sign In</a>
+                            <a href='/managers/sign_in' style={{color: "black"}}>Sign In</a>
                         </NavBtn>
                         <NavBtn>
-                            <a href='/managers/sign_up'>Sign Up</a>
+                            <a href='/managers/sign_up' style={{color: "black"}}>Sign Up</a>
                         </NavBtn>
                     </NavBtnList>
                 </NavbarContainer>

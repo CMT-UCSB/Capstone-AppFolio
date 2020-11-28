@@ -14,8 +14,8 @@ export const SidebarContainer = styled.aside `
     top: 0;
     left: 0;
     transition: 0.3s ease-in-out;
-    ${'' /* opacity: ${({ isOpen }) => ( isOpen ? '100%' : '0%') };
-    top: ${({ isOpen }) => ( isOpen ? '0' : '-100%' )}; */}
+    opacity: ${({ isOpen }) => ( isOpen ? '100%' : '0%') };
+    top: ${({ isOpen }) => ( isOpen ? '0' : '-100%' )};
 `;
 
 export const CloseIcon = styled(FaTimes) `
@@ -70,8 +70,9 @@ export const SideBtnList = styled.li `
     display: flex;
     align-items: center;
     list-style: none;
-    display: grid;
-    grid-template-colums: 1fr;
+    display:  list-item;
+    justify-content: center;
+    grid-template-rows: repeat(6, 80px);
 `
 
 export const SideBtnWrap = styled.ul `
@@ -81,6 +82,7 @@ export const SideBtnWrap = styled.ul `
     {/* codes from here is for SideBtnLink 
       * remove once signin/signup.js is created 
       */}
+    width: 100px;
     border-radius: 50px;
     background: white;
     white-space: nowrap;

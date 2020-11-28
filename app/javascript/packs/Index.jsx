@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render (
     /* set indirect path to point to the component */
     <Router>
-      <Route path="/reactHome" component={App}/> 
+      <Route path="/" component={App}/> 
     </Router>,
     document.body.appendChild(document.createElement('div')),
   )
