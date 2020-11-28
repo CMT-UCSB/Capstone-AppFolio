@@ -1,4 +1,4 @@
-<%= form_with(model: @survey, url: '/surveys/create') do |f| %>  
+<%= form_with(model: @survey, url: surveys_path) do |f| %>  
     <%= f.fields_for :questions do |q| %>
         Prompt: <%= q.text_field :prompt %>
         <br />
@@ -8,19 +8,19 @@
         <br />
     <% end %>
     <b>Remind employees every:</b><br />
-    <%= radio_button_tag(:interval, 1, checked = true) %>Monday<br />
-    <%= radio_button_tag(:interval, 2) %>Tuesday<br />
-    <%= radio_button_tag(:interval, 3) %>Wednesday<br />
-    <%= radio_button_tag(:interval, 4) %>Thursday<br />
-    <%= radio_button_tag(:interval, 5) %>Friday<br />
-    <%= radio_button_tag(:interval, 6) %>Saturday<br />
-    <%= radio_button_tag(:interval, 7) %>Sunday<br />
+    <%= f.radio_button :day_of_week, 1, :checked => true %>Monday<br />
+    <%= f.radio_button :day_of_week, 2 %>Tuesday<br />
+    <%= f.radio_button :day_of_week, 3 %>Wednesday<br />
+    <%= f.radio_button :day_of_week, 4 %>Thursday<br />
+    <%= f.radio_button :day_of_week, 5 %>Friday<br />
+    <%= f.radio_button :day_of_week, 6 %>Saturday<br />
+    <%= f.radio_button :day_of_week, 7 %>Sunday<br />
     <br />
-    <%= time_select("survey", "time_of_day", {ampm: true, minute_step: 5}) %>
+    <%= f.time_select :time_of_day, {ampm: true, minute_step: 5} %>
     <br />
     <br />
     <b>Is this survey Identifiable or Anonymous?</b><br />
-    <%= select_tag(:isAnonymous, options_for_select([['Identifiable', false], ['Anonymous', true]], false)) %>
+    <%= f.select :isAnonymous, options_for_select([['Identifiable', false], ['Anonymous', true]], false) %>
     <br />
     <br />
     <%= f.submit %>

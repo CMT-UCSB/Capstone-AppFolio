@@ -68,6 +68,6 @@ class SurveysController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def survey_params
-      params.require(:survey).permit(:interval, :time_of_day, :isAnonymous)
+      params.require(:survey).permit(:interval, :day_of_week, :time_of_day, :isAnonymous)
     end
 end
