@@ -4,7 +4,7 @@ class CreateSurveys < ActiveRecord::Migration[6.0]
       t.integer :interval
       t.time :time_of_day
       t.integer :day_of_week
-      t.boolean :isAnonymous
+      t.integer :isAnonymous
       t.references :manager
       t.timestamps
     end

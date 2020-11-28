@@ -46,11 +46,9 @@ style="display: block; height: 300px; width: 930px;">
   <% @surveys.each do |s| %>
   <tr>
     <b><td>ID: <%= s.id %></td></b><br>
-    <td>Interval: Weekly <%= s.interval %></td><br>
-    <td>Time of Day: <%= s.time_of_day %></td><br>
-    <td>Day of Week: <%= s.day_of_week %></td><br>
-    <td>Anonymous: <%= s.isAnonymous %></td><br>
-    <td>Created: <%= s.created_at %></td><br>
+    <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
+    <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
+    <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %></td><br>
     <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails %>
     <br><br>
   </tr>

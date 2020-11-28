@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
     t.integer "interval"
     t.time "time_of_day"
     t.integer "day_of_week"
-    t.boolean "isAnonymous"
+    t.integer "isAnonymous"
     t.bigint "manager_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
