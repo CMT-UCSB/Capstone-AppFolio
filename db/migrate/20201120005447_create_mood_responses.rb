@@ -3,7 +3,7 @@ class CreateMoodResponses < ActiveRecord::Migration[6.0]
     create_table :mood_responses do |t|
       t.integer :response
       t.references :question
-      t.references :employee
+      t.references :employee, index: true, type: :uuid
       t.timestamps
     end
   end

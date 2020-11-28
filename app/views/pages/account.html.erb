@@ -18,12 +18,7 @@
 
 <h1 style="text-align: center">Account</h1>
 <div style="margin-left: 20px">
-<button id="create_survey">Create New Survey</button>
-<br /><br />
-<%= button_to 'Send Reminders', pages_send_emails_path, method: :send_emails %>
-<br /><br /><br /><br />
 <h4>Analytics</h4>
-<br />
 <br />
 <select id="week" onchange="changeAnalytics()">
   <option value="9/28/20-10/4/20">Week of 9/28/20-10/4/20</option>
@@ -47,79 +42,38 @@ style="display: block; height: 300px; width: 930px;">
 <br /><br />
 </div>
 <h4 style="margin-left: 20px">Surveys</h4>
+<button id="create_survey" style="margin-left: 20px">Create New Survey</button><br><br>
 <div style="margin-left: 20px">
-  <div style="display: flex;grid-template-columns: 1fr 1fr;grid-gap: 20px;">
-    <p style="">Daily - Mood - Survey - Every day 4pm </p>
-    <button id="send_email">Send Survey via Email</button>
-  </div><br/>
-  <div style="display: flex;grid-template-columns: 1fr 1fr;grid-gap: 20px;">
-    <p style="">Weekly - Text - Survey - Every Friday</p>
-    <button id="send_email">Send Survey via Email</button>
-  </div><br/>
-  <div style="display: flex;grid-template-columns: 1fr 1fr;grid-gap: 20px;">
-    <p style="">Monthly - Text - Survey - Every 28th</p>
-    <button id="send_email">Send Survey via Email</button>
-  </div><br/>
+  <% if !@surveys.empty? %>
+    <% @surveys.each do |s| %>
+    <tr>
+      <b><td>ID: <%= s.id %></td></b><br>
+      <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
+      <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
+      <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
+      <td>
+        Questions:
+        <ol>
+          <% s.questions.each do |q| %>
+              <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+          <% end %>
+        </ol>
+      </td>
+      <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails %>
+      <br><br>
+    </tr>
+    <% end %>
+  <% else %>
+    <tr>You don't have any surveys yet!</tr>
+  <% end %>
 </div>
 <div id="createSurveyModal" class="modal">
   <div class="modal-content">
     <span class="close"> &times;</span>
     <h2 style="text-align: center">Enter Survey Details:</h2>
     <div class="modal-body">
-      <b>Queston 1:</b>
-      <form>
-        Prompt: <input name="prompt" type="text" /> <br />
-        Type:
-        <select name="type">
-          <option selected="selected" value="mood">Mood</option>
-        </select>
-        <br />
-        <br />
-        <b>Remind employees every:</b><br />
-        <input checked="checked" name="days" type="radio" value="Monday" /> Monday<br />
-        <input name="days" type="radio" value="weekly" /> Tuesday<br />
-        <input name="days" type="radio" value="weekly" /> Wednesday<br />
-        <input name="days" type="radio" value="weekly" /> Thursday<br />
-        <input name="days" type="radio" value="weekly" /> Friday<br />
-        <input name="days" type="radio" value="weekly" /> Saturday<br />
-        <input name="days" type="radio" value="weekly" /> Sunday<br />
-        <br />
-        <select name="hour">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option selected="selected" value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-        <select name="minute">
-          <option selected="selected" value="00">00</option>
-          <option value="05">05</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
-          <option value="50">50</option>
-          <option value="55">55</option>
-        </select>
-        <select name="ampm">
-          <option selected="selected" value="am">AM</option>
-          <option value="PM">PM</option>
-        </select>
-        <br />
-        <br />
-        <button id="submit">Submit</button>
-      </form>
+      <b>Question 1:</b>
+      <%= render 'surveys/form' %>
     </div>
   </div>
 </div>

@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
   create_table "mood_responses", force: :cascade do |t|
     t.integer "response"
     t.bigint "question_id"
-    t.bigint "employee_id"
+    t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employee_id"], name: "index_mood_responses_on_employee_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
   create_table "open_ended_responses", force: :cascade do |t|
     t.string "response"
     t.bigint "question_id"
-    t.bigint "employee_id"
+    t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employee_id"], name: "index_open_ended_responses_on_employee_id"
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   create_table "questions", force: :cascade do |t|
     t.string "prompt"
-    t.integer "type"
-    t.bigint "survey_id"
+    t.integer "question_type"
+    t.uuid "survey_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_questions_on_created_at"
@@ -90,7 +90,8 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
   create_table "surveys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "interval"
     t.time "time_of_day"
-    t.boolean "isAnonymous"
+    t.integer "day_of_week"
+    t.integer "isAnonymous"
     t.bigint "manager_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

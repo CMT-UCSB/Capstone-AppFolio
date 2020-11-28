@@ -1,0 +1,28 @@
+<%= form_with(model: @survey, url: surveys_create_path) do |f| %>  
+    <%= f.fields_for :questions do |q| %>
+        Prompt: <%= q.text_field :prompt %>
+        <br />
+        <br />
+        Type: <%= q.select :question_type, options_for_select([['Mood', 'mood'], ['Open-Ended', 'open_ended']], 'mood') %>
+        <br />
+        <br />
+    <% end %>
+    <b>Remind employees every:</b><br />
+    <%= f.radio_button :day_of_week, 'monday', :checked => true %>Monday<br />
+    <%= f.radio_button :day_of_week, 'tuesday' %>Tuesday<br />
+    <%= f.radio_button :day_of_week, 'wednesday' %>Wednesday<br />
+    <%= f.radio_button :day_of_week, 'thursday' %>Thursday<br />
+    <%= f.radio_button :day_of_week, 'friday' %>Friday<br />
+    <%= f.radio_button :day_of_week, 'saturday' %>Saturday<br />
+    <%= f.radio_button :day_of_week, 'sunday' %>Sunday<br />
+    <br />
+    <%= f.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+    <br />
+    <br />
+    <b>Is this survey Identified or Anonymous?</b><br />
+    <%= f.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+    <br />
+    <br />
+    <%= f.submit %>
+<% end %>
+  
