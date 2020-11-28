@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :managers
   resources :notes
   resources :employees
+  resources :surveys
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root "pages#home"
   get "/about" => "pages#about"
@@ -11,4 +12,5 @@ Rails.application.routes.draw do
   get '/survey/success' => 'survey#success'
   get '/survey/:id' => 'survey#show'
   post 'pages/send_emails'
+  post '/surveys/create'
 end
