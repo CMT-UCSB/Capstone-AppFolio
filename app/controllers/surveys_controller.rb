@@ -1,6 +1,11 @@
 class SurveysController < ApplicationController
     def show
         @survey = Survey.find_by(id: params[:id])
+        if ENV['RAILS_ENV'] == 'development'
+            @url = "localhost:3000"
+        else
+            @url = "synergi.herokuapp.com"
+        end
     
         # if @survey.blank?
         #   head :not_found

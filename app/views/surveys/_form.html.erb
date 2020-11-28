@@ -1,4 +1,4 @@
-<%= form_with(model: @survey, url: surveys_path) do |f| %>  
+<%= form_with(model: @survey, url: surveys_create_path) do |f| %>  
     <%= f.fields_for :questions do |q| %>
         Prompt: <%= q.text_field :prompt %>
         <br />
@@ -16,7 +16,7 @@
     <%= f.radio_button :day_of_week, 6 %>Saturday<br />
     <%= f.radio_button :day_of_week, 7 %>Sunday<br />
     <br />
-    <%= f.time_select :time_of_day, {ampm: true, minute_step: 5} %>
+    <%= f.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
     <br />
     <br />
     <b>Is this survey Identifiable or Anonymous?</b><br />
