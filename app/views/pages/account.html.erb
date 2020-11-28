@@ -46,7 +46,15 @@ style="display: block; height: 300px; width: 930px;">
       <b><td>ID: <%= s.id %></td></b><br>
       <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
       <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-      <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %></td><br>
+      <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
+      <td>
+        Questions:
+        <ol>
+          <% s.questions.each do |q| %>
+              <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+          <% end %>
+        </ol>
+      </td>
       <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails %>
       <br><br>
     </tr>

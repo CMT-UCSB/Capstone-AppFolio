@@ -3,7 +3,7 @@
         Prompt: <%= q.text_field :prompt %>
         <br />
         <br />
-        Type: <%= select_tag(:type, options_for_select([['Mood', 1]], 1)) %>
+        Type: <%= q.select :question_type, options_for_select([['Mood', 'mood'], ['Open-Ended', 'open_ended']], 'mood') %>
         <br />
         <br />
     <% end %>
