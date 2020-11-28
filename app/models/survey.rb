@@ -1,6 +1,6 @@
 class Survey < ApplicationRecord
   enum day_of_week: [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
-  enum isAnonymous: [:anonymous, :identified]
+  enum isAnonymous: [:anonymous, :identifiable]
 
   belongs_to :manager
   has_many :employee_surveys

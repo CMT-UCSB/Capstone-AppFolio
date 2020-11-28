@@ -43,16 +43,20 @@ style="display: block; height: 300px; width: 930px;">
 </div>
 <h4 style="margin-left: 20px">Surveys</h4>
 <div style="margin-left: 20px">
-  <% @surveys.each do |s| %>
-  <tr>
-    <b><td>ID: <%= s.id %></td></b><br>
-    <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
-    <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-    <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %></td><br>
-    <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails %>
-    <br><br>
-  </tr>
-<% end %>
+  <% if !@surveys.empty? %>
+    <% @surveys.each do |s| %>
+    <tr>
+      <b><td>ID: <%= s.id %></td></b><br>
+      <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
+      <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
+      <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %></td><br>
+      <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails %>
+      <br><br>
+    </tr>
+    <% end %>
+  <% else %>
+    <tr>You don't have any surveys yet!</tr>
+  <% end %>
 </div>
 <div id="createSurveyModal" class="modal">
   <div class="modal-content">
