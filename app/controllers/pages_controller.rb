@@ -10,5 +10,6 @@ class PagesController < ApplicationController
 
     def account
         @survey = Survey.new
+        @survey.questions.build
     end
 end

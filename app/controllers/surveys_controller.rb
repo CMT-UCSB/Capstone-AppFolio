@@ -16,6 +16,7 @@ class SurveysController < ApplicationController
     # GET method for the new survey
     def new
         @survey = Survey.new
+        @survey.questions.build
     end
 
     # POST method for processing form data
@@ -68,6 +69,6 @@ class SurveysController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def survey_params
-      params.require(:survey).permit(:interval, :day_of_week, :time_of_day, :isAnonymous)
+      params.require(:survey).permit(:interval, :day_of_week, :time_of_day, :isAnonymous, questions_attributes: [:prompt, :type])
     end
 end
