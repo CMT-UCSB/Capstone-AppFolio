@@ -3,7 +3,8 @@ class CreateSurveys < ActiveRecord::Migration[6.0]
     create_table :surveys, id: :uuid do |t|
       t.integer :interval
       t.time :time_of_day
-      t.boolean :isAnonymous
+      t.integer :day_of_week
+      t.integer :isAnonymous
       t.references :manager
       t.timestamps
     end

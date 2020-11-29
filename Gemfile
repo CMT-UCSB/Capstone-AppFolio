@@ -25,6 +25,8 @@ gem 'jbuilder', '~> 2.7'
 gem "spring", group: :development
 
 gem 'devise'
+gem 'react-rails'
+gem 'bootstrap', '~> 4.5.3'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -52,3 +54,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+

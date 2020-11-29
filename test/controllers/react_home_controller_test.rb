@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SurveyControllerTest < ActionDispatch::IntegrationTest
+class ReactHomeControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

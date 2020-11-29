@@ -3,7 +3,7 @@ class CreateOpenEndedResponses < ActiveRecord::Migration[6.0]
     create_table :open_ended_responses do |t|
       t.string :response
       t.references :question
-      t.references :employee
+      t.references :employee, index: true, type: :uuid
       t.timestamps
     end
   end
