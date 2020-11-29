@@ -1,6 +1,7 @@
 class SurveyController < ApplicationController
     def show
-        @survey = Survey.find_by(id: params[:id])
+        @employeeid = EmployeeSurvey.find_by(employee_id: params[:employeeid])
+        @survey = Survey.find_by(id: params[:surveyid])
     
         # if @survey.blank?
         #   head :not_found
