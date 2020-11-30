@@ -15,7 +15,4 @@ class PagesController < ApplicationController
         @surveys = Survey.where(manager_id: current_manager.id)
     end
 
-    def account
-        @surveys = Survey.where(manager: current_manager)
-    end
 end

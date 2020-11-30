@@ -68,14 +68,6 @@ style="display: block; height: 300px; width: 930px;">
   <% end %>
 </div>
 
-<div>
-  <% @surveys.each do |survey| %>
-    <div><%= survey.created_at %></div>
-    <div><%= survey.time_of_day %></div>
-    <button id="send_email">Send Survey via Email</button>
-  <% end %>
-</div>
-
 <div id="createSurveyModal" class="modal">
   <div class="modal-content">
     <span class="close"> &times;</span>
