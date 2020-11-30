@@ -11,9 +11,14 @@
       <h1>Survey from <%= @survey.manager.email %></h1> <br>
       <h8>Created on <%= @survey.created_at %></h8>
       <br>
-      <h8>This survey is identifiable (Manager will able to identify your response)</h8>
+      <% if @isAnon == true %>
+        <h8>This survey is anonymous (Manager will not able to identify your response)</h8>
+      <% else %>
+        <h8>This survey is identifiable (Manager will able to identify your response)</h8>
+      <% end %>
+      <%# <h8>This survey is identifiable (Manager will able to identify your response)</h8> %>
       <br><br>
-      <h2>Q1. How are you feeling today? </h2>
+      <h2>Q1. <%= @questionPrompt %> </h2>
       <br>
       <div style="padding: 10px; font-size: 50pt; background">
         <a href="http://<%= @url %>/surveys/success"><input type="button" class="w3-button" value="😃"></a>
@@ -21,6 +26,7 @@
         <a href="http://<%= @url %>/surveys/success"><input type="button" class="w3-button" value="😟"></a>
       </div>
     </form>
+    
   </div>
 
 <% else %>

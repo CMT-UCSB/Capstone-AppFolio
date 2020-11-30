@@ -1,5 +1,6 @@
 class SurveysController < ApplicationController
     def show
+        @employee = Employee.find_by(id: params[:employeeid])
         @survey = Survey.find_by(id: params[:id])
         if ENV['RAILS_ENV'] == 'development'
             @url = "localhost:3000"
@@ -11,6 +12,15 @@ class SurveysController < ApplicationController
         #   head :not_found
         #   return
         # end
+        if @survey.isAnonymous == "anonymous"
+            @isAnon = true
+        else
+            @isAnon = false
+        end
+        @question = Question.find_by(survey_id: params[:id])
+        @questionPrompt = @question.prompt
+        
+        # @moodResponse = MoodResponse.new
     end
 
     # GET method to get all surveys from database

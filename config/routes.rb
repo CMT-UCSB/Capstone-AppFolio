@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root "react_home#reactHome"
   get '/account' => 'pages#account', :as => :manager_root
   get 'surveys/success' => 'surveys#success'
-  get 'surveys/:id' => 'surveys#show'
+  get 'surveys/:id/:employeeid' => 'surveys#show'
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
 
