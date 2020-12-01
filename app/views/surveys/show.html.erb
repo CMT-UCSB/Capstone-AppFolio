@@ -14,7 +14,7 @@
       <h3>But you can still change your answer by submitting again.</h3>
       <br/><hr>
     <%end%>
-    <%= form_with(model: @survey, url: surveys_mood_responses_path, method: :post) do |f| %>
+    <%= form_with(model: @survey, url: @response_url, method: :post) do |f| %>
       <h1>Survey from <%= @survey.manager.email %></h1> <br>
       <h8>Created on <%= @survey.created_at %></h8>
       <br>
@@ -26,11 +26,17 @@
       <br><br>
       <h2>Q1. <%= @questionPrompt %> </h2>
       <br>
+      <% if @question.question_type == "mood" %>
       <div style="padding: 10px; font-size: 50pt; background">
         <%= f.submit "😃", :class =>"emoji_button"%>
         <%= f.submit "😐", :class =>"emoji_button"%>
         <%= f.submit "😟", :class =>"emoji_button"%>
       </div>
+      <% elsif @question.question_type == "open_ended" %>
+        <%= f.text_area :response, cols: "30"%>
+        <br><br>
+        <%= f.submit "Submit Response" %>
+      <% end %>
     <% end %>
   </div>
 

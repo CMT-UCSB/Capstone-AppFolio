@@ -20,7 +20,14 @@ class SurveysController < ApplicationController
         @question = Question.find_by(survey_id: params[:id])
         @questionPrompt = @question.prompt
 
-        this_survey_response = MoodResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
+        if @question.question_type == "mood"
+            this_survey_response = MoodResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
+            @response_url = surveys_mood_responses_path
+        elsif @question.question_type == "open_ended"
+            this_survey_response = OpenEndedResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
+            @response_url = surveys_open_ended_responses_path
+        end
+
         if this_survey_response == nil
             @isFilled = false
         else
