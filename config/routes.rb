@@ -2,11 +2,13 @@ Rails.application.routes.draw do
   devise_for :managers
   resources :notes
   resources :employees
+  # resources :mood_responses, only: [:create]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root "react_home#reactHome"
   get '/account' => 'pages#account', :as => :manager_root
-  get 'surveys/success' => 'surveys#success'
+  get 'surveys/success' => 'surveys#success', as: :surveys_success
   get 'surveys/:id/:employeeid' => 'surveys#show'
+  post 'surveys/:id/:employeeid/mood_responses' => 'mood_responses#create', as: :surveys_mood_responses
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
 

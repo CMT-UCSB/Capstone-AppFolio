@@ -1,7 +1,7 @@
 class SurveysController < ApplicationController
     def show
-        @employee = Employee.find_by(id: params[:employeeid])
-        @survey = Survey.find_by(id: params[:id])
+        @employee = Employee.find(params[:employeeid])
+        @survey = Survey.find(params[:id])
         if ENV['RAILS_ENV'] == 'development'
             @url = "localhost:3000"
         else
@@ -19,8 +19,14 @@ class SurveysController < ApplicationController
         end
         @question = Question.find_by(survey_id: params[:id])
         @questionPrompt = @question.prompt
+
+        this_survey_response = MoodResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
+        if this_survey_response == nil
+            @isFilled = false
+        else
+            @isFilled = true
+        end
         
-        # @moodResponse = MoodResponse.new
     end
 
     # GET method to get all surveys from database

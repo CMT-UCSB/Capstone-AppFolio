@@ -3,11 +3,18 @@
 <style>
   body,h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif; color: white}
   body {margin: 10vh; background-color: black}
+  .emoji_button {background-color: #000000; border: none; width: 100px}
+  .emoji_button:hover {background-color: grey; border: none; width: 100px}
 </style>
 
 <% if @survey.present? %>
   <div class="w3-center">
-    <form action="/users" class="new_user" id="new_user" method="post">
+    <% if @isFilled == true %>
+      <h1>You have already filled out the survey. ✅</h1>
+      <h3>But you can still change your answer by submitting again.</h3>
+      <br/><hr>
+    <%end%>
+    <%= form_with(model: @survey, url: surveys_mood_responses_path, method: :post) do |f| %>
       <h1>Survey from <%= @survey.manager.email %></h1> <br>
       <h8>Created on <%= @survey.created_at %></h8>
       <br>
@@ -16,17 +23,15 @@
       <% else %>
         <h8>This survey is identifiable (Manager will able to identify your response)</h8>
       <% end %>
-      <%# <h8>This survey is identifiable (Manager will able to identify your response)</h8> %>
       <br><br>
       <h2>Q1. <%= @questionPrompt %> </h2>
       <br>
       <div style="padding: 10px; font-size: 50pt; background">
-        <a href="http://<%= @url %>/surveys/success"><input type="button" class="w3-button" value="😃"></a>
-        <a href="http://<%= @url %>/surveys/success"><input type="button" class="w3-button" value="😐"></a>
-        <a href="http://<%= @url %>/surveys/success"><input type="button" class="w3-button" value="😟"></a>
+        <%= f.submit "😃", :class =>"emoji_button"%>
+        <%= f.submit "😐", :class =>"emoji_button"%>
+        <%= f.submit "😟", :class =>"emoji_button"%>
       </div>
-    </form>
-    
+    <% end %>
   </div>
 
 <% else %>
