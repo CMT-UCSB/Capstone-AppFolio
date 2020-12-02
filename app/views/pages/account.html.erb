@@ -5,12 +5,7 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
 
-<nav class="w3-dark-gray">
-  <% if manager_signed_in? %> <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete
-  %> <%= link_to 'Employees', employees_path %> <%= link_to 'Notes', notes_path %> <% else %> <%=
-  link_to 'Sign in', new_manager_session_path, class: 'button' %> <%= link_to 'Register',
-  new_manager_registration_path %> <% end %>
-</nav>
+<%= render :partial => 'account_header/header' %>
 
 <!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
 <p class='notice'><%= notice %></p>
