@@ -1,3 +1,28 @@
+<style>
+.btn {
+  border-radius: 50px;
+  background: white;
+  white-space: nowrap;
+  color: black;
+  padding: 10px 22px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: var(--light);
+  }
+}
+.btn_container {
+  margin-left: 33%;
+}
+</style>
+
 <%= form_with(model: employee, local: true) do |form| %>
   <% if employee.errors.any? %>
     <div id="error_explanation">
@@ -12,21 +37,22 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :first_name %>
+    <%= form.label :first_name, style: "color: white;" %>
     <%= form.text_field :first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :last_name %>
+    <%= form.label :last_name, style: "color: white;" %>
     <%= form.text_field :last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
+    <%= form.label :email, style: "color: white; padding-right: 34px;" %>
     <%= form.text_field :email %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <br />
+  <div class="btn_container">
+    <%= form.submit "Create", class: "btn" %>
   </div>
 <% end %>

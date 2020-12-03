@@ -1,6 +1,39 @@
-<h1>Editing Employee</h1>
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  justify-content: center;
+  margin-top: 8%;
+}
 
-<%= render 'form', employee: @employee %>
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
 
-<%= link_to 'Show', @employee %> |
-<%= link_to 'Back', employees_path %>
+.note_nav {
+    display: flex;
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container">
+    <br />
+    <h1>Editing Employee</h1>
+    <br />
+
+    <%= render 'form', employee: @employee %>
+
+    <br />
+    <div class="note_nav">
+        <%= link_to 'Display', @employee, style: "color: white; padding: 0 10px;" %> <p> | </p>
+        <%= link_to 'Cancel', employees_path, style: "color: white; padding: 0 10px;" %>
+    </div>
+    <br />
+</div>
