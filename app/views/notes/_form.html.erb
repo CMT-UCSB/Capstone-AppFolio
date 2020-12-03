@@ -1,3 +1,28 @@
+<style>
+.btn {
+  border-radius: 50px;
+  background: white;
+  white-space: nowrap;
+  color: black;
+  padding: 10px 22px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: var(--light);
+  }
+}
+.btn_container {
+  margin-left: 37%;
+}
+</style>
+
 <%= form_with(model: note, local: true) do |form| %>
   <% if note.errors.any? %>
     <div id="error_explanation">
@@ -12,16 +37,17 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :date %>
+    <%= form.label :date, style: "color: white;" %>
     <%= form.date_field :date %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.label :content, style: "color: white;" %> <br />
+    <%= form.text_area :content, style: "width: 100%;", size: "45px" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <br />
+  <div class="btn_container">
+    <%= form.submit "Create", class: "btn" %>
   </div>
 <% end %>

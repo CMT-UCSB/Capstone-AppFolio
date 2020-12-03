@@ -1,0 +1,106 @@
+<style>
+.nav {
+    background: var(--gray);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    z-index: 1;
+    width: 100%;
+    padding: 0 24px;
+    max-wdith: 1100px;
+}
+
+.logo {
+    color: white;
+    justify-self: flex-start;
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover{
+        color: var(--light);
+    }
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    text-align: center;
+    margin-right: -22px;
+}
+
+.menuItem {
+    color: white;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 1rem;
+    height: 100%;
+    cursor: pointer;
+
+    &:hover{
+        color: var(--light);
+    }
+}
+
+.btnContainer {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.btn {
+    border-radius: 50px;
+    background: white;
+    white-space: nowrap;
+    color: black;
+    padding: 10px 22px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: var(--light);
+    }
+}
+</style>
+<header>
+    <nav class="nav">
+        <div class="navContainer">
+            <div class="logo">
+                <%= link_to 'Synergi', manager_root_path, style: "color: white;" %>
+            </div>
+            <div class="menu">
+                <%= link_to 'Employees', employees_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
+                <%= link_to 'Notes', notes_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
+            </div>
+            <div class="btnContainer">
+                <% if manager_signed_in? %>
+                    <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete, class: 'btn' %>
+                <% else %>
+                    <%= link_to 'Sign in', new_manager_session_path, class: 'btn' %>
+                    <%= link_to 'Register', new_manager_registration_path, class: 'btn' %>
+                <% end %>
+            </div>
+        </div>
+    </nav>
+</header>

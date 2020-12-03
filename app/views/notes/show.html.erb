@@ -1,14 +1,48 @@
-<p id="notice"><%= notice %></p>
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+  justify-content: center;
+  margin-top: 8%;
+}
 
-<p>
-  <strong>Date:</strong>
-  <%= @note.date %>
-</p>
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
 
-<p>
-  <strong>Content:</strong>
-  <%= @note.content %>
-</p>
+.date {
+  align: left;
+}
 
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+.show_nav {
+    display: flex;
+    margin-left: 38%
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <p class="date">
+    <strong>Date:</strong>
+    <%= @note.date %>
+  </p>
+
+  <p>
+    <strong>Content:</strong> <br />
+    <%= @note.content %>
+  </p>
+
+  <div class="show_nav">
+    <%= link_to 'Edit', edit_note_path(@note), style: "color: white; padding: 0 10px;" %>
+    <p> | </p>
+    <%= link_to 'Back', notes_path, style: "color: white; padding: 0 10px;" %>
+  </div>
+</div>

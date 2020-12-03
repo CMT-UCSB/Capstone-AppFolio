@@ -1,19 +1,53 @@
-<p id="notice"><%= notice %></p>
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  justify-content: center;
+  margin-top: 8%;
+}
 
-<p>
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
+
+.date {
+  align: left;
+}
+
+.show_nav {
+    display: flex;
+    margin-left: 36%
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <p>
   <strong>First Name:</strong>
   <%= @employee.first_name %>
-</p>
+  </p>
 
-<p>
-  <strong>Last Name:</strong>
-  <%= @employee.last_name %>
-</p>
+  <p>
+    <strong>Last Name:</strong>
+    <%= @employee.last_name %>
+  </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @employee.email %>
-</p>
+  <p>
+    <strong>Email:</strong>
+    <%= @employee.email %>
+  </p>
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+  <div class="show_nav">
+    <%= link_to 'Edit', edit_employee_path(@employee), style: "color: white; padding: 0 10px;" %>
+    <p> | </p>
+    <%= link_to 'Back', employees_path, style: "color: white; padding: 0 10px;" %>
+  </div>
+</div>

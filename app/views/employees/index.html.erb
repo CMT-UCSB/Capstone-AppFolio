@@ -1,34 +1,76 @@
-<p id="notice"><%= notice %></p>
+<style>
+body {
+  background: black;
+}
 
-<%= link_to 'Notes', notes_path %>
-<%= link_to 'Dashboard', manager_root_path %>
+.container {
+  background: #262728;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 800px;
+  justify-content: center;
+}
 
-<h1>Employees</h1>
+h1, tr, th, p {
+  color: white;
+}
 
-<table>
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+.employee {
+  width: 100%;
+}
 
-  <tbody>
-    <% @employees.each do |employee| %>
+.employee td, .employee th {
+  padding: 10px;
+}
+
+.smallBtn {
+  border-radius: 30px;
+  background: white;
+  white-space: nowrap;
+  color: black;
+  padding: 5px 15px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+</style>
+
+<%= render :partial => 'account_header/header' %>
+
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Employees</h1>
+
+  <table class="employee">
+    <thead>
       <tr>
-        <td><%= employee.first_name %></td>
-        <td><%= employee.last_name %></td>
-        <td><%= employee.email %></td>
-        <td><%= link_to 'Show', employee %></td>
-        <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-        <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @employees.each do |employee| %>
+        <tr>
+          <td><%= employee.first_name %></td>
+          <td><%= employee.last_name %></td>
+          <td><%= employee.email %></td>
+          <td><%= link_to 'Display', employee, class: "smallBtn", style: "color: black" %></td>
+          <td><%= link_to 'Edit', edit_employee_path(employee), class: "smallBtn", style: "color: black" %></td>
+          <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Employee', new_employee_path %>
+  <br>
+
+  <%= link_to 'New Employee', new_employee_path, style: "color: black;", class: "btn" %>
+
+  <br />
+</div>

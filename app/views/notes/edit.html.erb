@@ -1,6 +1,39 @@
-<h1>Editing Note</h1>
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 450px;
+  justify-content: center;
+  margin-top: 8%;
+}
 
-<%= render 'form', note: @note %>
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
 
-<%= link_to 'Show', @note %> |
-<%= link_to 'Back', notes_path %>
+.note_nav {
+    display: flex;
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container">
+    <br />
+    <h1>Editing Note</h1>
+    <br />
+
+    <%= render 'form', note: @note %>
+
+    <br />
+    <div class="note_nav">
+        <%= link_to 'Display', @note, style: "color: white; padding: 0 10px;" %> <p> | </p>
+        <%= link_to 'Cancel', notes_path, style: "color: white; padding: 0 10px;" %>
+    </div>
+    <br />
+</div>
