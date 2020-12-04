@@ -2,7 +2,8 @@ require 'test_helper'
 
 class EmployeesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @employee = employees(:one)
+    @manager = Manager.new(email: "john@example.com", password: "password", password_confirmation: "password")
+    @employee = Employee.new(first_name: "John", last_name: "Doe", email: "johndoes@example.com", manager: @manager)
   end
 
   test "should get index" do
@@ -44,5 +45,9 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to employees_url
+  end
+
+  test "manager id should equal" do
+    assert_equal @manager.id, @employee.manager.id
   end
 end

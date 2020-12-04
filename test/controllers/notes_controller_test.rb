@@ -2,7 +2,8 @@ require 'test_helper'
 
 class NotesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @note = notes(:one)
+    @manager = Manager.new(email: "john@example.com", password: "password", password_confirmation: "password")
+    @note = Notes.new(date: Date.today, content: "This is a test", manager: @manager)
   end
 
   test "should get index" do
@@ -44,5 +45,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to notes_url
+  end
+
+  test "manager id should equal" do
+    assert_equal @manager.id, @note.manager.id
   end
 end
