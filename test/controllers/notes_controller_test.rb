@@ -2,7 +2,8 @@ require 'test_helper'
 
 class NotesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @note = notes(:one)
+    # @note = notes(:one)
+    @note = Note.create(content: 'Test', date: Date.tomorrow)
   end
 
   test "should get index" do
