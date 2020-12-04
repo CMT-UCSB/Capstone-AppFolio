@@ -17,13 +17,11 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should create employee" do
-  #   assert_difference('Employee.count') do
-  #     post employees_url, params: { employee: { email: @employee.email, first_name: @employee.first_name, last_name: @employee.last_name } }
-  #   end
-
-  #   assert_redirected_to employee_url(Employee.last)
-  # end
+  test "should create employee" do
+    assert_difference('Employee.count') do
+      post employees_url, params: { employee: { email: @employee.email, first_name: @employee.first_name, last_name: @employee.last_name } }
+    end
+  end
 
   test "should show employee" do
     get employee_url(@employee)
