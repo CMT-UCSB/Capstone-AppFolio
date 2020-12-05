@@ -2,7 +2,9 @@ require 'test_helper'
 
 class EmployeesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @employee = employees(:one)
+    @manager = Manager.create!(email: 'test@gmail.com', password: 'test123')
+    sign_in @manager
+    @employee = Employee.create(first_name: 'John', last_name: 'Doe', email: 'test2@gmail.com', manager: @manager)
   end
 
   test "should get index" do
@@ -17,10 +19,8 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create employee" do
     assert_difference('Employee.count') do
-      post employees_url, params: { employee: { email: @employee.email, name: @employee.name } }
+      post employees_url, params: { employee: { email: @employee.email, first_name: @employee.first_name, last_name: @employee.last_name } }
     end
-
-    assert_redirected_to employee_url(Employee.last)
   end
 
   test "should show employee" do
@@ -34,7 +34,7 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update employee" do
-    patch employee_url(@employee), params: { employee: { email: @employee.email, name: @employee.name } }
+    patch employee_url(@employee), params: { employee: { email: @employee.email, first_name: @employee.first_name, last_name: @employee.last_name } }
     assert_redirected_to employee_url(@employee)
   end
 
@@ -44,5 +44,9 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to employees_url
+  end
+
+  test "manager id should equal" do
+    assert_equal @manager.id, @employee.manager.id
   end
 end

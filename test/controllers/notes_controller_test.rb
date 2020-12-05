@@ -2,7 +2,9 @@ require 'test_helper'
 
 class NotesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @note = notes(:one)
+    @manager = Manager.create!(email: 'test2@gmail.com', password: 'test1234')
+    sign_in @manager
+    @note = Note.create(content: 'Test', date: Date.tomorrow, manager: @manager)
   end
 
   test "should get index" do
@@ -17,10 +19,8 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create note" do
     assert_difference('Note.count') do
-      post notes_url, params: { note: { content: @note.content, date: @note.date, manager_id: @note.manager_id } }
+      post notes_url, params: { note: { content: @note.content, date: @note.date, manager: @note.manager } }
     end
-
-    assert_redirected_to note_url(Note.last)
   end
 
   test "should show note" do
@@ -34,7 +34,7 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update note" do
-    patch note_url(@note), params: { note: { content: @note.content, date: @note.date, manager_id: @note.manager_id } }
+    patch note_url(@note), params: { note: { content: @note.content, date: @note.date, manager: @note.manager } }
     assert_redirected_to note_url(@note)
   end
 
@@ -44,5 +44,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to notes_url
+  end
+
+  test "manager id should equal" do
+    assert_equal @manager.id, @note.manager.id
   end
 end
