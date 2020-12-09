@@ -27,11 +27,16 @@
   <br />
   <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
   <br />
+
+  <% @surveys.each do |mood_survey| %>
+    <% render partial: 'chart', locals: { chart: mood_survey } %>
+  <% end %>
   <div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
   font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
     <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
   </div>
   <script>
+    const chartData = <%= @chart_data.to_json %>;
     new Chartkick.PieChart(document.getElementById("display"), [["Good",44],["Okay/Fine",23],["Bad",13]], {});
   </script>
   <br /><br />
@@ -41,14 +46,12 @@
 <div>
 <% if !@surveys.empty? %>
   <% @surveys.each do |s|%>
-    <% s.questions.each do |q| %>
-      <% if q.question_type == "mood"%>
-        <% MoodResponse.where(question_id: q.id).each do |mr| %>
-          <script>
-            var response = "<%= mr.response %>";
-            console.log(response);
-          </script>
-        <%end%>
+    <% s.questions.filter { |q| q.question_type == 'mood' }.each do |q| %>
+      <% MoodResponse.where(question_id: q.id).each do |mr| %>
+        <script>
+          var response = "<%= mr.response %>";
+          console.log(response);
+        </script>
       <%end%>
     <%end%>
   <%end%>
@@ -229,8 +232,23 @@
     }
   };
 
+  var numMood = [];
+  function recordSurveyData(moodReponse)
+  {
+    numMood.push(0);
+
+  }
+
+  var results = [];
+  function storeSurveyData(QID, responseName)
+  {
+
+  }
+
   function changeAnalytics() {
     document.getElementById('analytics_data').innerHTML = 'Showing data for week of ' + document.getElementById('week').value;
+
+    response
 
     new Chartkick.PieChart(document.getElementById("display"), [["Good", 3], ["Okay/Fine", 2], ["Bad", 1]], {});
   }
