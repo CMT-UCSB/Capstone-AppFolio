@@ -9,6 +9,10 @@ class PagesController < ApplicationController
         UserMailer.bulk_email(current_manager, @survey)
     end
 
+    def self.send_emails_task(survey)
+        UserMailer.bulk_email(survey.manager, survey)
+    end
+
     def account
         @survey = Survey.new
         @survey.questions.build
