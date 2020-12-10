@@ -28,18 +28,20 @@
   <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
   <br />
 
-  <% @surveys.each do |mood_survey| %>
-    <% render partial: 'chart', locals: { chart: mood_survey } %>
+  <div>
+  <% @surveys.each do |mood_response| %>
+    <%= render partial: 'chart', locals: { chart: mood_response } %>
   <% end %>
-  <div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
+  </div>
+  <!--div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
   font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
     <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
   </div>
   <script>
     const chartData = <%= @chart_data.to_json %>;
-    new Chartkick.PieChart(document.getElementById("display"), [["Good",44],["Okay/Fine",23],["Bad",13]], {});
+    new Chartkick.PieChart(document.getElementById("display"), chartData, {});
   </script>
-  <br /><br />
+  <br /><br /-->
 </div>
 
 <!--h4 style= "margin-left: 20px">Displaying all surveys</h4-->
