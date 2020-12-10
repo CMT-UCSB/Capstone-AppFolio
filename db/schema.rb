@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   create_table "mood_responses", force: :cascade do |t|
     t.integer "response"
-    t.integer "elapsed_weeks"
     t.bigint "question_id"
     t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false
@@ -70,7 +69,6 @@ ActiveRecord::Schema.define(version: 2020_11_20_005447) do
 
   create_table "open_ended_responses", force: :cascade do |t|
     t.string "response"
-    t.integer "elapsed_weeks"
     t.bigint "question_id"
     t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false
