@@ -19,7 +19,7 @@ class OpenEndedResponsesController < ApplicationController
     end
 
     if @isFilled == false
-        OpenEndedResponse.create!(employee: employee, question: question, response: params[:survey][:response])
+        OpenEndedResponse.create!(employee: employee, question: question, response: params[:survey][:response], elapsed_time: 0)
     else
         this_survey_response.update(response: params[:survey][:response])
     end
