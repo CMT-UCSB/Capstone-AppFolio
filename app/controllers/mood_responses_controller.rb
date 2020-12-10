@@ -20,11 +20,11 @@ class MoodResponsesController < ApplicationController
 
     if @isFilled == false
       if params[:commit] == "😃"
-        MoodResponse.create!(employee: employee, question: question, response: 2, elapsed_time = 0)
+        MoodResponse.create!(employee: employee, question: question, response: 2, elapsed_time: 0)
       elsif params[:commit] == "😐"
-        MoodResponse.create!(employee: employee, question: question, response: 1, elapsed_time = 0)
+        MoodResponse.create!(employee: employee, question: question, response: 1, elapsed_time: 0)
       elsif params[:commit] == "😟"
-        MoodResponse.create!(employee: employee, question: question, response: 0, elapsed_time = 0)
+        MoodResponse.create!(employee: employee, question: question, response: 0, elapsed_time: 0)
       end
     else
       if params[:commit] == "😃"
