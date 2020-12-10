@@ -10,8 +10,8 @@ class MoodResponsesController < ApplicationController
     else
         # check if if has been at least one week since a response has last been saved
         weeks = ((DateTime.now.utc - this_survey_response.created_at) / (60 * 60 * 24 * 7))
-        this_survey_response.update(elapsed_time: weeks)
-        if this_survey_response.elapsed_time > 0
+        this_survey_response.update(elapsed_weeks: weeks)
+        if this_survey_response.elapsed_weeks > 0
           @isFilled = false
         else
           @isFilled = true
@@ -20,11 +20,11 @@ class MoodResponsesController < ApplicationController
 
     if @isFilled == false
       if params[:commit] == "😃"
-        MoodResponse.create!(employee: employee, question: question, response: 2, elapsed_time: 0)
+        MoodResponse.create!(employee: employee, question: question, response: 2, elapsed_weeks: 0)
       elsif params[:commit] == "😐"
-        MoodResponse.create!(employee: employee, question: question, response: 1, elapsed_time: 0)
+        MoodResponse.create!(employee: employee, question: question, response: 1, elapsed_weeks: 0)
       elsif params[:commit] == "😟"
-        MoodResponse.create!(employee: employee, question: question, response: 0, elapsed_time: 0)
+        MoodResponse.create!(employee: employee, question: question, response: 0, elapsed_weeks: 0)
       end
     else
       if params[:commit] == "😃"
