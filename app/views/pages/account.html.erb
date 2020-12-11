@@ -28,7 +28,7 @@
     <br />
     <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
     <br />
-    <div>
+    <div class="chart">
     <% @surveys.each do |mood_response| %>
       <%= render partial: 'chart', locals: { chart: mood_response } %>
     <% end %>
