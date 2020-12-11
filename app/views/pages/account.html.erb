@@ -46,10 +46,10 @@
       new Chartkick.LineChart(document.getElementById("display2"), [["12/3",2.7],["12/4",2.9],["12/7",2.3],["12/8",2.5],["12/9",2.4]], {});
     </script>
     <div class="linechart-buttons">
-      <button class="linechart-btn">Past Year</button>
-      <button class="linechart-btn">Past 3 months</button>
-      <button class="linechart-btn">Past month</button>
-      <button class="linechart-btn">Past week</button>
+      <button class="linechart-btn" onclick="changeTimeIntervalY()">Past Year</button>
+      <button class="linechart-btn" onclick="changeTimeInterval3M()">Past 3 months</button>
+      <button class="linechart-btn" onclick="changeTimeIntervalM()">Past month</button>
+      <button class="linechart-btn" onclick="changeTimeIntervalW()">Past week</button>
     </div>
     <br /><br />
   </div>
@@ -311,4 +311,22 @@
 
     new Chartkick.PieChart(document.getElementById("display"), [["Good", 3], ["Okay/Fine", 2], ["Bad", 1]], {});
   }
+
+  function changeTimeIntervalY() {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["1/9",2.2],["4/9",2.7],["7/9",2.5],["10/1",2.8],["12/9",2.4]], {});
+  }
+  function changeTimeInterval3M() {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["10/7",2.6],["10/18",2.4],["11/4",2.7],["11/22",2.2],["12/9",2.5]], {});
+  }
+  function changeTimeIntervalM() {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["11/11",2.9],["11/18",2.5],["11/25",2.1],["12/2",2.4],["12/9",2.6]], {});
+  }
+  function changeTimeIntervalW() {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["12/3",2.7],["12/4",2.9],["12/7",2.3],["12/8",2.5],["12/9",2.4]], {});
+  }
+
 </script>
