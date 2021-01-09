@@ -27,6 +27,7 @@ gem "spring", group: :development
 gem 'devise'
 gem 'react-rails'
 gem 'bootstrap', '~> 4.5.3'
+gem 'jsonapi-serializer'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
