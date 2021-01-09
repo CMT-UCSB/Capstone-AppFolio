@@ -49,11 +49,13 @@ class SurveysController < ApplicationController
 
     # POST method for processing form data
     def create
+        :verify_authenticity_token
+        print("\ncreate in surveys_controller!!!!!!\n")
         @survey = Survey.new(survey_params)
         @survey.manager_id = current_manager.id
 
         respond_to do |format|
-            if @survey.save   
+            if @survey.save
                 format.html { redirect_to '/account', notice: 'Survey was successfully created.' }
                 format.json { render :show, status: :created, location: @survey }
             else   

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'surveys/:id/:employeeid/open_ended_responses' => 'open_ended_responses#create', as: :surveys_open_ended_responses
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
+  get '/surveys_tab' => 'surveys#index', :as => :surveys_tab
 
 
   # make all undefined path to get reactHome

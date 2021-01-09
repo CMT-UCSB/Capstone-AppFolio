@@ -1,0 +1,220 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+<%= render partial: 'account_header/header' %>
+
+<!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
+<p class='notice'><%= notice %></p>
+<p class='alert'><%= alert %></p>
+
+<div class="container">
+  <!--Surveys-->
+  <%# <div class="surveys-dashboard"> %>
+    <h1 style="text-align: center;">Surveys</h1><br>
+    <!--button id="create_survey" style="margin-left: 20px; text-align: center; align-items: center;">Create New Survey</button><br><br-->
+    <div class= "survey-container">
+      <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
+      <% if !@surveys.empty? %>
+        <% @surveys.each do |s| %>
+        <tr>
+          <b><td>ID: <%= s.id %></td></b><br>
+          <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
+          <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
+          <td>
+            Questions:
+            <ol>
+              <% s.questions.each do |q| %>
+                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+              <% end %>
+            </ol>
+          </td>
+          <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails%>
+          <br><br>
+        </tr>
+        <% end %>
+      <% else %>
+        <tr>You don't have any surveys yet!</tr>
+      <% end %>
+    </div>
+  <%# </div> %>
+
+</div>
+
+<div id="createSurveyModal" class="modal">
+  <div class="modal-content">
+    <span class="close"> &times;</span>
+    <h2 style="text-align: center">Enter Survey Details:</h2>
+    <div class="modal-body">
+      <b>Question 1:</b>
+      <%= render 'surveys/form' %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background: #262728;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 800px;
+    justify-content: center;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: black;
+  }
+
+  h1, h3, h4, p {
+    color: white;
+  }
+
+  ol {
+    text-align: center;
+    list-style-position: inside;
+  }
+
+  .survey-container {
+    color: white;
+    align-items: center;
+    flex-direction: column;
+    text-align: center
+  }
+
+  .analytics-container {
+    /* background: #262728; */
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    max-width: 95wv;
+    justify-content: center;
+    position: relative;
+    /* left: 23%; */
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .surveys-dashboard{
+    background: #262728;
+    padding-top: 10px;
+    width: 1080px;
+    margin: 0 auto;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+  }
+
+  .modal-body {
+    padding: 5%;
+  }
+
+  /* commented this because this made the Sign Out text color white
+  a:visited {
+    color: rgb(255, 255, 255);
+  } */
+
+  @-webkit-keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+
+<script>
+  var modal = document.getElementById('createSurveyModal');
+
+  var btn = document.getElementById('create_survey');
+
+  var span = document.getElementsByClassName('close')[0];
+
+  btn.onclick = function () {
+    modal.style.display = 'block';
+  };
+
+  span.onclick = function () {
+    modal.style.display = 'none';
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  };
+
+  var numMood = [];
+  function recordSurveyData(moodReponse)
+  {
+    numMood.push(0);
+
+  }
+
+  var results = [];
+  function storeSurveyData(QID, responseName)
+  {
+
+  }
+
+</script>
