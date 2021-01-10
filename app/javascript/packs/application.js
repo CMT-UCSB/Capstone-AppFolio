@@ -13,7 +13,7 @@ require("../components/reactNote/ReactNote")
 
 import "bootstrap";
 import '../../assets/stylesheets/application.scss';
-import '../../assets/stylesheets/scss/black-dashboard-react.scss';
+
 import '../../assets/stylesheets/css/nucleo-icons.css';
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -7,6 +7,8 @@ import NoteList from "./NoteList"
 import Note from "./Note"
 import Container from "./Container"
 
+import './popupStyle.css'
+
 class ReactNote extends React.Component {
     constructor(props) {
         super(props);
