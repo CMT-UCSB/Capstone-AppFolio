@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 
 import axios from 'axios'
@@ -13,7 +13,12 @@ class ReactNote extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: []
+            notes: [],
+            newNote: {
+                id: "",
+                date: new Date(),
+                content: ""
+            }
         };
         this.getNotes = this.getNotes.bind(this);
     };
@@ -35,9 +40,9 @@ class ReactNote extends React.Component {
     render() {
         return (
             <>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', padding: '0px 50px'}}>
                     <h1>Note</h1>
-                    <Container triggerText='New'/>
+                    <Container triggerText='New' updateNote={this.getNotes} note={this.state.newNote} create={true}/>
                 </div>
                 <NoteList>
                     {this.state.notes.map(note => (

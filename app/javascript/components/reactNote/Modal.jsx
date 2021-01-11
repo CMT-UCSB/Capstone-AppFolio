@@ -9,6 +9,9 @@ export const Modal = ({
     modalRef,
     buttonRef,
     closeModal,
+    updateNote,
+    note,
+    create
 }) => {
     return ReactDOM.createPortal (
         <FocusTrap>
@@ -37,7 +40,7 @@ export const Modal = ({
                         </svg>
                     </button>
                     <div className="modal-body">
-                        <NoteForm />
+                        <NoteForm updateNote={updateNote} closeModal={closeModal} note={note} create={create}/>
                     </div>
                 </div>
             </aside>

@@ -7,7 +7,7 @@ class NoteList extends React.Component {
     render() {
         return (
             <>
-                <div style={{display: 'flex', flexDirection: 'row', maxWidth: '500px'}}>
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                     {this.props.children}
                 </div>
             </>

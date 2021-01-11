@@ -3,6 +3,10 @@ import Modal from './Modal'
 import TriggerButton from './TriggerButton'
 
 class Container extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(this.props.note)
+    }
     state = { isShown: false };
     showModal = () => {
         this.setState({ isShown: true }, () => {
@@ -46,6 +50,9 @@ class Container extends React.Component {
                         closeModal={this.closeModal}
                         onKeyDown={this.onKeyDown}
                         onClickOutside={this.onClickOutside}
+                        updateNote={this.props.updateNote}
+                        note={this.props.note}
+                        create={this.props.create}
                     />) : null }
             </>
         )
