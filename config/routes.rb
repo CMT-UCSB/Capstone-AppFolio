@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   post 'surveys/:id/:employeeid/open_ended_responses' => 'open_ended_responses#create', as: :surveys_open_ended_responses
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
-  get '/reactnote' => 'react_notes#reactNotes'
 
 
   namespace :api, defaults: { format:  :json } do
