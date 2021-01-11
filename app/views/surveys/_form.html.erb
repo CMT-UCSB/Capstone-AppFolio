@@ -1,4 +1,9 @@
-<%= form_with(model: @survey, url: surveys_create_path) do |f| %>  
+<%= form_with(model: @survey, url: surveys_create_path) do |f| %>
+    <b>Name: </b><%= f.text_field :name %>
+    <br />
+    <br />
+    <b>Question 1:</b>
+    <br />
     <%= f.fields_for :questions do |q| %>
         Prompt: <%= q.text_field :prompt %>
         <br />
