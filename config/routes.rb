@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :managers
-  resources :notes
   resources :employees
   # resources :mood_responses, only: [:create]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -12,10 +11,18 @@ Rails.application.routes.draw do
   post 'surveys/:id/:employeeid/open_ended_responses' => 'open_ended_responses#create', as: :surveys_open_ended_responses
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
+  get '/reactnote' => 'react_notes#reactNotes'
+
+
+  namespace :api, defaults: { format:  :json } do
+    namespace :v1 do
+      resources :notes, only: [:index, :show, :create, :update, :destroy]
+    end
+  end
 
 
   # make all undefined path to get reactHome
-  get '*path', to: 'react_home#reactHome', via: :all
+  #get '*path', to: 'react_home#reactHome', via: :all
 
   post '/surveys/create'
 
