@@ -122,5 +122,4 @@ Rails.application.configure do
     enable_starttls_auto: true,
   }
 
-  config.read_en
 end
