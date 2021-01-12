@@ -25,7 +25,7 @@ class Note extends React.Component {
                     console.log(error);
                 });
         }
-        this.props.updateNote();
+        location.reload();
     }
 
     render() {

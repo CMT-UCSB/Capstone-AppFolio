@@ -58,7 +58,7 @@ class NoteForm extends React.Component {
         }
         event.target.reset();
         this.props.closeModal();
-        setTimeout( this.props.updateNote(), 500)
+        location.reload();
     }
 
     render() {
