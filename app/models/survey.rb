@@ -6,6 +6,7 @@ class Survey < ApplicationRecord
   has_many :employee_surveys
   has_many :employees, through: :employee_surveys
   has_many :questions
+  accepts_nested_attributes_for :questions
 
   def questions_attributes=(questions_attributes)
     questions_attributes.each do |i, questions_attributes|

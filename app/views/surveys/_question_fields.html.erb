@@ -1,0 +1,12 @@
+<fieldset>
+  <b>Question</b>
+  <%= q.hidden_field :_destroy %>
+  <%= link_to(" (Remove)", '#', class: 'remove-fields') %>
+  <br />
+  Prompt: <%= q.text_field :prompt %>
+  <br />
+  <br />
+  Type: <%= q.select :question_type, options_for_select([['Mood', 'mood'], ['Open-Ended', 'open_ended']], 'mood') %>
+  <br />
+  <br />
+</fieldset>
