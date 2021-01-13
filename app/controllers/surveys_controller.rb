@@ -38,6 +38,8 @@ class SurveysController < ApplicationController
 
     # GET method to get all surveys from database
     def index
+        @survey = Survey.new
+        @survey.questions.build
         @surveys = Survey.where(manager_id: current_manager.id)
     end
 
@@ -49,14 +51,13 @@ class SurveysController < ApplicationController
 
     # POST method for processing form data
     def create
-        :verify_authenticity_token
         print("\ncreate in surveys_controller!!!!!!\n")
         @survey = Survey.new(survey_params)
         @survey.manager_id = current_manager.id
 
         respond_to do |format|
             if @survey.save
-                format.html { redirect_to '/account', notice: 'Survey was successfully created.' }
+                format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully created.' }
                 format.json { render :show, status: :created, location: @survey }
             else   
                 format.html { render :new }

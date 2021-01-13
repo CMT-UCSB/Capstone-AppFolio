@@ -74,56 +74,12 @@
 <%end%> 
 </div>
 
-<!--Surveys-->
 <br/>
-<div class="surveys-dashboard">
-  <h4 style="margin-left: 20px; text-align: center;">Surveys</h4>
-  <!--button id="create_survey" style="margin-left: 20px; text-align: center; align-items: center;">Create New Survey</button><br><br-->
-  <div class= "survey-container">
-    <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
-    <% if !@surveys.empty? %>
-      <% @surveys.each do |s| %>
-      <tr>
-        <b><td>Name: <%= s.name %></td></b><br>
-        <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
-        <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-        <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
-        <td>
-          Questions:
-          <ol>
-            <% s.questions.each do |q| %>
-                <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
-            <% end %>
-          </ol>
-        </td>
-        <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails%>
-        <br><br>
-      </tr>
-      <% end %>
-    <% else %>
-      <tr>You don't have any surveys yet!</tr>
-    <% end %>
-  </div>
-</div>
-
 <br/>
-
 <div class="surveys-dashboard">
   <div id="react_note"> </div>
 </div>
-
 <br/>
-
-<div id="createSurveyModal" class="modal">
-  <div class="modal-content">
-    <span class="close"> &times;</span>
-    <h2 style="text-align: center">Enter Survey Details:</h2>
-    <div class="modal-body">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
-</div> %>
-
 
 
 <style>

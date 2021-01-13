@@ -14,9 +14,6 @@ class PagesController < ApplicationController
     end
 
     def account
-        @survey = Survey.new
-        @survey.questions.build
         @surveys = Survey.where(manager_id: current_manager.id)
     end
-
 end
