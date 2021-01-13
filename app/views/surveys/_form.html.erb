@@ -1,17 +1,13 @@
 <%= form_with(model: @survey, url: surveys_create_path) do |f| %>
-    <b>Name: </b><%= f.text_field :name %>
+    <b>Survey Name: </b><%= f.text_field :name %>
     <br />
-    <br />
-    <b>Question 1:</b>
     <br />
     <%= f.fields_for :questions do |q| %>
-        Prompt: <%= q.text_field :prompt %>
-        <br />
-        <br />
-        Type: <%= q.select :question_type, options_for_select([['Mood', 'mood'], ['Open-Ended', 'open_ended']], 'mood') %>
-        <br />
-        <br />
+        <% render 'surveys/question_fields', q: q %>
     <% end %>
+    <%= link_to_add_fields("Add Question", f, :questions) %>
+    <br />
+    <br />
     <b>Remind employees every:</b><br />
     <%= f.radio_button :day_of_week, 'monday', :checked => true %>Monday<br />
     <%= f.radio_button :day_of_week, 'tuesday' %>Tuesday<br />
@@ -30,4 +26,19 @@
     <br />
     <%= f.submit %>
 <% end %>
-  
+
+<script>
+    $('form').on('click', '.remove-fields', function(event) {
+        $(this).prev('input[type=hidden]').val('1');
+        $(this).closest('fieldset').hide();
+        return event.preventDefault();
+    });
+
+    $('form').on('click', '.add_fields', function(event) {
+        var regexp, time;
+        time = new Date().getTime();
+        regexp = new RegExp($(this).data('id'), 'g');
+        $(this).before($(this).data('fields').replace(regexp, time));
+        return event.preventDefault();
+    });
+</script> 
