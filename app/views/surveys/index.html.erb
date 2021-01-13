@@ -21,7 +21,7 @@
       <% if !@surveys.empty? %>
         <% @surveys.each do |s| %>
         <tr>
-          <b><td>ID: <%= s.id %></td></b><br>
+          <b><td>Name: <%= s.name %></td></b><br>
           <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
           <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
           <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
