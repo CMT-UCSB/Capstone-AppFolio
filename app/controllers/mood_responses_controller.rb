@@ -36,6 +36,6 @@ class MoodResponsesController < ApplicationController
       end
     end
 
-    # redirect_to surveys_success_path
+    redirect_back(fallback_location: root_path)
   end
 end

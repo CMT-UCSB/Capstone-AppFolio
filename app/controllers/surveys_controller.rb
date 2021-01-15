@@ -20,17 +20,17 @@ class SurveysController < ApplicationController
         @questions = Question.where(survey_id: params[:id])
 
         @response_paths = []
-        this_survey_responses = []
+        @this_survey_responses = []
         @questions.each do |q|
             if q.question_type == "mood"
-                this_survey_responses.push(MoodResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
+                @this_survey_responses.push(MoodResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
                 @response_paths.push(surveys_mood_responses_path(questionid: q.id))
             elsif q.question_type == "open_ended"
-                this_survey_responses.push(OpenEndedResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
+                @this_survey_responses.push(OpenEndedResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
                 @response_paths.push(surveys_open_ended_responses_path(questionid: q.id))
             end
         end
-        if this_survey_responses.all?
+        if @this_survey_responses.all?
             @isFilled = true
         else
             @isFilled = false

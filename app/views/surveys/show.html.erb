@@ -26,7 +26,14 @@
       <br><br>
       <% @questions.each_with_index do |q, index| %>
         <%= form_with(model: @survey, url: @response_paths[index], method: :post) do |f| %>
-          <h2>Q. <%= q.prompt %> </h2>
+          <h2>
+            <% if @this_survey_responses[index] == nil %>
+              🔴
+            <% else %>
+              🟢
+            <% end %>
+            Q<%= index+1 %>. <%= q.prompt %>
+          </h2>
           <br>
           <% if q.question_type == "mood" %>
           <div style="padding: 10px; font-size: 50pt; background">

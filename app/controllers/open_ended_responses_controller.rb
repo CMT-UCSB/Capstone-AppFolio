@@ -23,6 +23,6 @@ class OpenEndedResponsesController < ApplicationController
     else
         this_survey_response.update(response: params[:survey][:response])
     end
-    # redirect_to surveys_success_path
+    redirect_back(fallback_location: root_path)
   end
 end
