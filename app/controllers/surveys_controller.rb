@@ -17,21 +17,23 @@ class SurveysController < ApplicationController
         else
             @isAnon = false
         end
-        @question = Question.find_by(survey_id: params[:id])
-        @questionPrompt = @question.prompt
+        @questions = Question.where(survey_id: params[:id])
 
-        if @question.question_type == "mood"
-            this_survey_response = MoodResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
-            @response_url = surveys_mood_responses_path
-        elsif @question.question_type == "open_ended"
-            this_survey_response = OpenEndedResponse.find_by(question_id: @question.id, employee_id: params[:employeeid])
-            @response_url = surveys_open_ended_responses_path
+        @response_paths = []
+        this_survey_responses = []
+        @questions.each do |q|
+            if q.question_type == "mood"
+                this_survey_responses.push(MoodResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
+                @response_paths.push(surveys_mood_responses_path(questionid: q.id))
+            elsif q.question_type == "open_ended"
+                this_survey_responses.push(OpenEndedResponse.find_by(question_id: q.id, employee_id: params[:employeeid]))
+                @response_paths.push(surveys_open_ended_responses_path(questionid: q.id))
+            end
         end
-
-        if this_survey_response == nil
-            @isFilled = false
-        else
+        if this_survey_responses.all?
             @isFilled = true
+        else
+            @isFilled = false
         end
         
     end
