@@ -19,21 +19,24 @@
     <div class= "survey-container">
       <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
       <% if !@surveys.empty? %>
-        <% @surveys.each do |s| %>
+        <% @surveys.each do |survey| %>
         <tr>
-          <b><td>Name: <%= s.name %></td></b><br>
-          <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
-          <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-          <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
+          <b><td>Name: <%= survey.name %></td></b><br>
+          <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
+          <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
           <td>
             Questions:
             <ol>
-              <% s.questions.each do |q| %>
+              <% survey.questions.each do |q| %>
                   <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
               <% end %>
             </ol>
           </td>
-          <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails%>
+          <%= link_to 'Delete', surveys_destroy_path(survey), data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <br />
+          <br />
+          <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
           <br><br>
         </tr>
         <% end %>
@@ -138,6 +141,18 @@
   .modal-body {
     padding: 5%;
   }
+
+  .smallBtn {
+  border-radius: 30px;
+  background: white;
+  white-space: nowrap;
+  color: black;
+  padding: 5px 15px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
 
   /* commented this because this made the Sign Out text color white
   a:visited {
