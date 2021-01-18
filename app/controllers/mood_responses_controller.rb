@@ -2,7 +2,7 @@ class MoodResponsesController < ApplicationController
   def create
     employee = Employee.find(params[:employeeid])
     survey = Survey.find(params[:id])
-    question = survey.questions.first
+    question = Question.find(params[:questionid])
 
     this_survey_response = MoodResponse.find_by(question_id: question.id, employee_id: params[:employeeid])
     if this_survey_response == nil
@@ -36,6 +36,6 @@ class MoodResponsesController < ApplicationController
       end
     end
 
-    redirect_to surveys_success_path
+    redirect_back(fallback_location: root_path)
   end
 end

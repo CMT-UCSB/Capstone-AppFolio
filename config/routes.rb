@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/account' => 'pages#account', :as => :manager_root
   get 'surveys/success' => 'surveys#success', as: :surveys_success
   get 'surveys/:id/:employeeid' => 'surveys#show'
-  post 'surveys/:id/:employeeid/mood_responses' => 'mood_responses#create', as: :surveys_mood_responses
+  post 'surveys/:id/:employeeid/mood_responses/:questionid' => 'mood_responses#create', as: :surveys_mood_responses
   post 'surveys/:id/:employeeid/open_ended_responses' => 'open_ended_responses#create', as: :surveys_open_ended_responses
   get 'surveys/create' => 'surveys#create'
   get 'surveys/destroy' => 'surveys#destroy'

@@ -2,7 +2,7 @@ class OpenEndedResponsesController < ApplicationController
   def create
     employee = Employee.find(params[:employeeid])
     survey = Survey.find(params[:id])
-    question = survey.questions.first
+    question = Question.find(params[:questionid])
 
     this_survey_response = OpenEndedResponse.find_by(question_id: question.id, employee_id: params[:employeeid])
     if this_survey_response == nil
@@ -23,6 +23,6 @@ class OpenEndedResponsesController < ApplicationController
     else
         this_survey_response.update(response: params[:survey][:response])
     end
-    redirect_to surveys_success_path
+    redirect_back(fallback_location: root_path)
   end
 end
