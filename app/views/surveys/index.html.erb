@@ -33,6 +33,7 @@
               <% end %>
             </ol>
           </td>
+          <%= link_to 'Edit', surveys_update_path(survey), class: "smallBtn", style: "color: black" %>
           <%= link_to 'Delete', surveys_destroy_path(survey), data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
