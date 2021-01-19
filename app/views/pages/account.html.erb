@@ -19,19 +19,21 @@
   <div class="piechart">
     <h4>Analytics</h4>
     <br />
-    <select id="week" onchange="changeAnalytics()">
-      <option value="9/28/20-10/4/20">Week of 9/28/20-10/4/20</option>
-      <option value="10/5/20-10/11/20">Week of 10/5/20-10/11/20</option>
-      <option value="10/12/20-10/18/20">Week of 10/12/20-10/18/20</option>
-      <option value="10/19/20-10/25/20">Week of 10/19/20-10/25/20</option>
-      <option selected="selected" value="10/26/20-11/1/20">Week of 10/26/20-11/1/20</option>
+    <select id="number" onchange="changeAnalytics()">
+      <option value="current">Current Mood Survey</option>
+      <option value="recent">Recent Mood Survey</option>
+      <option value="older">Older Mood Survey</option>
+      <!--option value="10/19/20-10/25/20">Week of 10/19/20-10/25/20</option-->
+      <option selected="selected" value="current">Current Mood Survey</option>
     </select>
     <br />
-    <p id="analytics_data">Showing data for week of 10/26/20-11/1/20</p>
+    <p id="analytics_data">Showing data for current survey</p>
     <br />
     <div class="chart">
-    <% @surveys.each do |mood_response| %>
-      <%= render partial: 'chart', locals: { chart: mood_response } %>
+    <% if !@surveys.empty? %>
+      <% @surveys.each do |mood_response| %>
+        <%= render partial: 'chart', locals: { chart: mood_response } %>
+      <% end %>
     <% end %>
     </div>
   </div>
@@ -268,12 +270,46 @@
 
   }
 
-  function changeAnalytics() {
-    document.getElementById('analytics_data').innerHTML = 'Showing data for week of ' + document.getElementById('week').value;
+  function changeAnalytics() 
+  {
+    document.getElementById('analytics_data').innerHTML = 'Showing data for ' + document.getElementById('number').value + ' survey';
 
-    response
+    if("<%= @surveys.empty? %>" != "true")
+    {
+      if(document.getElementById('number').value == "current" && "<%= @surveys.first.nil? %>" != "true")
+      {
+        const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
+      
+        var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+        new Chartkick.PieChart(document.getElementById("display"), data, {});
+      }
+      
+      else if(document.getElementById('number').value == "recent" && "<%= @surveys.second.nil? %>" != "true")
+      {
+        const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.second).pie_chart_data %>";
+      
+        var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
+        new Chartkick.PieChart(document.getElementById("display"), data, {});
+      }
 
-    new Chartkick.PieChart(document.getElementById("display"), [["Good", 3], ["Okay/Fine", 2], ["Bad", 1]], {});
+      else if(document.getElementById('number').value == "older" && "<%= @surveys.third %>" != "")
+      {
+        const olderData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.third).pie_chart_data %>";
+      
+        var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]] ];
+        new Chartkick.PieChart(document.getElementById("display"), data, {});
+      }
+
+      else 
+      {
+        new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+      }
+    }
+
+    else 
+    {
+      new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+    }
   }
 
   function changeTimeIntervalY() {
