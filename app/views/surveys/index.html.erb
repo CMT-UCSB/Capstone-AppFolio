@@ -33,7 +33,8 @@
               <% end %>
             </ol>
           </td>
-          <%= link_to 'Edit', surveys_update_path(survey), class: "smallBtn", style: "color: black" %>
+          <button id="edit_survey"  class="smallBtn">Edit Survey</button><br><br>
+          <%# link_to 'Edit', surveys_update_path(survey), class: "smallBtn", style: "color: black" %>
           <%= link_to 'Delete', surveys_destroy_path(survey), data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
@@ -53,6 +54,16 @@
   <div class="modal-content">
     <span class="close"> &times;</span>
     <h2 style="text-align: center">Enter Survey Details:</h2>
+    <div class="modal-body">
+      <%= render 'surveys/form' %>
+    </div>
+  </div>
+</div>
+
+<div id="editSurveyModal" class="modal">
+  <div class="modal-content">
+    <span class="close"> &times;</span>
+    <h2 style="text-align: center">Edit Survey Details:</h2>
     <div class="modal-body">
       <%= render 'surveys/form' %>
     </div>
@@ -199,18 +210,26 @@
 
 
 <script>
-  var modal = document.getElementById('createSurveyModal');
+  var modal = document.getElementsByClassName('modal');
 
-  var btn = document.getElementById('create_survey');
+  var btn = document.getElementsByClassName('smallBtn');
 
-  var span = document.getElementsByClassName('close')[0];
+  var span = document.getElementsByClassName('close');
 
-  btn.onclick = function () {
-    modal.style.display = 'block';
+  btn[0].onclick = function () {
+    modal[0].style.display = 'block';
   };
 
-  span.onclick = function () {
-    modal.style.display = 'none';
+  span[0].onclick = function () {
+    modal[0].style.display = 'none';
+  };
+
+  btn[1].onclick = function () {
+    modal[1].style.display = 'block';
+  };
+
+  span[1].onclick = function () {
+    modal[1].style.display = 'none';
   };
 
   window.onclick = function (event) {
