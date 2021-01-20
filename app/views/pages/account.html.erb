@@ -24,10 +24,10 @@
       <option value="recent">Recent Mood Survey</option>
       <option value="older">Older Mood Survey</option>
       <!--option value="10/19/20-10/25/20">Week of 10/19/20-10/25/20</option-->
-      <option selected="selected" value="current">Current Mood Survey</option>
+      <option selected="selected" value="first">First Mood Survey</option>
     </select>
     <br />
-    <p id="analytics_data">Showing data for current survey</p>
+    <p id="analytics_data">Showing data for the first survey</p>
     <br />
     <div class="chart">
     <% if !@surveys.empty? %>
@@ -276,33 +276,92 @@
 
     if("<%= @surveys.empty? %>" != "true")
     {
-      if(document.getElementById('number').value == "current" && "<%= @surveys.first.nil? %>" != "true")
+      if("<%= @surveys.last(3)[0].nil? %>" != "true" && "<%= @surveys.last(3)[1].nil? %>" != "true" && "<%= @surveys.last(3)[2].nil? %>" != "true")
       {
-        const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
-      
-        var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
-        new Chartkick.PieChart(document.getElementById("display"), data, {});
-      }
-      
-      else if(document.getElementById('number').value == "recent" && "<%= @surveys.second.nil? %>" != "true")
-      {
-        const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.second).pie_chart_data %>";
-      
-        var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
-        new Chartkick.PieChart(document.getElementById("display"), data, {});
+        if(document.getElementById('number').value == "current")
+        {
+          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[2]).pie_chart_data %>";
+        
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+        
+        else if(document.getElementById('number').value == "recent")
+        {
+          const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[1]).pie_chart_data %>";
+        
+          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else if(document.getElementById('number').value == "older")
+        {
+          const olderData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[0]).pie_chart_data %>";
+        
+          var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else if(document.getElementById('number').value == "first")
+        {
+          const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
+
+          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else 
+        {
+          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+        }
       }
 
-      else if(document.getElementById('number').value == "older" && "<%= @surveys.third %>" != "")
+      else if("<%= @surveys.last(2)[0].nil? %>" != "true" && "<%= @surveys.last(2)[1].nil? %>" != "true")
       {
-        const olderData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.third).pie_chart_data %>";
-      
-        var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]] ];
-        new Chartkick.PieChart(document.getElementById("display"), data, {});
+        if(document.getElementById('number').value == "current")
+        {
+          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[1]).pie_chart_data %>";
+        
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else if(document.getElementById('number').value == "recent")
+        {
+          const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[0]).pie_chart_data %>";
+        
+          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else if(document.getElementById('number').value == "first")
+        {
+          const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
+
+          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else
+        {
+          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+        }
       }
 
-      else 
+      else
       {
-        new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+        if(document.getElementById('number').value == "current" || document.getElementById('number').value == "first")
+        {
+          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last).pie_chart_data %>";
+        
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          new Chartkick.PieChart(document.getElementById("display"), data, {});
+        }
+
+        else
+        {
+          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+        }
       }
     }
 
