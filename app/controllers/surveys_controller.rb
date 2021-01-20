@@ -1,4 +1,7 @@
 class SurveysController < ApplicationController
+    before_action :authenticate_manager!
+    # before_action :set_survey, only: [:edit, :update, :destroy]
+
     def show
         @employee = Employee.find(params[:employeeid])
         @survey = Survey.find(params[:id])
@@ -78,7 +81,7 @@ class SurveysController < ApplicationController
             if @survey.update_attributes(survey_params)
                 format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully updated.' }
                 format.json { render :show, status: :ok, location: @survey }
-            else   
+            else
                 format.html { render :edit }
                 format.json { render json: @survey.errors, status: :unprocessable_entity }
             end
@@ -87,6 +90,7 @@ class SurveysController < ApplicationController
 
     # DELETE method for deleting a survey from database based on id
     def destroy
+        #@survey = Survey.find(params[:id])
         @survey.destroy
         respond_to do |format|
             format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully destroyed.' }
@@ -97,7 +101,7 @@ class SurveysController < ApplicationController
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
-      @survey = Survey.find(params[:id])
+        @survey = Survey.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

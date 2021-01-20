@@ -19,6 +19,7 @@
     <div class= "survey-container">
       <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
       <% if !@surveys.empty? %>
+        <td><%= puts @surveys.inspect %><%# @surveys[1].id %></td>
         <% @surveys.each do |survey| %>
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
@@ -33,9 +34,7 @@
               <% end %>
             </ol>
           </td>
-          <button id="edit_survey"  class="smallBtn">Edit Survey</button><br><br>
-          <%# link_to 'Edit', surveys_update_path(survey), class: "smallBtn", style: "color: black" %>
-          <%= link_to 'Delete', surveys_destroy_path(survey), data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <%= link_to 'Delete', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
           <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
@@ -54,16 +53,6 @@
   <div class="modal-content">
     <span class="close"> &times;</span>
     <h2 style="text-align: center">Enter Survey Details:</h2>
-    <div class="modal-body">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
-</div>
-
-<div id="editSurveyModal" class="modal">
-  <div class="modal-content">
-    <span class="close"> &times;</span>
-    <h2 style="text-align: center">Edit Survey Details:</h2>
     <div class="modal-body">
       <%= render 'surveys/form' %>
     </div>
@@ -210,26 +199,18 @@
 
 
 <script>
-  var modal = document.getElementsByClassName('modal');
+  var modal = document.getElementById('createSurveyModal');
 
-  var btn = document.getElementsByClassName('smallBtn');
+  var btn = document.getElementById('create_survey');
 
-  var span = document.getElementsByClassName('close');
+  var span = document.getElementsByClassName('close')[0];
 
-  btn[0].onclick = function () {
-    modal[0].style.display = 'block';
+  btn.onclick = function () {
+    modal.style.display = 'block';
   };
 
-  span[0].onclick = function () {
-    modal[0].style.display = 'none';
-  };
-
-  btn[1].onclick = function () {
-    modal[1].style.display = 'block';
-  };
-
-  span[1].onclick = function () {
-    modal[1].style.display = 'none';
+  span.onclick = function () {
+    modal.style.display = 'none';
   };
 
   window.onclick = function (event) {
