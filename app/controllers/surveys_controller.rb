@@ -13,41 +13,6 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
-    # @employee = Employee.find(params[:employee_id])
-    @survey = Survey.find(params[:id])
-    if ENV['RAILS_ENV'] == 'development'
-        @url = "localhost:3000"
-    else
-        @url = "synergi.herokuapp.com"
-    end
-
-    # if @survey.blank?
-    #   head :not_found
-    #   return
-    # end
-    if @survey.isAnonymous == "anonymous"
-        @isAnon = true
-    else
-        @isAnon = false
-    end
-    @questions = Question.where(survey_id: params[:id])
-
-    @response_paths = []
-    @this_survey_responses = []
-    @questions.each do |q|
-        if q.question_type == "mood"
-            @this_survey_responses.push(MoodResponse.find_by(question_id: q.id, employee_id: params[:employee_id]))
-            @response_paths.push(surveys_mood_responses_path(id: @survey.id, question_id: q.id, employee_id: params[:employee_id]))
-        elsif q.question_type == "open_ended"
-            @this_survey_responses.push(OpenEndedResponse.find_by(question_id: q.id, employee_id: params[:employee_id]))
-            @response_paths.push(surveys_open_ended_responses_path(id: @survey.id, question_id: q.id, employee_id: params[:employee_id]))
-        end
-    end
-    if @this_survey_responses.all?
-        @isFilled = true
-    else
-        @isFilled = false
-    end
   end
 
   # GET /surveys/new
@@ -68,7 +33,7 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       if @survey.save
-        format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully created.' }
+        format.html { redirect_to '/surveys', notice: 'Survey was successfully created.' }
         format.json { render :show, status: :created, location: @survey }
       else
         format.html { render :new }
@@ -82,7 +47,7 @@ class SurveysController < ApplicationController
   def update
     respond_to do |format|
       if @survey.update(survey_params)
-        format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully updated.' }
+        format.html { redirect_to '/surveys', notice: 'Survey was successfully updated.' }
         format.json { render :show, status: :ok, location: @survey }
       else
         format.html { render :edit }
@@ -96,7 +61,7 @@ class SurveysController < ApplicationController
   def destroy
     @survey.destroy
     respond_to do |format|
-      format.html { redirect_to '/surveys_tab', notice: 'Survey was successfully destroyed.' }
+      format.html { redirect_to '/surveys', notice: 'Survey was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

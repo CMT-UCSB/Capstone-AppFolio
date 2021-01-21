@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+<style>
+  body,h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif; color: white}
+  body {margin: 10vh; background-color: black}
+  .emoji_button {background-color: #000000; border: none; width: 100px}
+  .emoji_button:hover {background-color: grey; border: none; width: 100px}
+</style>
+
+<% if @survey.present? %>
+  <div class="w3-center">
+    <% if @isFilled == true %>
+      <h1>You have already filled out the survey. ✅</h1>
+      <h3>But you can still change your answer by submitting again.</h3>
+      <br/><hr>
+    <%end%>
+    
+      <h1>Survey from <%= @survey.manager.email %></h1> <br>
+      <h8>Created on <%= @survey.created_at %></h8>
+      <br>
+      <% if @isAnon == true %>
+        <h8>This survey is anonymous (Manager will not able to identify your response)</h8>
+      <% else %>
+        <h8>This survey is identifiable (Manager will able to identify your response)</h8>
+      <% end %>
+      <br><br>
+      <% @questions.each_with_index do |q, index| %>
+        <%= form_with(model: @survey, url: @response_paths[index], method: :post) do |f| %>
+          <h2>
+            <% if @this_survey_responses[index] == nil %>
+              🔴
+            <% else %>
+              🟢
+            <% end %>
+            Q<%= index+1 %>. <%= q.prompt %>
+          </h2>
+          <br>
+          <% if q.question_type == "mood" %>
+          <div style="padding: 10px; font-size: 50pt; background">
+            <%= f.submit "😃", :class =>"emoji_button"%>
+            <%= f.submit "😐", :class =>"emoji_button"%>
+            <%= f.submit "😟", :class =>"emoji_button"%>
+          </div>
+          <% elsif q.question_type == "open_ended" %>
+            <%= f.text_area :response, cols: "30"%>
+            <br><br>
+            <%= f.submit "Submit Response" %>
+          <% end %>
+        <% end %>
+      <% end %>
+  </div>
+
+<% else %>
+  <h1 style="text-align: center">404 Not Found, Invalid Link</h1>
+<% end %>
