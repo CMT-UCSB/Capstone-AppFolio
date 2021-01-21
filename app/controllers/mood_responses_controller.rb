@@ -1,10 +1,10 @@
 class MoodResponsesController < ApplicationController
   def create
-    employee = Employee.find(params[:employeeid])
+    employee = Employee.find(params[:employee_id])
     survey = Survey.find(params[:id])
-    question = Question.find(params[:questionid])
+    question = Question.find(params[:question_id])
 
-    this_survey_response = MoodResponse.find_by(question_id: question.id, employee_id: params[:employeeid])
+    this_survey_response = MoodResponse.find_by(question_id: question.id, employee_id: params[:employee_id])
     if this_survey_response == nil
         @isFilled = false
     else

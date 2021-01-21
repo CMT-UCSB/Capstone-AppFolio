@@ -1,30 +1,81 @@
-<%= form_with(model: @survey, url: surveys_create_path) do |f| %>
-    <b>Survey Name: </b><%= f.text_field :name %>
-    <br />
-    <br />
-    <%= f.fields_for :questions do |q| %>
+<style>
+.btn {
+  border-radius: 50px;
+  background: white;
+  white-space: nowrap;
+  color: black;
+  padding: 10px 22px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: var(--light);
+  }
+}
+.btn_container {
+  margin-left: 33%;
+}
+</style>
+
+<%= form_with(model: survey, local: true) do |form| %>
+  <% if survey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+
+      <ul>
+        <% survey.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
+  </div>
+
+  <br />
+
+  <div class="field">
+    <%= form.fields_for :questions do |q| %>
         <% render 'surveys/question_fields', q: q %>
     <% end %>
-    <%= link_to_add_fields("Add Question", f, :questions) %>
+    <%= link_to_add_fields("Add Question", form, :questions) %>
+  </div>
+  
+  <br />
+
+  <div class="field">
+    <b style="color: white;">Remind employees every:</b><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'monday', :checked => true %>Monday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'tuesday' %>Tuesday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'wednesday' %>Wednesday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'thursday' %>Thursday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'friday' %>Friday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'saturday' %>Saturday</span><br />
+    <span style="color: white;"><%= form.radio_button :day_of_week, 'sunday' %>Sunday</span><br />
     <br />
-    <br />
-    <b>Remind employees every:</b><br />
-    <%= f.radio_button :day_of_week, 'monday', :checked => true %>Monday<br />
-    <%= f.radio_button :day_of_week, 'tuesday' %>Tuesday<br />
-    <%= f.radio_button :day_of_week, 'wednesday' %>Wednesday<br />
-    <%= f.radio_button :day_of_week, 'thursday' %>Thursday<br />
-    <%= f.radio_button :day_of_week, 'friday' %>Friday<br />
-    <%= f.radio_button :day_of_week, 'saturday' %>Saturday<br />
-    <%= f.radio_button :day_of_week, 'sunday' %>Sunday<br />
-    <br />
-    <%= f.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
-    <br />
-    <br />
-    <b>Is this survey Identified or Anonymous?</b><br />
-    <%= f.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
-    <br />
-    <br />
-    <%= f.submit %>
+    <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+  </div>
+  
+  <br />
+
+  <div class="field">
+    <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
+    <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+  </div>
+
+  <br />
+  
+  <div class="btn_container">
+    <%= form.submit "Create", class: "btn" %>
+  </div>
 <% end %>
 
 <script>
@@ -41,4 +92,4 @@
         $(this).before($(this).data('fields').replace(regexp, time));
         return event.preventDefault();
     });
-</script> 
+</script>

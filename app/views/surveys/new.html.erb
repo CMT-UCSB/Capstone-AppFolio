@@ -1,0 +1,32 @@
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  justify-content: center;
+  margin-top: 8%;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container">
+    <br />
+    <h1>New Survey</h1>
+    <br />
+
+    <%= render 'form', survey: @survey %>
+
+    <br />
+    <%= link_to 'Cancel', surveys_path %>
+    <br />
+</div>

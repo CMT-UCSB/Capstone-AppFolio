@@ -1,65 +1,8 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
-
-<%= render partial: 'account_header/header' %>
-
-<!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
-<p class='notice'><%= notice %></p>
-<p class='alert'><%= alert %></p>
-
-<div class="container">
-  <!--Surveys-->
-  <%# <div class="surveys-dashboard"> %>
-    <h1 style="text-align: center;">Surveys</h1><br>
-    <!--button id="create_survey" style="margin-left: 20px; text-align: center; align-items: center;">Create New Survey</button><br><br-->
-    <div class= "survey-container">
-      <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
-      <% if !@surveys.empty? %>
-        <td><%= puts @surveys.inspect %><%# @surveys[1].id %></td>
-        <% @surveys.each do |survey| %>
-        <tr>
-          <b><td>Name: <%= survey.name %></td></b><br>
-          <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
-          <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
-          <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
-          <td>
-            Questions:
-            <ol>
-              <% survey.questions.each do |q| %>
-                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
-              <% end %>
-            </ol>
-          </td>
-          <%= link_to 'Delete', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
-          <br />
-          <br />
-          <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
-          <br><br>
-        </tr>
-        <% end %>
-      <% else %>
-        <tr>You don't have any surveys yet!</tr>
-      <% end %>
-    </div>
-  <%# </div> %>
-
-</div>
-
-<div id="createSurveyModal" class="modal">
-  <div class="modal-content">
-    <span class="close"> &times;</span>
-    <h2 style="text-align: center">Enter Survey Details:</h2>
-    <div class="modal-body">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
-</div>
-
 <style>
+  body {
+    background: black;
+  }
+
   .container {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -70,18 +13,34 @@
     max-width: 800px;
     justify-content: center;
   }
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: black;
-  }
 
-  h1, h3, h4, p {
+  h1, tr, th, h3, h4, p {
     color: white;
   }
 
+  .survey {
+    width: 100%;
+  }
+
+  .survey td, .survey th {
+    padding: 10px;
+  }
+
+  .smallBtn {
+    border-radius: 30px;
+    background: white;
+    white-space: nowrap;
+    color: black;
+    padding: 5px 15px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+
   ol {
-    text-align: center;
-    list-style-position: inside;
+      text-align: center;
+      list-style-position: inside;
   }
 
   .survey-container {
@@ -143,18 +102,6 @@
     padding: 5%;
   }
 
-  .smallBtn {
-  border-radius: 30px;
-  background: white;
-  white-space: nowrap;
-  color: black;
-  padding: 5px 15px;
-  font-size: 16px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
-
   /* commented this because this made the Sign Out text color white
   a:visited {
     color: rgb(255, 255, 255);
@@ -197,9 +144,75 @@
   }
 </style>
 
+<%= render :partial => 'account_header/header' %>
+
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h1 style="text-align: center;">Surveys</h1><br>
+    <div class= "survey-container">
+      <%= link_to 'New Survey', new_survey_path, class: "btn", style: "color: black" %>
+      <br />
+      <br />
+      <% if !@surveys.empty? %>
+        <% @surveys.each do |survey| %>
+        <tr>
+          <b><td>Name: <%= survey.name %></td></b><br>
+          <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
+          <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
+          <td>
+            Questions:
+            <ol>
+              <% survey.questions.each do |q| %>
+                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+              <% end %>
+            </ol>
+          </td>
+          <%= link_to 'Edit', edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
+          <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <br />
+          <br />
+          <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
+          <br><br>
+        </tr>
+        <% end %>
+      <% else %>
+        <tr>You don't have any surveys yet!</tr>
+      <% end %>
+    </div>
+  <%# </div> %>
+
+  <!--<h1>Surveys</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @surveys.each do |survey| %>
+        <tr>
+          <td><%= link_to 'Show', survey %></td>
+          <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
+          <td><%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Survey', new_survey_path %> -->
+
+  <br />
+</div>
+
 
 <script>
-  var modal = document.getElementById('createSurveyModal');
+  /* var modal = document.getElementById('createSurveyModal');
 
   var btn = document.getElementById('create_survey');
 
@@ -217,7 +230,7 @@
     if (event.target == modal) {
       modal.style.display = 'none';
     }
-  };
+  }; */
 
   var numMood = [];
   function recordSurveyData(moodReponse)
