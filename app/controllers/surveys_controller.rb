@@ -41,6 +41,11 @@ class SurveysController < ApplicationController
         @survey = Survey.new
         @survey.questions.build
         @surveys = Survey.where(manager_id: current_manager.id)
+        gon.Survey = Survey.all
+        gon.Employee = Employee.all
+        gon.questions = Question.all
+        gon.MoodResponse = MoodResponse.all
+        gon.OpenEndedResponse = OpenEndedResponse.all
     end
 
     # GET method for the new survey
@@ -51,7 +56,6 @@ class SurveysController < ApplicationController
 
     # POST method for processing form data
     def create
-        print("\ncreate in surveys_controller!!!!!!\n")
         @survey = Survey.new(survey_params)
         @survey.manager_id = current_manager.id
 

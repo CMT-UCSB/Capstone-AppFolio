@@ -6,6 +6,7 @@
 />
 
 <%= render partial: 'account_header/header' %>
+<%= include_gon(:init => true) %>
 
 <!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
 <p class='notice'><%= notice %></p>
@@ -13,35 +14,35 @@
 
 <div class="container">
   <!--Surveys-->
-  <%# <div class="surveys-dashboard"> %>
-    <h1 style="text-align: center;">Surveys</h1><br>
-    <!--button id="create_survey" style="margin-left: 20px; text-align: center; align-items: center;">Create New Survey</button><br><br-->
-    <div class= "survey-container">
-      <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
-      <% if !@surveys.empty? %>
-        <% @surveys.each do |s| %>
-        <tr>
-          <b><td>ID: <%= s.id %></td></b><br>
-          <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
-          <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-          <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
-          <td>
-            Questions:
-            <ol>
-              <% s.questions.each do |q| %>
-                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
-              <% end %>
-            </ol>
-          </td>
-          <%= button_to 'Send Reminders', pages_send_emails_path(id: s), method: :send_emails%>
-          <br><br>
-        </tr>
-        <% end %>
-      <% else %>
-        <tr>You don't have any surveys yet!</tr>
+  <h1 style="text-align: center;">Surveys</h1><br>
+  <div class= "survey-container">
+    <button id="create_survey"  class="create-survey-btn">Create New Survey</button><br><br>
+    <% if !@surveys.empty? %>
+      <% @surveys.each_with_index do |s, index| %>
+      <tr>
+        <b><td>ID: <%= s.id %></td></b><br>
+        <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
+        <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
+        <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
+        <td>
+          Questions:
+          <ol>
+            <% s.questions.each do |q| %>
+                <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+            <% end %>
+          </ol>
+        </td>
+        <div class="survey_tab_buttons">
+          <%= button_to('Send Reminders', pages_send_emails_path(id: s), method: :send_emails, :class => "survey-index-btn")%>
+          <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=s.id%>" class="survey-index-btn">Show Results</button>
+        </div>
+        <br><br>
+      </tr>
       <% end %>
-    </div>
-  <%# </div> %>
+    <% else %>
+      <tr>You don't have any surveys yet!</tr>
+    <% end %>
+  </div>
 
 </div>
 
@@ -52,6 +53,20 @@
     <div class="modal-body">
       <b>Question 1:</b>
       <%= render 'surveys/form' %>
+    </div>
+  </div>
+</div>
+
+<div id="showResultModal" class="modal">
+  <div class="modal-content">
+    <span class="close_sr"> &times;</span>
+    <h2 style="text-align: center">Survey Results:</h2>
+    <div class="modal-body">
+      <% if !@surveys.empty? %>
+        <span id="question1prompt"></span>
+      <% else %>
+
+      <% end %>
     </div>
   </div>
 </div>
@@ -81,11 +96,42 @@
     list-style-position: inside;
   }
 
+  .survey_tab_buttons{
+    display: flex;
+    margin: 0px 40px 0px 60px;
+  }
+
+  .create-survey-btn{
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .survey-index-btn {
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 2em;
+  }
+
   .survey-container {
     color: white;
     align-items: center;
     flex-direction: column;
-    text-align: center
+    text-align: center;
+    /* justify-content: center; */
   }
 
   .analytics-container {
@@ -128,7 +174,7 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 20%;
+    width: 30%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -137,7 +183,7 @@
   }
 
   .modal-body {
-    padding: 5%;
+    padding: 0% 5% 5% 5%;
   }
 
   /* commented this because this made the Sign Out text color white
@@ -180,6 +226,20 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .close_sr {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close_sr:hover,
+  .close_sr:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
 
 
@@ -202,6 +262,82 @@
     if (event.target == modal) {
       modal.style.display = 'none';
     }
+    if (event.target == modal_sr) {
+      modal_sr.style.display = 'none';
+    }
+  };
+
+  // var btn_sr = document.getElementById('survey_show_results');
+  var modal_sr = document.getElementById('showResultModal');
+  var span_sr = document.getElementsByClassName('close_sr')[0];
+  var survey_clickedOn;
+
+  // btn_sr.onclick = 
+  function show_survey_result(index) {
+    modal_sr.style.display = 'block';
+    var btn_sr = document.getElementsByName('show_result')[index];
+    var survey_clicked_id = btn_sr.getAttribute("data-myvalue");
+    // console.log(survey_clicked_id);
+    var Survey = gon.Survey;
+    var Employee = gon.Employee;
+    var AllQuestions = gon.questions;
+    var questions = AllQuestions.filter(function(question){
+      return question.survey_id == survey_clicked_id;
+    });
+    // console.log(questions);
+    var clickedSurvey = Survey.filter(function(survey){
+      return survey.id == survey_clicked_id;
+    });
+    var isClickedAnonymous = clickedSurvey[0].isAnonymous;
+    // console.log("is it anon? ", isClickedAnonymous);
+
+    var what_to_print = "";
+    var responses = [];
+    var MoodResponse = gon.MoodResponse;
+    var OpenEndedResponse = gon.OpenEndedResponse;
+    for(var i = 0; i < questions.length; ++i){
+      what_to_print += "<br>Q"+(i+1)+". "+questions[i].prompt+"<br>";
+      if(questions[i].question_type == "mood"){
+        responses[i] = MoodResponse.filter(function(mResponse){
+          return mResponse.question_id == questions[i].id;
+        });
+        for(var j = 0; j < responses[i].length; ++j){
+          if(isClickedAnonymous == "identifiable"){
+            var employee = Employee.filter(function(employee){
+              return employee.id == responses[i][j].employee_id;
+            });
+            var employeeName = employee[0].first_name + " " + employee[0].last_name;
+            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
+          }
+          else{
+            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
+          }
+        }
+      }
+      else{
+        resopnses[i] = OpenEndedResponse.filter(function(oeResponse){
+          return oeResponse.question_id == questions[i].id;
+        });
+        for(var j = 0; j < responses[i].length; ++j){
+          if(isClickedAnonymous == "identifiable"){
+            var employee = Employee.filter(function(employee){
+              return employee.id == responses[i][j].employee_id;
+            });
+            var employeeName = employee[0].first_name + " " + employee[0].last_name;
+            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
+          }
+          else{
+            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
+          }
+        }
+      }
+    };
+    document.getElementById("question1prompt").innerHTML = what_to_print;
+
+  };
+
+  span_sr.onclick = function () {
+    modal_sr.style.display = 'none';
   };
 
   var numMood = [];

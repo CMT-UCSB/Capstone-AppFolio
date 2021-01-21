@@ -103,12 +103,18 @@ GEM
     ffi (1.13.1-x64-mingw32)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    gon (6.1.0)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     groupdate (5.2.1)
       activesupport (>= 5)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
+    json (2.3.0)
     jsonapi-serializer (2.1.0)
       activesupport (>= 4.2)
     loofah (2.7.0)
@@ -125,6 +131,7 @@ GEM
     minitest (5.14.2)
     msgpack (1.3.3)
     msgpack (1.3.3-x64-mingw32)
+    multi_json (1.15.0)
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -176,6 +183,8 @@ GEM
       railties (>= 3.2)
       tilt
     regexp_parser (1.8.2)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -247,6 +256,7 @@ DEPENDENCIES
   chartkick
   devise
   dotenv-rails
+  gon (~> 6.1)
   groupdate
   jbuilder (~> 2.7)
   jsonapi-serializer
