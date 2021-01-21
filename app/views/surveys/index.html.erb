@@ -169,6 +169,7 @@
               <% end %>
             </ol>
           </td>
+          <%= link_to 'Display', survey, class: "smallBtn", style: "color: black" %>
           <%= link_to 'Edit', edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
           <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />

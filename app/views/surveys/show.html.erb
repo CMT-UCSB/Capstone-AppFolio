@@ -1,4 +1,53 @@
-<p id="notice"><%= notice %></p>
+<style>
+body {
+    background: black;
+}
+.container{
+  background: #262728;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  justify-content: center;
+  margin-top: 8%;
+}
 
-<%= link_to 'Edit', edit_survey_path(@survey) %> |
-<%= link_to 'Back', surveys_path %>
+h1, h2, h3, h4, h5, h6, p {
+  color: white;
+}
+
+.date {
+  align: left;
+}
+
+.show_nav {
+    display: flex;
+    margin-left: 36%
+}
+</style>
+
+<%= render partial: 'account_header/header' %>
+
+<div class="container" style="text-align: center;">
+  <p id="notice"><%= notice %></p>
+
+  <tr>
+      <strong style="color: white;"><td>Name: <%= @survey.name %></td></strong>
+      <td><span style="color: white;">Notifications sent every <%= @survey.day_of_week.capitalize %> @ <%= @survey.time_of_day.strftime("%I:%M %p") %></span></td>
+      <td><span style="color: white;">Visibility: <%= @survey.isAnonymous.capitalize %></span></td>
+      <td><span style="color: white;">Created on <%= @survey.created_at.strftime("%b %d") %> at <%= @survey.created_at.strftime("%I:%M %p") %> UTC</span></td>
+      <td>
+        <span style="color: white;">Questions:</span>
+        <ol>
+          <span style="color: white;"><% @survey.questions.each do |q| %></span>
+            <li><span style="color: white;"><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</span></li>
+          <% end %>
+        </ol>
+      </td>
+    </td>
+
+  <div class="show_nav">
+    <%= link_to 'Edit', edit_survey_path(@survey), style: "color: white; padding: 0 10px;" %>
+    <p> | </p>
+    <%= link_to 'Back', surveys_path, style: "color: white; padding: 0 10px;" %>
+  </div>
+</div>
