@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'surveys/create' => 'surveys#create'
   post 'pages/send_emails'
   get '/surveys_tab' => 'surveys#index', :as => :surveys_tab
+  get '/nlp' => 'nlp_ruby_test#nlp_ruby_test'
 
 
   namespace :api, defaults: { format:  :json } do
