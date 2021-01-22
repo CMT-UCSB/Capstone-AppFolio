@@ -28,6 +28,7 @@ gem 'devise'
 gem 'react-rails'
 gem 'bootstrap', '~> 4.5.3'
 gem 'jsonapi-serializer'
+gem 'google-cloud-language'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
