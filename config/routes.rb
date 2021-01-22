@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'surveys/:id/:employee_id/open_ended_responses' => 'open_ended_responses#create', as: :surveys_open_ended_responses
   post 'pages/send_emails'
 
+  get 'survey_responses/success' => 'survey_responses#success', as: :survey_responses_success
+
   namespace :api, defaults: { format:  :json } do
     namespace :v1 do
       resources :notes, only: [:index, :show, :create, :update, :destroy]

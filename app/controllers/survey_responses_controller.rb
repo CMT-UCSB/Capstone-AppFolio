@@ -1,8 +1,8 @@
 class SurveyResponsesController < ApplicationController
     before_action :authenticate_manager!
     
-    # GET /surveys/1/edit
-    def edit
+    # GET /surveys/1/
+    def show
         # @employee = Employee.find(params[:employee_id])
         @survey = Survey.find(params[:id])
         if ENV['RAILS_ENV'] == 'development'
@@ -39,6 +39,5 @@ class SurveyResponsesController < ApplicationController
             @isFilled = false
         end
     end
-
 end
   
