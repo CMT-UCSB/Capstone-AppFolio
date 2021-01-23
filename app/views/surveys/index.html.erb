@@ -5,73 +5,11 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
 
-<%= render partial: 'account_header/header' %>
-<%= include_gon(:init => true) %>
-
-<!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
-<p class='notice'><%= notice %></p>
-<p class='alert'><%= alert %></p>
-
-<div class="container">
-  <!--Surveys-->
-  <%# <div class="surveys-dashboard"> %>
-    <h1 style="text-align: center;">Surveys</h1><br>
-    <!--button id="create_survey" style="margin-left: 20px; text-align: center; align-items: center;">Create New Survey</button><br><br-->
-    <div class= "survey-container">
-      <button id="create_survey"  class="linechart-btn">Create New Survey</button><br><br>
-      <% if !@surveys.empty? %>
-        <% @surveys.each_with_index do |s, index| %>
-        <tr>
-          <b><td>Name: <%= s.name %></td></b><br>
-          <td>Notifications sent every <%= s.day_of_week.capitalize %> @ <%= s.time_of_day.strftime("%I:%M %p") %></td><br>
-          <td>Visibility: <%= s.isAnonymous.capitalize %></td><br>
-          <td>Created on <%= s.created_at.strftime("%b %d") %> at <%= s.created_at.strftime("%I:%M %p") %> UTC</td><br>
-          <td>
-            Questions:
-            <ol>
-              <% s.questions.each do |q| %>
-                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
-              <% end %>
-            </ol>
-          </td>
-          <div class="survey_tab_buttons">
-            <%= button_to('Send Reminders', pages_send_emails_path(id: s), method: :send_emails, :class => "survey-index-btn")%>
-            <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=s.id%>" class="survey-index-btn">Show Results</button>
-          </div>
-          <br><br>
-        </tr>
-        <% end %>
-      <% else %>
-        <tr>You don't have any surveys yet!</tr>
-      <% end %>
-    </div>
-</div>
-
-<div id="createSurveyModal" class="modal">
-  <div class="modal-content">
-    <span class="close"> &times;</span>
-    <h2 style="text-align: center">Enter Survey Details:</h2>
-    <div class="modal-body">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
-</div>
-
-<div id="showResultModal" class="modal">
-  <div class="modal-content">
-    <span class="close_sr"> &times;</span>
-    <h2 style="text-align: center">Survey Results:</h2>
-    <div class="modal-body">
-      <% if !@surveys.empty? %>
-        <span id="question1prompt"></span>
-      <% else %>
-
-      <% end %>
-    </div>
-  </div>
-</div>
-
 <style>
+  body {
+    background: black;
+  }
+
   .container {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -82,18 +20,34 @@
     max-width: 800px;
     justify-content: center;
   }
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: black;
-  }
 
-  h1, h3, h4, p {
+  h1, tr, th, h3, h4, p {
     color: white;
   }
 
+  .survey {
+    width: 100%;
+  }
+
+  .survey td, .survey th {
+    padding: 10px;
+  }
+
+  .smallBtn {
+    border-radius: 30px;
+    background: white;
+    white-space: nowrap;
+    color: black;
+    padding: 5px 15px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+
   ol {
-    text-align: center;
-    list-style-position: inside;
+      text-align: center;
+      list-style-position: inside;
   }
 
   .survey_tab_buttons{
@@ -101,37 +55,11 @@
     margin: 0px 40px 0px 60px;
   }
 
-  .create-survey-btn{
-    border-radius: 50px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .survey-index-btn {
-    border-radius: 50px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    margin-right: 2em;
-  }
-
   .survey-container {
     color: white;
     align-items: center;
     flex-direction: column;
-    text-align: center;
-    /* justify-content: center; */
+    text-align: center
   }
 
   .analytics-container {
@@ -174,7 +102,7 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 30%;
+    width: 20%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -183,7 +111,7 @@
   }
 
   .modal-body {
-    padding: 0% 5% 5% 5%;
+    padding: 5%;
   }
 
   /* commented this because this made the Sign Out text color white
@@ -226,42 +154,108 @@
     text-decoration: none;
     cursor: pointer;
   }
-
-  .close_sr {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close_sr:hover,
-  .close_sr:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
 </style>
 
+<%= render :partial => 'account_header/header' %>
+<%= include_gon(:init => true) %>
+
+<div class="container">
+  <p id="notice"><%= notice %></p>
+  <p class='alert'><%= alert %></p>
+
+  <h1 style="text-align: center;">Surveys</h1><br>
+    <div class= "survey-container">
+      <!-- button id="create_survey"  class="smallBtn">Create New Survey</button><br><br> -->
+      <%= link_to 'Create New Survey', new_survey_path, class: "btn", style: "color: black" %>
+      <br />
+      <br />
+      <% if !@surveys.empty? %>
+        <% @surveys.each_with_index do |survey, index| %>
+        <tr>
+          <b><td>Name: <%= survey.name %></td></b><br>
+          <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
+          <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
+          <td>
+            Questions:
+            <ol>
+              <% survey.questions.each do |q| %>
+                  <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
+              <% end %>
+            </ol>
+          </td>
+          <%= link_to 'Display', survey, class: "smallBtn", style: "color: black" %>
+          <%= link_to 'Edit', edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
+          <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <br />
+          <br />
+          <div class="survey_tab_buttons">
+            <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
+            <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</button>
+          </div>
+          <br><br>
+        </tr>
+        <% end %>
+      <% else %>
+        <tr>You don't have any surveys yet!</tr>
+      <% end %>
+    </div>
+  <%# </div> %>
+
+  <!--<h1>Surveys</h1>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @surveys.each do |survey| %>
+        <tr>
+          <td><%= link_to 'Show', survey %></td>
+          <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
+          <td><%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to 'New Survey', new_survey_path %> -->
+
+  <br />
+</div>
+
+<div id="showResultModal" class="modal">
+  <div class="modal-content">
+    <span class="close_sr"> &times;</span>
+    <h2 style="text-align: center">Survey Results:</h2>
+    <div class="modal-body">
+      <% if !@surveys.empty? %>
+        <span id="question1prompt"></span>
+      <% else %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <script>
-  var modal = document.getElementById('createSurveyModal');
-
+  /* var modal = document.getElementById('createSurveyModal');
   var btn = document.getElementById('create_survey');
-
   var span = document.getElementsByClassName('close')[0];
-
   btn.onclick = function () {
     modal.style.display = 'block';
   };
-
   span.onclick = function () {
     modal.style.display = 'none';
   };
-
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
+  }; */
+
+  window.onclick = function (event) {
     if (event.target == modal_sr) {
       modal_sr.style.display = 'none';
     }
