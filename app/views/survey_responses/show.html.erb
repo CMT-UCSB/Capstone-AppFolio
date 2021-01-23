@@ -36,8 +36,10 @@
           <% if q.question_type == "mood" %>
           <div style="padding: 10px; font-size: 50pt; background">
             <%= f.submit "😃", :class =>"emoji_button"%>
+            <%= f.submit "🙂", :class =>"emoji_button"%>
             <%= f.submit "😐", :class =>"emoji_button"%>
             <%= f.submit "😟", :class =>"emoji_button"%>
+            <%= f.submit "😭", :class =>"emoji_button"%>
           </div>
           <% elsif q.question_type == "open_ended" %>
             <%= f.text_area :response, cols: "30"%>
