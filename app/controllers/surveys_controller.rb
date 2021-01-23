@@ -64,6 +64,9 @@ class SurveysController < ApplicationController
   # DELETE /surveys/1
   # DELETE /surveys/1.json
   def destroy
+    @survey.questions.each do |q|
+      q.destroy
+    end
     @survey.destroy
     respond_to do |format|
       format.html { redirect_to '/surveys', notice: 'Survey was successfully destroyed.' }

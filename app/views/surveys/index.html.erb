@@ -1,3 +1,10 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
 <style>
   body {
     background: black;
@@ -48,37 +55,11 @@
     margin: 0px 40px 0px 60px;
   }
 
-  .create-survey-btn{
-    border-radius: 50px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .survey-index-btn {
-    border-radius: 50px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    margin-right: 2em;
-  }
-
   .survey-container {
     color: white;
     align-items: center;
     flex-direction: column;
-    text-align: center;
-    /* justify-content: center; */
+    text-align: center
   }
 
   .analytics-container {
@@ -121,7 +102,7 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 30%;
+    width: 20%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -130,7 +111,7 @@
   }
 
   .modal-body {
-    padding: 0% 5% 5% 5%;
+    padding: 5%;
   }
 
   /* commented this because this made the Sign Out text color white
@@ -173,24 +154,10 @@
     text-decoration: none;
     cursor: pointer;
   }
-
-  .close_sr {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close_sr:hover,
-  .close_sr:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
 </style>
 
 <%= render :partial => 'account_header/header' %>
-<%= include_gon(:init => true)
+<%= include_gon(:init => true) %>
 
 <div class="container">
   <p id="notice"><%= notice %></p>
@@ -198,7 +165,8 @@
 
   <h1 style="text-align: center;">Surveys</h1><br>
     <div class= "survey-container">
-      <%= link_to 'New Survey', new_survey_path, class: "btn", style: "color: black" %>
+      <!-- button id="create_survey"  class="smallBtn">Create New Survey</button><br><br> -->
+      <%= link_to 'Create New Survey', new_survey_path, class: "btn", style: "color: black" %>
       <br />
       <br />
       <% if !@surveys.empty? %>
@@ -221,10 +189,10 @@
           <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
-          <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=s.id%>" class="smallBtn">Show Results</button>
-          <br />
-          <br />
-          <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
+          <div class="survey_tab_buttons">
+            <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
+            <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</button>
+          </div>
           <br><br>
         </tr>
         <% end %>
@@ -235,14 +203,12 @@
   <%# </div> %>
 
   <!--<h1>Surveys</h1>
-
   <table>
     <thead>
       <tr>
         <th colspan="3"></th>
       </tr>
     </thead>
-
     <tbody>
       <% @surveys.each do |survey| %>
         <tr>
@@ -253,22 +219,10 @@
       <% end %>
     </tbody>
   </table>
-
   <br>
-
   <%= link_to 'New Survey', new_survey_path %> -->
 
   <br />
-</div>
-
-<div id="createSurveyModal" class="modal">
-  <div class="modal-content">
-    <span class="close"> &times;</span>
-    <h2 style="text-align: center">Enter Survey Details:</h2>
-    <div class="modal-body">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
 </div>
 
 <div id="showResultModal" class="modal">
@@ -287,24 +241,25 @@
 
 <script>
   /* var modal = document.getElementById('createSurveyModal');
-
   var btn = document.getElementById('create_survey');
-
   var span = document.getElementsByClassName('close')[0];
-
   btn.onclick = function () {
     modal.style.display = 'block';
   };
-
   span.onclick = function () {
     modal.style.display = 'none';
   };
-
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
   }; */
+
+  window.onclick = function (event) {
+    if (event.target == modal_sr) {
+      modal_sr.style.display = 'none';
+    }
+  };
 
   // var btn_sr = document.getElementById('survey_show_results');
   var modal_sr = document.getElementById('showResultModal');
