@@ -51,8 +51,6 @@
   }
 
   .survey_tab_buttons{
-    margin: 0 auto;
-    width: 80%;
     display: flex;
     margin: 0px 40px 0px 60px;
   }
@@ -191,10 +189,12 @@
           <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
-          <div class="survey_tab_buttons">
+          <!-- div class="survey_tab_buttons">
             <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
             <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</button>
-          </div>
+          </div> -->
+          <%= link_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
+          <a name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</a>
           <br><br>
         </tr>
         <% end %>
