@@ -43,11 +43,42 @@
       list-style-position: inside;
   }
 
+  .survey_tab_buttons{
+    display: flex;
+    margin: 0px 40px 0px 60px;
+  }
+
+  .create-survey-btn{
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .survey-index-btn {
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 2em;
+  }
+
   .survey-container {
     color: white;
     align-items: center;
     flex-direction: column;
-    text-align: center
+    text-align: center;
+    /* justify-content: center; */
   }
 
   .analytics-container {
@@ -90,7 +121,7 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 20%;
+    width: 30%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -99,7 +130,7 @@
   }
 
   .modal-body {
-    padding: 5%;
+    padding: 0% 5% 5% 5%;
   }
 
   /* commented this because this made the Sign Out text color white
@@ -142,12 +173,28 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .close_sr {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close_sr:hover,
+  .close_sr:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
 
 <%= render :partial => 'account_header/header' %>
+<%= include_gon(:init => true)
 
 <div class="container">
   <p id="notice"><%= notice %></p>
+  <p class='alert'><%= alert %></p>
 
   <h1 style="text-align: center;">Surveys</h1><br>
     <div class= "survey-container">
@@ -155,7 +202,7 @@
       <br />
       <br />
       <% if !@surveys.empty? %>
-        <% @surveys.each do |survey| %>
+        <% @surveys.each_with_index do |survey, index| %>
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
           <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
@@ -172,6 +219,9 @@
           <%= link_to 'Display', survey, class: "smallBtn", style: "color: black" %>
           <%= link_to 'Edit', edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
           <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <br />
+          <br />
+          <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=s.id%>" class="smallBtn">Show Results</button>
           <br />
           <br />
           <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails %>
@@ -211,6 +261,29 @@
   <br />
 </div>
 
+<div id="createSurveyModal" class="modal">
+  <div class="modal-content">
+    <span class="close"> &times;</span>
+    <h2 style="text-align: center">Enter Survey Details:</h2>
+    <div class="modal-body">
+      <%= render 'surveys/form' %>
+    </div>
+  </div>
+</div>
+
+<div id="showResultModal" class="modal">
+  <div class="modal-content">
+    <span class="close_sr"> &times;</span>
+    <h2 style="text-align: center">Survey Results:</h2>
+    <div class="modal-body">
+      <% if !@surveys.empty? %>
+        <span id="question1prompt"></span>
+      <% else %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <script>
   /* var modal = document.getElementById('createSurveyModal');
@@ -232,6 +305,79 @@
       modal.style.display = 'none';
     }
   }; */
+
+  // var btn_sr = document.getElementById('survey_show_results');
+  var modal_sr = document.getElementById('showResultModal');
+  var span_sr = document.getElementsByClassName('close_sr')[0];
+  var survey_clickedOn;
+
+  // btn_sr.onclick = 
+  function show_survey_result(index) {
+    modal_sr.style.display = 'block';
+    var btn_sr = document.getElementsByName('show_result')[index];
+    var survey_clicked_id = btn_sr.getAttribute("data-myvalue");
+    // console.log(survey_clicked_id);
+    var Survey = gon.Survey;
+    var Employee = gon.Employee;
+    var AllQuestions = gon.questions;
+    var questions = AllQuestions.filter(function(question){
+      return question.survey_id == survey_clicked_id;
+    });
+    // console.log(questions);
+    var clickedSurvey = Survey.filter(function(survey){
+      return survey.id == survey_clicked_id;
+    });
+    var isClickedAnonymous = clickedSurvey[0].isAnonymous;
+    // console.log("is it anon? ", isClickedAnonymous);
+
+    var what_to_print = "";
+    var responses = [];
+    var MoodResponse = gon.MoodResponse;
+    var OpenEndedResponse = gon.OpenEndedResponse;
+    for(var i = 0; i < questions.length; ++i){
+      what_to_print += "<br>Q"+(i+1)+". "+questions[i].prompt+" ("+questions[i].question_type+")"+"<br>";
+      if(questions[i].question_type == "mood"){
+        responses[i] = MoodResponse.filter(function(mResponse){
+          return mResponse.question_id == questions[i].id;
+        });
+        for(var j = 0; j < responses[i].length; ++j){
+          if(isClickedAnonymous == "identifiable"){
+            var employee = Employee.filter(function(employee){
+              return employee.id == responses[i][j].employee_id;
+            });
+            var employeeName = employee[0].first_name + " " + employee[0].last_name;
+            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
+          }
+          else{
+            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
+          }
+        }
+      }
+      else{
+        responses[i] = OpenEndedResponse.filter(function(oeResponse){
+          return oeResponse.question_id == questions[i].id;
+        });
+        for(var j = 0; j < responses[i].length; ++j){
+          if(isClickedAnonymous == "identifiable"){
+            var employee = Employee.filter(function(employee){
+              return employee.id == responses[i][j].employee_id;
+            });
+            var employeeName = employee[0].first_name + " " + employee[0].last_name;
+            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
+          }
+          else{
+            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
+          }
+        }
+      }
+    };
+    document.getElementById("question1prompt").innerHTML = what_to_print;
+
+  };
+
+  span_sr.onclick = function () {
+    modal_sr.style.display = 'none';
+  };
 
   var numMood = [];
   function recordSurveyData(moodReponse)

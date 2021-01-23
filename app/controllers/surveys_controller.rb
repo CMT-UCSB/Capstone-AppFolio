@@ -8,6 +8,11 @@ class SurveysController < ApplicationController
     @survey = Survey.new
     @survey.questions.build
     @surveys = Survey.where(manager: current_manager)
+    gon.Survey = Survey.all
+    gon.Employee = Employee.all
+    gon.questions = Question.all
+    gon.MoodResponse = MoodResponse.all
+    gon.OpenEndedResponse = OpenEndedResponse.all
   end
 
   # GET /surveys/1
