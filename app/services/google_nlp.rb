@@ -25,7 +25,6 @@ class GoogleNlp
         sentiment = sentence.sentiment
         puts "#{sentence.text.content}: (#{sentiment.score})"
         
-        end
-        
+        end        
     end
 end
