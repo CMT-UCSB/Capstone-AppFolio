@@ -1,8 +1,13 @@
-class GoogleNlp
-    def printSentence
-        require "google/cloud/language"
-        #ENV["LANGUAGE_CREDENTIALS"] = "celtic-tendril-301721-9023ae324751.json"
+class GoogleNlpSentiment
+    def initialize(input_text:)
+        @text = input_text
+    end
 
+    def printResult
+        require "google/cloud/language"
+
+        # set google credential
+        # credential is stored in .env file
         Google::Cloud::Language.configure do |config|
             config.credentials = JSON.parse(ENV.fetch('GOOGLE_API_CREDS'))
         end
@@ -11,7 +16,8 @@ class GoogleNlp
 
         text_content = "Hello Worlds!"
 
-        document = { content: text_content, type: :PLAIN_TEXT }
+        # text_content is the string which will be analyze by the NLP
+        document = { content: @text, type: :PLAIN_TEXT }
         response = language.analyze_sentiment document: document
 
         sentiment = response.document_sentiment
@@ -22,9 +28,8 @@ class GoogleNlp
         sentences = response.sentences
 
         sentences.each do |sentence|
-        sentiment = sentence.sentiment
-        puts "#{sentence.text.content}: (#{sentiment.score})"
-        
+            sentiment = sentence.sentiment
+            puts "#{sentence.text.content}: (#{sentiment.score})"
         end
         
     end
