@@ -1,5 +1,5 @@
 class MoodResponse < ApplicationRecord
-    enum response: [:bad, :okay, :good]
+    enum response: [:terrible, :bad, :okay, :good, :amazing]
     
     belongs_to :question
     belongs_to :employee
