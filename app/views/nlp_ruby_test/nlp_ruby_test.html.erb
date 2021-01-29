@@ -1,2 +1,6 @@
-<%  @sentence = GoogleNlp.new()%>
-<p> <%= @sentence.printSentence %> </p>
+<!-- plug survey_response with real data once free response answers are stored in data base -->
+<% @survey_response = "Today is a wonderful. I am very happy with my life right now" %>
+
+<% @Sentiment = GoogleNlpSentiment.new(input_text: @survey_response)%>
+<%= @Sentiment.printScore %>
+<%= @Sentiment.printMagnitude%>
