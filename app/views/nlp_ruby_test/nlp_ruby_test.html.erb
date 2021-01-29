@@ -1,5 +1,6 @@
 <!-- plug survey_response with real data once free response answers are stored in data base -->
-<% @survey_response = "This is a stub response." %>
+<% @survey_response = "Today is a wonderful. I am very happy with my life right now" %>
 
 <% @Sentiment = GoogleNlpSentiment.new(input_text: @survey_response)%>
-<%= @Sentiment.printResult %>
+<%= @Sentiment.printScore %>
+<%= @Sentiment.printMagnitude%>
