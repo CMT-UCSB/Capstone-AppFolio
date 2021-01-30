@@ -1,6 +1,7 @@
 class GoogleNlpSentiment
     def initialize(input_text:)
         @text = input_text
+        puts @text
         require "google/cloud/language"
 
         # set google credential
@@ -18,11 +19,11 @@ class GoogleNlpSentiment
         @sentiment = response.document_sentiment
     end
 
-    def printScore
+    def getScore
         @sentiment.score
     end
 
-    def printMagnitude
+    def getMagnitude
         @sentiment.magnitude
     end
 end
