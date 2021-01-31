@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_20_082304) do
+ActiveRecord::Schema.define(version: 2021_01_31_001812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 2021_01_20_082304) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["manager_id"], name: "index_employees_on_manager_id"
+  end
+
+  create_table "entity_nlps", force: :cascade do |t|
+    t.string "name"
+    t.integer "count"
+    t.decimal "sentiment_score"
+    t.decimal "sentiment_mag"
+    t.decimal "salience_score"
+    t.uuid "survey_id"
+    t.bigint "open_ended_response_id"
+    t.index ["open_ended_response_id"], name: "index_entity_nlps_on_open_ended_response_id"
+    t.index ["survey_id"], name: "index_entity_nlps_on_survey_id"
   end
 
   create_table "managers", force: :cascade do |t|
