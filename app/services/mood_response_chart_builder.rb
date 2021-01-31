@@ -5,7 +5,7 @@ class MoodResponseChartBuilder
 
     def pie_chart_data
         if !@mood_survey.nil?
-            default_data = { "okay" => 0, "bad" => 0, "good" => 0 }
+            default_data = { "okay" => 0, "bad" => 0, "good" => 0, "terrible" => 0, "amazing" => 0 }
             pie_chart_data = default_data.merge(MoodResponse.where(question_id: @mood_survey.questions.map(&:id)).group(:response).count)
             print "pie_chart_data"
             if pie_chart_data.values.any?(&:positive?)

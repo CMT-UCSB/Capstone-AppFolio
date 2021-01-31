@@ -4,7 +4,7 @@
 </div>
 <script>
     const chartData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
-    
-    var data = [ ["Okay", chartData[22]], ["Bad", chartData[45]], ["Good", chartData[69]] ];
+
+    var data = [ ["Okay", chartData[22]], ["Bad", chartData[45]], ["Good", chartData[69]], ["Terrible", chartData[97]], ["Amazing", chartData[124]] ];
     new Chartkick.PieChart(document.querySelector('.chart-<%= @surveys.first.id %>'), data, {});
 </script>

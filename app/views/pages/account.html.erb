@@ -23,7 +23,6 @@
       <option value="current">Current Mood Survey</option>
       <option value="recent">Recent Mood Survey</option>
       <option value="older">Older Mood Survey</option>
-      <!--option value="10/19/20-10/25/20">Week of 10/19/20-10/25/20</option-->
       <option selected="selected" value="first">First Mood Survey</option>
     </select>
     <br />
@@ -31,9 +30,7 @@
     <br />
     <div class="chart">
     <% if !@surveys.empty? %>
-      <% @surveys.each do |mood_response| %>
-        <%= render partial: 'chart', locals: { chart: mood_response } %>
-      <% end %>
+      <%= render partial: 'chart', locals: { chart: @surveys.first } %>
     <% end %>
     </div>
   </div>
@@ -59,22 +56,7 @@
 </div>
 
 <!--h4 style= "margin-left: 20px">Displaying all surveys</h4-->
-<div>
-<% if !@surveys.empty? %>
-  <% @surveys.each do |s|%>
-    <% s.questions.filter { |q| q.question_type == 'mood' }.each do |q| %>
-      <% MoodResponse.where(question_id: q.id).each do |mr| %>
-        <script>
-          var response = "<%= mr.response %>";
-          console.log(response);
-        </script>
-      <%end%>
-    <%end%>
-  <%end%>
-<!--% else %-->
-  <!--p>Nothing to display</p--> 
-<%end%> 
-</div>
+
 
 <br/>
 <br/>
@@ -282,7 +264,7 @@
         {
           const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[2]).pie_chart_data %>";
         
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
         
@@ -290,7 +272,7 @@
         {
           const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[1]).pie_chart_data %>";
         
-          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
+          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]], ["Terrible", recentData[97]], ["Amazing", recentData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
@@ -298,7 +280,7 @@
         {
           const olderData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[0]).pie_chart_data %>";
         
-          var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]] ];
+          var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]], ["Terrible", olderData[97]], ["Amazing", olderData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
@@ -306,13 +288,13 @@
         {
           const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
 
-          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]] ];
+          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]], ["Terrible", firstData[97]], ["Amazing", firstData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
         else 
         {
-          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
         }
       }
 
@@ -322,7 +304,7 @@
         {
           const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[1]).pie_chart_data %>";
         
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
@@ -330,7 +312,7 @@
         {
           const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[0]).pie_chart_data %>";
         
-          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]] ];
+          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]], ["Terrible", recentData[97]], ["Amazing", recentData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
@@ -338,13 +320,13 @@
         {
           const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
 
-          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]] ];
+          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]], ["Terrible", firstData[97]], ["Amazing", firstData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
         else
         {
-          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
         }
       }
 
@@ -354,7 +336,7 @@
         {
           const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last).pie_chart_data %>";
         
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]] ];
+          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
           new Chartkick.PieChart(document.getElementById("display"), data, {});
         }
 
@@ -367,7 +349,7 @@
 
     else 
     {
-      new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+      new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
     }
   }
 

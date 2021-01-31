@@ -83,6 +83,8 @@ ActiveRecord::Schema.define(version: 2021_01_31_001812) do
   create_table "open_ended_responses", force: :cascade do |t|
     t.string "response"
     t.integer "elapsed_weeks"
+    t.float "score"
+    t.float "magnitude"
     t.bigint "question_id"
     t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false

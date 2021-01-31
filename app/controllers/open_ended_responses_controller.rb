@@ -18,10 +18,14 @@ class OpenEndedResponsesController < ApplicationController
         end
     end
 
+    sentiment = GoogleNlpSentiment.new(input_text: params[:survey][:response])
+    Rails.logger.info("sentiment: #{sentiment.inspect}")
+
     if @isFilled == false
-        OpenEndedResponse.create!(employee: employee, question: question, response: params[:survey][:response], elapsed_weeks: 0)
+        OpenEndedResponse.create!(employee: employee, question: question, response: params[:survey][:response], elapsed_weeks: 0,
+                                  score: sentiment.getScore, magnitude: sentiment.getMagnitude)
     else
-        this_survey_response.update(response: params[:survey][:response])
+        this_survey_response.update(response: params[:survey][:response], score: sentiment.getScore, magnitude: sentiment.getMagnitude)
     end
     redirect_back(fallback_location: root_path)
   end
