@@ -165,7 +165,6 @@
 
   <h1 style="text-align: center;">Surveys</h1><br>
     <div class= "survey-container">
-      <!-- button id="create_survey"  class="smallBtn">Create New Survey</button><br><br> -->
       <%= link_to 'Create New Survey', new_survey_path, class: "btn", style: "color: black" %>
       <br />
       <br />
@@ -189,10 +188,7 @@
           <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
-          <!-- div class="survey_tab_buttons">
-            <%= button_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
-            <button name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</button>
-          </div> -->
+
           <%= link_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
           <a name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</a>
           <br><br>
@@ -202,27 +198,7 @@
         <tr>You don't have any surveys yet!</tr>
       <% end %>
     </div>
-  <%# </div> %>
-
-  <!--<h1>Surveys</h1>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @surveys.each do |survey| %>
-        <tr>
-          <td><%= link_to 'Show', survey %></td>
-          <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
-          <td><%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <br>
-  <%= link_to 'New Survey', new_survey_path %> -->
+  
 
   <br />
 </div>
@@ -242,20 +218,6 @@
 </div>
 
 <script>
-  /* var modal = document.getElementById('createSurveyModal');
-  var btn = document.getElementById('create_survey');
-  var span = document.getElementsByClassName('close')[0];
-  btn.onclick = function () {
-    modal.style.display = 'block';
-  };
-  span.onclick = function () {
-    modal.style.display = 'none';
-  };
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  }; */
 
   window.onclick = function (event) {
     if (event.target == modal_sr) {
