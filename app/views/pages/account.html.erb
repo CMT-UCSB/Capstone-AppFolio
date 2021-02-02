@@ -70,17 +70,20 @@
       <% e = EntityNlp.all %>
       <% e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
       <% if e_grouped.length == 1 %>
-        1. <%= e_grouped[0][0] %>
+        <span style="color: white;">1. <%= e_grouped[0][0] %></span>
       <% elsif e_grouped.length == 2 %>
-        1. <%= e_grouped[0][0] %>
-        2. <%= e_grouped[1][0] %>
+        <span style="color: white;">1. <%= e_grouped[0][0] %></span>
+        <br/>
+        <span style="color: white;">2. <%= e_grouped[1][0] %></span>
       <% else %>
-        1. <%= e_grouped[0][0] %>
-        1. <%= e_grouped[1][0] %>
-        1. <%= e_grouped[2][0] %>
+        <span style="color: white;">1. <%= e_grouped[0][0] %></span>
+        <br/>
+        <span style="color: white;">2. <%= e_grouped[1][0] %></span>
+        <br/>
+        <span style="color: white;">3. <%= e_grouped[2][0] %></span>
       <% end %>
     <% else %>
-      No mentions yet!
+      <span style="color: white;">No mentions yet!</span>
     <% end %>
   </div>
 </div>
