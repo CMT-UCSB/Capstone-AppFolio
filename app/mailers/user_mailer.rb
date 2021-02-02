@@ -23,6 +23,7 @@ class UserMailer < ApplicationMailer
     slack_url = URI.parse('https://slack.com/api/chat.postMessage')
     req = Net::HTTP::Post.new(slack_url.to_s)
     req['Authorization'] = ENV['SLACK_AUTH']
+    puts ENV['SLACK_AUTH']
     req['Content-Type'] = 'application/json'
     req.set_form_data('channel' => slack_id, 'text' => 'Hey there ' + @employee.first_name + '! You have a new survey from ' + @manager.email + ' to complete! Link: http://' + @url + '/employees/' + @employee.id + '/surveys/' + @survey.id, 'pretty' => 1)
     http = Net::HTTP.new(slack_url.host, slack_url.port)
