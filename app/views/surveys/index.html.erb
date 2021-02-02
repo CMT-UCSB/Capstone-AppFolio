@@ -320,10 +320,10 @@
               return employee.id == responses[i][j].employee_id;
             });
             var employeeName = employee[0].first_name + " " + employee[0].last_name;
-            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
+            what_to_print += " - "+employeeName+": "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
           }
           else{
-            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
+            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
           }
         }
       }
