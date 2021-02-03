@@ -71,10 +71,7 @@
       <% e = EntityNlp.all %>
       <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
       <% e_grouped.each do |g| %>
-        <tr>
-          <td>Name: <%= g[0] %></td>
-          <td>Times Mentioned: <%= g[1] %></td>
-        <tr/>
+        <span style="color: white;">Name: <%= g[0] %>             Times Mentioned: <%= g[1] %></span><br />
       <% end %>
     <% else %>
       <span style="color: white;">No mentions yet!</span>
