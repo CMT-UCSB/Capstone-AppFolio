@@ -70,22 +70,11 @@
     <% if !(EntityNlp.all).empty? %>
       <% e = EntityNlp.all %>
       <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% if e_grouped.length == 1 %>
-        <span style="color: white;">Name: <%= e_grouped[0][0] %> Times Mentioned: <%= e_grouped[0][1] %></span>
-        <br/>
-      <% elsif e_grouped.length == 2 %>
-        <span style="color: white;">Name: <%= e_grouped[0][0] %> Times Mentioned: <%= e_grouped[0][1] %></span>
-        <br/>
-        <span style="color: white;">Name: <%= e_grouped[1][0] %> Times Mentioned: <%= e_grouped[1][1] %></span>
-        <br/>
-      <% else %>
-        <span style="color: white;">Name: <%= e_grouped[0][0] %> Times Mentioned: <%= e_grouped[0][1] %></span>
-        <br/>
-        <span style="color: white;">Name: <%= e_grouped[1][0] %> Times Mentioned: <%= e_grouped[1][1] %></span>
-        <br/>
-        <span style="color: white;">Name: <%= e_grouped[2][0] %> Times Mentioned: <%= e_grouped[2][1] %></span>
-        <br/>
-        <br/>
+      <% e_grouped.each do |g| %>
+        <tr>
+          <td>Name: <%= g[0] %></td>
+          <td>Times Mentioned: <%= g[1] %></td>
+        <tr/>
       <% end %>
     <% else %>
       <span style="color: white;">No mentions yet!</span>
