@@ -20,10 +20,26 @@ class GoogleNlpSentiment
     end
 
     def getScore
-        @sentiment.score
+        format('%<num>0.3f', num: @sentiment.score)
     end
 
     def getMagnitude
-        @sentiment.magnitude
+        format('%<num>0.3f', num: @sentiment.magnitude)
+    end
+
+    def getSentiment
+        if @sentiment.score > 0.35
+            return "positive"
+        elsif @sentiment.score > 0.21
+            return "slightly_positive"
+        elsif @sentiment.score < -0.35
+            return "negative"
+        elsif @sentiment.score < -0.21
+            return "slightly_negative"
+        elsif @sentiment.magnitude > 2.0
+            return "mixed"
+        else
+            return "neutral"
+        end
     end
 end
