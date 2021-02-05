@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_31_001812) do
+
+ActiveRecord::Schema.define(version: 2021_02_04_235130) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -81,18 +83,8 @@ ActiveRecord::Schema.define(version: 2021_01_31_001812) do
     t.index ["manager_id"], name: "index_notes_on_manager_id"
   end
 
-  create_table "open_ended_responses", force: :cascade do |t|
-    t.string "response"
-    t.integer "elapsed_weeks"
-    t.float "score"
-    t.float "magnitude"
-    t.bigint "question_id"
-    t.uuid "employee_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["employee_id"], name: "index_open_ended_responses_on_employee_id"
-    t.index ["question_id"], name: "index_open_ended_responses_on_question_id"
-  end
+# Could not dump table "open_ended_responses" because of following StandardError
+#   Unknown type 'sentiment' for column 'sentiment'
 
   create_table "questions", force: :cascade do |t|
     t.string "prompt"
