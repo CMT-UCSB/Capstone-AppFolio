@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem "spring", group: :development
+gem 'spring', group: :development
 gem 'sidekiq', '~>6.0.0'
 
 gem 'devise'
@@ -58,9 +58,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "chartkick"
+gem 'chartkick'
 gem 'groupdate'
 
 gem 'jquery'
 gem 'jquery-rails'
 gem 'gon', '~> 6.1'
+
+gem "jqcloud-rails"

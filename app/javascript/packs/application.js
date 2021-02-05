@@ -12,7 +12,6 @@ require("chart.js")
 require("../components/reactNote/ReactNote")
 require("../../assets/stylesheets/css/note_popup.css")
 require("jquery")
-
 import "bootstrap";
 import '../../assets/stylesheets/application.scss';
 

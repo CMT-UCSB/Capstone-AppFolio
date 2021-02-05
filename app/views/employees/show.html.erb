@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 </style>
 
-<%= render partial: 'account_header/header' %>
+<%= render partial: "account_header/header" %>
 
 <div class="container">
   <p id="notice"><%= notice %></p>
@@ -45,9 +45,14 @@ h1, h2, h3, h4, h5, h6, p {
     <%= @employee.email %>
   </p>
 
+  <p>
+    <strong>Slack ID:</strong>
+    <%= @employee.slack_id %>
+  </p>
+
   <div class="show_nav">
-    <%= link_to 'Edit', edit_employee_path(@employee), style: "color: white; padding: 0 10px;" %>
+    <%= link_to "Edit", edit_employee_path(@employee), style: "color: white; padding: 0 10px;" %>
     <p> | </p>
-    <%= link_to 'Back', employees_path, style: "color: white; padding: 0 10px;" %>
+    <%= link_to "Back", employees_path, style: "color: white; padding: 0 10px;" %>
   </div>
 </div>

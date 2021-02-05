@@ -58,6 +58,29 @@
 <!--h4 style= "margin-left: 20px">Displaying all surveys</h4-->
 
 
+<br />
+<br />
+<div class="analytics-container">
+  <div class="surveys-dashboard">
+    <h4>Most Mentioned</h4>
+    <br />
+    <%# e = Survey.all %>
+    <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
+    <%# e_grouped[0][0] %>
+    <% if !(EntityNlp.all).empty? %>
+      <% e = EntityNlp.all %>
+      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+      <% e_grouped.each do |g| %>
+        <span style="color: white;">Name: <%= g[0] %>&emsp;&emsp;Times Mentioned: <%= g[1] %></span><br />
+      <% end %>
+    <% else %>
+      <span style="color: white;">No mentions yet!</span>
+      <br/>
+      <br/>
+    <% end %>
+  </div>
+</div>
+
 <br/>
 <br/>
 <div class="surveys-dashboard">

@@ -51,6 +51,11 @@
     <%= form.text_field :email %>
   </div>
 
+  <div class="field">
+    <%= form.label :slack_id, "Slack ID", style: "color: white; padding-right: 16px;" %>
+    <%= form.text_field :slack_id %>
+  </div>
+
   <br />
   <div class="btn_container">
     <%= form.submit "Create", class: "btn" %>
