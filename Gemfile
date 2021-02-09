@@ -66,3 +66,4 @@ gem 'jquery-rails'
 gem 'gon', '~> 6.1'
 
 gem "jqcloud-rails"
+gem "active_flag"
