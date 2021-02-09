@@ -61,23 +61,67 @@
 <br />
 <br />
 <div class="analytics-container">
-  <div class="surveys-dashboard">
-    <h4>Most Mentioned</h4>
-    <br />
-    <%# e = Survey.all %>
-    <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
-    <%# e_grouped[0][0] %>
-    <% if !(EntityNlp.all).empty? %>
-      <% e = EntityNlp.all %>
-      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% e_grouped.each do |g| %>
-        <span style="color: white;">Name: <%= g[0] %>&emsp;&emsp;Times Mentioned: <%= g[1] %></span><br />
+  <div class="insight-wrapper">
+    <div class="insight-piece">
+      <h4>Most Mentioned Names</h4>
+      <br />
+      <%# e = Survey.all %>
+      <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
+      <%# e_grouped[0][0] %>
+      <% if !(EntityNlp.all).empty? %>
+        <% e = EntityNlp.all %>
+        <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+        <% e_grouped.each do |g| %>
+          <span><%= g[0] %> : <%= g[1] %> times</span><br />
+        <% end %>
+      <% else %>
+        <span>No data yet!</span>
+        <br/>
+        <br/>
       <% end %>
-    <% else %>
-      <span style="color: white;">No mentions yet!</span>
-      <br/>
-      <br/>
-    <% end %>
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Positively Viewed</h4>
+      <br />
+      <span>1. Tom</span><br />
+      <span>2. Amy</span><br />
+      <span>3. Calvin</span><br />
+      <span>4. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Negatively Viewed</h4>
+      <br />
+      <span>1. John Doe</span><br />
+      <span>2. Tim</span><br />
+      <span>3. Bob</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Controversial</h4>
+      <br />
+      <span>1. John Doe</span><br />
+      <span>2. Bob</span><br />
+      <span>3. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Improved</h4>
+      <br />
+      <span>1. Tom</span><br />
+      <span>2. Calvin</span><br />
+      <span>3. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Drop in Mood</h4>
+      <br />
+      <span>1. Bob</span><br />
+      <span>2. John Doe</span><br />
+      <span>3. Tim</span><br />
+    </div>
+
   </div>
 </div>
 
@@ -137,6 +181,29 @@
     width: 500px;
     height: 600px;
     margin-left: 80px;
+  }
+
+  .insight-wrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 27px;
+    grid-auto-rows: minmax(100px, auto);
+    /* grid-auto-columns: 400px; */
+  }
+
+  .insight-piece {
+    background: #262728;
+    width: 250px;
+    height: 260px;
+    color: white;
+  }
+
+  .right-insight {
+    background: #262728;
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin-left: 26px;
   }
 
   .chart{
