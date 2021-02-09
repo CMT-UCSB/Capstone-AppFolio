@@ -381,10 +381,10 @@
             if(responses[0][j].response == "good")
               dummyData[0][1]++;
             
-            else if(responses[0][j].response == "bad")
+            else if(responses[0][j].response == "okay")
               dummyData[1][1]++;
 
-            else if(responses[0][j].response == "okay")
+            else if(responses[0][j].response == "bad")
               dummyData[2][1]++;
 
             else if(responses[0][j].response == "terrible")
@@ -657,9 +657,50 @@
       return question.question_type == "mood";
     });
 
-    if(MRS.length <= 7)
+    if(MRS.length == 0)
     {
       new Chartkick.LineChart(document.getElementById("display2"), [["12",0],["11",0],["10",0],["9",0],["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else if(MRS.length <= 11)
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["12",0],["11",0],["10",0],["9",0],["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+
+      var negCtr = 11;
+      for(var i = responses.length - 1; i >= 0; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
     }
 
     else
@@ -711,9 +752,50 @@
       return question.question_type == "mood";
     });
 
-    if(MRS.length <= 7)
+    if(MRS.length == 0)
     {
       new Chartkick.LineChart(document.getElementById("display2"), [["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else if(MRS.length <= 7)
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+
+      var negCtr = 7;
+      for(var i = responses.length - 1; i >= 0; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
     }
 
     else
@@ -765,9 +847,50 @@
       return question.question_type == "mood";
     });
 
-    if(MRS.length <= 3)
+    if(MRS.length == 0)
     {
       new Chartkick.LineChart(document.getElementById("display2"), [["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else if(MRS.length <= 3)
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["4",0], ["3",0], ["2",0], ["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+
+      var negCtr = 3;
+      for(var i = responses.length - 1; i >= 0; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
     }
 
     else
