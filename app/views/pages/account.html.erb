@@ -7,6 +7,7 @@
 <%= stylesheet_pack_tag 'application' %>
 
 <%= render :partial => 'account_header/header' %>
+<%= include_gon(:init => true) %>
 
 <!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
 <p class='notice'><%= notice %></p>
@@ -14,7 +15,9 @@
 
 <h1 style="text-align: center">Account Dashboard</h1><br/>
 
-<!--Analytics -->
+<body onload="changeTimeIntervalM()"></body>
+
+<!--Anayltics -->
 <div class="analytics-container">
   <div class="piechart">
     <h4>Analytics</h4>
@@ -43,13 +46,14 @@
       <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
     </div>
     <script>
-      new Chartkick.LineChart(document.getElementById("display2"), [["12/3",2.7],["12/4",2.9],["12/7",2.3],["12/8",2.5],["12/9",2.4]], {});
+      //new Chartkick.LineChart(document.getElementById("display2"), [["4",2.7],["3",2.9],["2",2.3],["1",2.5],["12/9",2.4]], {});
     </script>
     <div class="linechart-buttons">
-      <button class="linechart-btn" onclick="changeTimeIntervalY()">Past Year</button>
-      <button class="linechart-btn" onclick="changeTimeInterval3M()">Past 3 months</button>
-      <button class="linechart-btn" onclick="changeTimeIntervalM()">Past month</button>
-      <button class="linechart-btn" onclick="changeTimeIntervalW()">Past week</button>
+      <button class="linechart-btn" onclick="changeTimeIntervalM()">Past 4 Surveys</button>
+      <button class="linechart-btn" onclick="changeTimeInterval2M()">Past 8 Surveys</button>
+      <button class="linechart-btn" onclick="changeTimeInterval3M()">Past 12 Surveys</button>
+      <!--button class="linechart-btn" onclick="changeTimeInterval6M()">Past 24 Surveys</button-->
+      <!--button class="linechart-btn" onclick="changeTimeIntervalY()">Past 48 Surveys</button-->
     </div>
     <br /><br />
   </div>
@@ -61,31 +65,67 @@
 <br />
 <br />
 <div class="analytics-container">
-  <div class="surveys-dashboard">
-    <h4>Most Mentioned</h4>
-    <br />
-    <select id="number" onchange="showTop3()">
-      <option selected="selected" value="first">Top 3</option>
-    </select>
-    <br />
-    <% f = Survey.all %>
-    <% f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
-    <% f_grouped.each do |g| %>
-      <span style="color: white;">Name: <%= g[0] %>&emsp;&emsp;Times Mentioned: <%= g[1] %></span><br />
-    <% end %>
-    <div id='wordCloud'></div>
-    <% if !(EntityNlp.all).empty? %>
-      <% e = EntityNlp.all %>
-      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% e_grouped.each do |g| %>
-        <span style="color: white;">Name: <%= g[0] %>&emsp;&emsp;Times Mentioned: <%= g[1] %></span><br />
+  <div class="insight-wrapper">
+    <div class="insight-piece">
+      <h4>Most Mentioned Names</h4>
+      <br />
+      <%# e = Survey.all %>
+      <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
+      <%# e_grouped[0][0] %>
+      <% if !(EntityNlp.all).empty? %>
+        <% e = EntityNlp.all %>
+        <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+        <% e_grouped.each do |g| %>
+          <span><%= g[0] %> : <%= g[1] %> times</span><br />
+        <% end %>
+      <% else %>
+        <span>No data yet!</span>
+        <br/>
+        <br/>
       <% end %>
-      <div id='wordCloud'></div>
-    <% else %>
-      <span style="color: white;">No mentions yet!</span>
-      <br/>
-      <br/>
-    <% end %>
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Positively Viewed</h4>
+      <br />
+      <span>1. Tom</span><br />
+      <span>2. Amy</span><br />
+      <span>3. Calvin</span><br />
+      <span>4. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Negatively Viewed</h4>
+      <br />
+      <span>1. John Doe</span><br />
+      <span>2. Tim</span><br />
+      <span>3. Bob</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Controversial</h4>
+      <br />
+      <span>1. John Doe</span><br />
+      <span>2. Bob</span><br />
+      <span>3. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Improved</h4>
+      <br />
+      <span>1. Tom</span><br />
+      <span>2. Calvin</span><br />
+      <span>3. Luke</span><br />
+    </div>
+
+    <div class="insight-piece">
+      <h4>Most Drop in Mood</h4>
+      <br />
+      <span>1. Bob</span><br />
+      <span>2. John Doe</span><br />
+      <span>3. Tim</span><br />
+    </div>
+
   </div>
 </div>
 
@@ -145,6 +185,29 @@
     width: 500px;
     height: 600px;
     margin-left: 80px;
+  }
+
+  .insight-wrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 27px;
+    grid-auto-rows: minmax(100px, auto);
+    /* grid-auto-columns: 400px; */
+  }
+
+  .insight-piece {
+    background: #262728;
+    width: 250px;
+    height: 260px;
+    color: white;
+  }
+
+  .right-insight {
+    background: #262728;
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin-left: 26px;
   }
 
   .chart{
@@ -278,127 +341,475 @@
   }
 
   var results = [];
-  function storeSurveyData(QID, responseName)
-  {
-
-  }
+  function storeSurveyData(QID, responseName) {}
 
   function changeAnalytics() 
   {
     document.getElementById('analytics_data').innerHTML = 'Showing data for ' + document.getElementById('number').value + ' survey';
+    
+    var num = document.getElementById('number').value;
+    var AllQuestions = gon.questions;
+    var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
+    
+    var MRS = AllQuestions.filter(function(question){
+      return question.question_type == "mood";
+    });
 
-    if("<%= @surveys.empty? %>" != "true")
+    if(MRS.length == 0)
     {
-      if("<%= @surveys.last(3)[0].nil? %>" != "true" && "<%= @surveys.last(3)[1].nil? %>" != "true" && "<%= @surveys.last(3)[2].nil? %>" != "true")
+      new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+    }
+
+    else
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+
+      for(var i = 0; i < MRS.length; i++)
       {
-        if(document.getElementById('number').value == "current")
-        {
-          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[2]).pie_chart_data %>";
-        
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
-        
-        else if(document.getElementById('number').value == "recent")
-        {
-          const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[1]).pie_chart_data %>";
-        
-          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]], ["Terrible", recentData[97]], ["Amazing", recentData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
-
-        else if(document.getElementById('number').value == "older")
-        {
-          const olderData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(3)[0]).pie_chart_data %>";
-        
-          var data = [ ["Okay", olderData[22]], ["Bad", olderData[45]], ["Good", olderData[69]], ["Terrible", olderData[97]], ["Amazing", olderData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
-
-        else if(document.getElementById('number').value == "first")
-        {
-          const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
-
-          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]], ["Terrible", firstData[97]], ["Amazing", firstData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
-
-        else 
-        {
-          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
-        }
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
       }
 
-      else if("<%= @surveys.last(2)[0].nil? %>" != "true" && "<%= @surveys.last(2)[1].nil? %>" != "true")
+      if(MRS.length == 1)
       {
-        if(document.getElementById('number').value == "current")
+        if(num == "current" || num == "first")
         {
-          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[1]).pie_chart_data %>";
-        
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
+          for(var j = 0; j < responses[0].length; j++)
+          {
+            if(responses[0][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[0][j].response == "bad")
+              dummyData[1][1]++;
 
-        else if(document.getElementById('number').value == "recent")
-        {
-          const recentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last(2)[0]).pie_chart_data %>";
-        
-          var data = [ ["Okay", recentData[22]], ["Bad", recentData[45]], ["Good", recentData[69]], ["Terrible", recentData[97]], ["Amazing", recentData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
-        }
+            else if(responses[0][j].response == "okay")
+              dummyData[2][1]++;
 
-        else if(document.getElementById('number').value == "first")
-        {
-          const firstData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.first).pie_chart_data %>";
+            else if(responses[0][j].response == "terrible")
+              dummyData[3][1]++;
 
-          var data = [ ["Okay", firstData[22]], ["Bad", firstData[45]], ["Good", firstData[69]], ["Terrible", firstData[97]], ["Amazing", firstData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
+            else if(responses[0][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
         }
 
         else
         {
-          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
         }
       }
 
-      else
+      else if(MRS.length == 2)
       {
-        if(document.getElementById('number').value == "current" || document.getElementById('number').value == "first")
+        if(num == "current")
         {
-          const currentData = "<%= MoodResponseChartBuilder.new(mood_survey: @surveys.last).pie_chart_data %>";
-        
-          var data = [ ["Okay", currentData[22]], ["Bad", currentData[45]], ["Good", currentData[69]], ["Terrible", currentData[97]], ["Amazing", currentData[124]] ];
-          new Chartkick.PieChart(document.getElementById("display"), data, {});
+          for(var j = 0; j < responses[MRS.length - 1].length; j++)
+          {
+            if(responses[MRS.length - 1][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 1][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "recent" || num == "first")
+        {
+          for(var j = 0; j < responses[0].length; j++)
+          {
+            if(responses[0][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[0][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[0][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[0][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[0][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
         }
 
         else
         {
-          new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0]], {});
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+      }
+
+      else if(MRS.length == 3)
+      {
+        if(num == "current")
+        {
+          for(var j = 0; j < responses[MRS.length - 1].length; j++)
+          {
+            if(responses[MRS.length - 1][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 1][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "recent")
+        {
+          for(var j = 0; j < responses[MRS.length - 2].length; j++)
+          {
+            if(responses[MRS.length - 2][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 2][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "older" || num == "first")
+        {
+          for(var j = 0; j < responses[0].length; j++)
+          {
+            if(responses[0][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[0][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[0][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[0][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[0][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else
+        {
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+      }
+
+      else if(MRS.length >= 4)
+      {
+        if(num == "current" && responses[MRS.length - 1].length != 0)
+        {
+          for(var j = 0; j < responses[MRS.length - 1].length; j++)
+          {
+            if(responses[MRS.length - 1][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 1][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 1][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "recent" && responses[MRS.length - 2].length != 0)
+        {
+          for(var j = 0; j < responses[MRS.length - 2].length; j++)
+          {
+            if(responses[MRS.length - 2][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 2][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 2][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "older" && responses[MRS.length - 3].length != 0)
+        {
+          for(var j = 0; j < responses[MRS.length - 3].length; j++)
+          {
+            if(responses[MRS.length - 3][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[MRS.length - 3][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[MRS.length - 3][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[MRS.length - 3][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[MRS.length - 3][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else if(num == "first" && responses[0].length != 0)
+        {
+          for(var j = 0; j < responses[0].length; j++)
+          {
+            if(responses[0][j].response == "good")
+              dummyData[0][1]++;
+            
+            else if(responses[0][j].response == "bad")
+              dummyData[1][1]++;
+
+            else if(responses[0][j].response == "okay")
+              dummyData[2][1]++;
+
+            else if(responses[0][j].response == "terrible")
+              dummyData[3][1]++;
+
+            else if(responses[0][j].response == "amazing")
+              dummyData[4][1]++;
+          }
+          
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+        }
+
+        else
+        {
+          new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
         }
       }
     }
+  }
 
-    else 
+  /*
+  function changeTimeIntervalY() 
+  {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["1/9",2.2],["4/9",2.7],["7/9",2.5],["10/1",2.8],["12/9",2.4],["1/8",2.2],["4/8",2.7],["7/8",2.5],["10/8",2.8],["12/8",2.4]], {});
+  }
+  
+  function changeTimeInterval6M() 
+  {
+    // these are dummy data
+    new Chartkick.LineChart(document.getElementById("display2"), [["1/9",2.2],["4/9",2.7],["7/9",2.5],["10/1",2.8]], {});
+  }
+  */
+
+  function changeTimeInterval3M() 
+  {
+    var AllQuestions = gon.questions;
+    var MRS = AllQuestions.filter(function(question){
+      return question.question_type == "mood";
+    });
+
+    if(MRS.length <= 7)
     {
-      new Chartkick.PieChart(document.getElementById("display"), [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]], {});
+      new Chartkick.LineChart(document.getElementById("display2"), [["12",0],["11",0],["10",0],["9",0],["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["12",0],["11",0],["10",0],["9",0],["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+      
+      var negCtr = 11;
+      for(var i = responses.length - 1; i > responses.length - 13; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + posCtr.toString() + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
     }
   }
 
-  function changeTimeIntervalY() {
-    // these are dummy data
-    new Chartkick.LineChart(document.getElementById("display2"), [["1/9",2.2],["4/9",2.7],["7/9",2.5],["10/1",2.8],["12/9",2.4]], {});
+  function changeTimeInterval2M() 
+  {
+    var AllQuestions = gon.questions;
+    var MRS = AllQuestions.filter(function(question){
+      return question.question_type == "mood";
+    });
+
+    if(MRS.length <= 7)
+    {
+      new Chartkick.LineChart(document.getElementById("display2"), [["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["8",0],["7",0],["6",0],["5",0],["4",0],["3",0],["2",0],["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+      
+      var negCtr = 7;
+      for(var i = responses.length - 1; i > responses.length - 9; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + posCtr.toString() + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
+    }
   }
-  function changeTimeInterval3M() {
-    // these are dummy data
-    new Chartkick.LineChart(document.getElementById("display2"), [["10/7",2.6],["10/18",2.4],["11/4",2.7],["11/22",2.2],["12/9",2.5]], {});
-  }
-  function changeTimeIntervalM() {
-    // these are dummy data
-    new Chartkick.LineChart(document.getElementById("display2"), [["11/11",2.9],["11/18",2.5],["11/25",2.1],["12/2",2.4],["12/9",2.6]], {});
-  }
-  function changeTimeIntervalW() {
-    // these are dummy data
-    new Chartkick.LineChart(document.getElementById("display2"), [["12/3",2.7],["12/4",2.9],["12/7",2.3],["12/8",2.5],["12/9",2.4]], {});
+  
+  function changeTimeIntervalM() 
+  {
+    var AllQuestions = gon.questions;
+    var MRS = AllQuestions.filter(function(question){
+      return question.question_type == "mood";
+    });
+
+    if(MRS.length <= 3)
+    {
+      new Chartkick.LineChart(document.getElementById("display2"), [["4",0],["3",0],["2",0],["1",0]], {});
+    }
+
+    else
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+      var data = [["4",0], ["3",0], ["2",0], ["1",0]];
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+      
+      var negCtr = 3;
+      for(var i = responses.length - 1; i > responses.length - 5; i--)
+      {   
+        for(var j = 0; j < responses[i].length; j++)
+        {
+          var avg = 0;
+
+          if(responses[i][j].response == "good")
+              avg += 1;
+            
+          else if(responses[i][j].response == "bad")
+              avg -= 1;
+
+          else if(responses[i][j].response == "terrible")
+              avg -= 2;
+
+          else if(responses[i][j].response == "amazing")
+              avg += 2;
+        }
+
+        data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
+        data[negCtr][1] = avg;
+        negCtr--;
+      }
+
+      new Chartkick.LineChart(document.getElementById("display2"), data, {});
+    }
   }
 
   function showTop3() {

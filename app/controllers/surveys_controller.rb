@@ -24,6 +24,10 @@ class SurveysController < ApplicationController
   def new
     @survey = Survey.new
     @survey.questions.build
+
+    gon.Survey = Survey.all
+    gon.questions = Question.all
+    gon.current_manager = current_manager
   end
 
   # GET /surveys/1/edit
@@ -82,6 +86,6 @@ class SurveysController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def survey_params
-      params.require(:survey).permit(:name, :interval, :day_of_week, :time_of_day, :isAnonymous, questions_attributes: [:id, :prompt, :question_type, :_destroy])
+      params.require(:survey).permit(:name, :interval, :time_of_day, :isAnonymous, questions_attributes: [:id, :prompt, :question_type, :_destroy], day_of_weeks: [])
     end
 end

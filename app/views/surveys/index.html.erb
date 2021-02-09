@@ -154,6 +154,12 @@
     text-decoration: none;
     cursor: pointer;
   }
+  .one-survey{
+    background-color: #141414;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
 </style>
 
 <%= render :partial => 'account_header/header' %>
@@ -170,9 +176,10 @@
       <br />
       <% if !@surveys.empty? %>
         <% @surveys.each_with_index do |survey, index| %>
+        <div class="one-survey">
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
-          <td>Notifications sent every <%= survey.day_of_week.capitalize %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(', ') %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
           <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
           <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
           <td>
@@ -193,6 +200,7 @@
           <a name="show_result" onclick="show_survey_result(<%=index%>)" data-myvalue="<%=survey.id%>" class="smallBtn">Show Results</a>
           <br><br>
         </tr>
+        </div>
         <% end %>
       <% else %>
         <tr>You don't have any surveys yet!</tr>

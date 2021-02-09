@@ -12,7 +12,7 @@ class SurveyTest < ActiveSupport::TestCase
   end
 
   test "valid when data is passed" do
-    survey = Survey.new(time_of_day: '2000-01-01 16:00:00', day_of_week: "monday", isAnonymous: "identifiable", manager: @manager)
+    survey = Survey.new(time_of_day: '2000-01-01 16:00:00', day_of_weeks: "monday", isAnonymous: "identifiable", manager: @manager)
     assert survey.save
   end
 end
