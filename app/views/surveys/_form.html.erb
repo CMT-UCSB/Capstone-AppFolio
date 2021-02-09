@@ -1,28 +1,33 @@
 <style>
-.btn {
-  border-radius: 50px;
-  background: white;
-  white-space: nowrap;
-  color: black;
-  padding: 10px 22px;
-  font-size: 16px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  display: flex;
-
-  &:hover {
+  .btn_new_survey_form {
+    width: fit-content;
+    border-radius: 50px;
+    background: white;
+    white-space: nowrap;
+    color: black;
+    padding: 6px 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
     transition: all 0.2s ease-in-out;
-    background: var(--light);
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      transition: all 0.2s ease-in-out;
+      background: var(--light);
+    }
   }
-}
-.btn_container {
-  margin-left: 33%;
-}
+  .btn_right {
+    margin-left: 20px;
+  }
+
 </style>
 
+<%= include_gon(:init => true) %>
 <%= form_with(model: survey, local: true) do |form| %>
   <% if survey.errors.any? %>
     <div id="error_explanation">
@@ -36,46 +41,103 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
-  </div>
-
-  <br />
-
-  <div class="field">
-    <%= form.fields_for :questions do |q| %>
-        <% render 'surveys/question_fields', q: q %>
-    <% end %>
-    <%= link_to_add_fields("Add Question", form, :questions) %>
-  </div>
   
-  <br />
+  <div><b style="color: white;">Choose survey type:</b></div>
+  
+  <div>
+    <%= link_to "Mood", {onclick: @a=0}, class: "btn_new_survey_form" %>
+    <%= link_to "Open Ended", {onclick: @a=1}, class: "btn_new_survey_form btn_right" %>
+  </div>
 
-  <div class="field">
-    <b style="color: white;">Remind employees every:</b><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'monday', :checked => true %>Monday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'tuesday' %>Tuesday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'wednesday' %>Wednesday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'thursday' %>Thursday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'friday' %>Friday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'saturday' %>Saturday</span><br />
-    <span style="color: white;"><%= form.radio_button :day_of_week, 'sunday' %>Sunday</span><br />
+  <% if params[:onclick].to_i == 1%>
+    <br/>
+    <%# --------Open Ended---------- %>
+    <div class="field">
+      <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
+    </div>
     <br />
-    <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
-  </div>
-  
-  <br />
 
-  <div class="field">
-    <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
-    <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
-  </div>
+    <div class="field">
+      <%= form.fields_for :questions do |q| %>
+          <% render 'surveys/question_fields', q: q %>
+      <% end %>
+      <%= link_to_add_fields("Add Question", form, :questions) %>
+    </div>
+    
+    <br />
 
-  <br />
-  
-  <div class="btn_container">
-    <%= form.submit "Create", class: "btn" %>
-  </div>
+    <div class="field">
+      <b style="color: white;">Remind employees every:</b><br />
+      <span style="color: white;">
+          <%# <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
+          <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, {:multiple => true} %>
+      </span><br />
+      <br />
+      <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+    </div>
+    
+    <br />
+
+    <div class="field">
+      <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
+      <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+    </div>
+
+    <br />
+    
+    <div class="btn_container">
+      <%= form.submit "Create", class: "btn" %>
+    </div>
+    <%# --------Open Ended end---------- %>
+  <%else%>
+    <div style="color: red; size: 10px;">*You are only allowed to have 1 mood survey.</div><br/>
+    <div id="nomood">
+      <%# ------Mood------- %>
+      <div class="field">
+        <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
+      </div>
+
+      <br />
+
+      <div class="field">
+        <%= form.fields_for :questions do |q| %>
+            <% render 'surveys/mood_question', q: q %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <b style="color: white;">Remind employees every:</b><br />
+        <span style="color: white;">
+            <%# <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
+            <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, {:multiple => true} %>
+        </span><br />
+        <br />
+        <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+      </div>
+      
+      <br />
+
+      <div class="field">
+        <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
+        <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+      </div>
+
+      <br />
+      
+      <div class="btn_container">
+        <%= form.submit "Create", class: "btn" %>
+      </div>
+      <%# ------Mood end------- %>
+    </div>
+    
+    
+    <div style="color: white; size: 12px;" id="yesmood">
+      You have already created a mood survey. <br/>
+      Please create an open-ended survey instead.
+    </div>
+
+  <%end%>
+
 <% end %>
 
 <script>
@@ -92,4 +154,45 @@
         $(this).before($(this).data('fields').replace(regexp, time));
         return event.preventDefault();
     });
+
+
+    var hasMood = false;
+    var Questions = gon.questions;
+    var Surveys = gon.Survey;
+    var current_manager = gon.current_manager;
+    // console.log("Surveys: ", Surveys);
+    var mood_surveys = [];
+    var this_user_survey;
+    var moodQuestions;
+    // console.log("current manager: ", current_manager.id);
+    this_user_survey = Surveys.filter(function(sy){
+      return sy.manager_id == current_manager.id;
+    });
+
+    moodQuestions = Questions.filter(function(question){
+      return question.question_type == 'mood';
+    });
+    // console.log("this user survey: ", this_user_survey);
+    // console.log("mood questions: ", moodQuestions);
+    
+    for(var i = 0; i < moodQuestions.length; ++i){
+      mood_surveys[i] = this_user_survey.filter(function(survey){
+        return survey.id == moodQuestions[i].survey_id;
+      });
+      // console.log("mood survey: ", mood_surveys[i]);
+      if(mood_surveys[i].length != 0){
+        hasMood = true;
+      }
+    }
+    // console.log("has mood survey? ", hasMood);
+    if ( hasMood == false) {
+      $("#nomood").show();
+      $("#yesmood").hide();
+    }
+    else
+    { //has mood survey already
+      $("#nomood").hide();
+      $("#yesmood").show();
+    }
+
 </script>

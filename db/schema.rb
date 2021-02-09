@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_001812) do
     t.string "name"
     t.integer "interval"
     t.time "time_of_day"
-    t.integer "day_of_week"
+    t.integer "day_of_weeks", default: 0, null: false
     t.integer "isAnonymous"
     t.bigint "manager_id"
     t.datetime "created_at", precision: 6, null: false

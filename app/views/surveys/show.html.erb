@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6, p {
 
   <tr>
       <strong style="color: white;"><td>Name: <%= @survey.name %></td></strong>
-      <td><span style="color: white;">Notifications sent every <%= @survey.day_of_week.capitalize %> @ <%= @survey.time_of_day.strftime("%I:%M %p") %></span></td>
+      <td><span style="color: white;">Notifications sent every <%= @survey.day_of_weeks %> @ <%= @survey.time_of_day.strftime("%I:%M %p") %></span></td>
       <td><span style="color: white;">Visibility: <%= @survey.isAnonymous.capitalize %></span></td>
       <td><span style="color: white;">Created on <%= @survey.created_at.strftime("%b %d") %> at <%= @survey.created_at.strftime("%I:%M %p") %> UTC</span></td>
       <td>
