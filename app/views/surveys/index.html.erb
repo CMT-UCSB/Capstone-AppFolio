@@ -102,7 +102,7 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 20%;
+    width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -290,15 +290,15 @@
               return employee.id == responses[i][j].employee_id;
             });
             var employeeName = employee[0].first_name + " " + employee[0].last_name;
-            what_to_print += " - "+employeeName+": "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
+            what_to_print += " - "+employeeName+": " + "(" + responses[i][j].sentiment + ") " +responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
           }
           else{
-            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
+            what_to_print += " - A"+(j+1)+": " + "(" + responses[i][j].sentiment + ") "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
           }
         }
       }
     };
-    document.getElementById("question1prompt").innerHTML = what_to_print;
+    document.getElementById("question1prompt").innerHTML = what_to_print + "<br>";
 
   };
 
