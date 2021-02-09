@@ -154,10 +154,11 @@
     text-decoration: none;
     cursor: pointer;
   }
-  .one_survey{
+  .one-survey{
     background-color: #141414;
     width: 100%;
     margin-bottom: 20px;
+    padding: 10px;
   }
 </style>
 
@@ -175,7 +176,7 @@
       <br />
       <% if !@surveys.empty? %>
         <% @surveys.each_with_index do |survey, index| %>
-        <div class="one_survey">
+        <div class="one-survey">
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
           <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(', ') %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>

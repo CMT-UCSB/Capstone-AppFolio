@@ -30,7 +30,7 @@ const Header = ( {toggle} ) => {
                             <a href='/managers/sign_in' style={{color: "black"}}>Sign In</a>
                         </NavBtn>
                         <NavBtn>
-                            <a href='/managers/sign_up' style={{color: "black"}}>Register</a>
+                            <a href='/managers/sign_up' style={{color: "black"}}>Sign Up</a>
                         </NavBtn>
                     </NavBtnList>
                 </NavbarContainer>
