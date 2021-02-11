@@ -15,6 +15,11 @@ class SurveysController < ApplicationController
     gon.OpenEndedResponse = OpenEndedResponse.all
   end
 
+  def survey_result
+    #@open_response = OpenEndedResponse.where()
+    
+  end
+
   # GET /surveys/1
   # GET /surveys/1.json
   def show
