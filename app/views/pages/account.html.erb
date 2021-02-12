@@ -354,12 +354,23 @@
     document.getElementById('analytics_data').innerHTML = 'Showing data for ' + document.getElementById('number').value + ' survey';
     
     var num = document.getElementById('number').value;
-    var AllQuestions = gon.questions;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
-    var MRS = AllQuestions.filter(function(question){
-      return question.question_type == "mood";
+    var Manager = gon.Manager;
+    var Surveys = gon.Surveys;
+    var AllQuestions = gon.questions; 
+
+    var AllSurveys = Surveys.filter(function(survey){
+      return survey.manager_id == Manager.id
     });
+    
+    var MRS = [];
+    for(var i = 0; i < AllSurveys.length; i++)
+    {
+      MRS = AllQuestions.filter(function(question){
+        return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
+      });
+    }
 
     if(MRS.length == 0)
     {
