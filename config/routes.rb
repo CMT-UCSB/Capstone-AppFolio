@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :managers
-  resources :surveys
+  resources :surveys do
+    member do
+      get :survey_result
+    end
+  end
   resources :employees do
     resources :surveys, controller: 'survey_responses'
   end
@@ -13,6 +17,7 @@ Rails.application.routes.draw do
   post 'pages/send_emails'
   get 'survey_responses/success' => 'survey_responses#success', as: :survey_responses_success
   get '/nlp' => 'nlp_ruby_test#nlp_ruby_test'
+
 
   namespace :api, defaults: { format:  :json } do
     namespace :v1 do
