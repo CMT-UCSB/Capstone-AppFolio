@@ -102,16 +102,27 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 60%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
+    text-align: center;
   }
 
   .modal-body {
-    padding: 5%;
+
+  }
+
+  table {
+    width: 100%;
+  }
+ 
+  .question th, td {
+    color: black;
+    padding: 10px;
+    font-size: 17px;
   }
 
   /* commented this because this made the Sign Out text color white
@@ -221,9 +232,51 @@
 </div>
 
 <% @surveys.each do |survey| %>
-  <div style="display: none;" class="survey-results-<%= survey.id %>">
-    Survey Results for id=<%= survey.id %>
-    <b>Hi</b>
+  <div style="display: none; text-align: center;" class="survey-results-<%= survey.id %>">
+    <% Question.where(survey_id: survey.id).each do |question|%>
+
+      <b style="font-size: 30px;"><%= question.prompt %> </b> <br/>
+      <table class="question">
+
+        <thead>
+          <tr>
+            <% if survey.isAnonymous === "identifiable"%>
+              <th> Name </th>
+            <%end%>
+            <th> Sentiment </th>
+            <th> Response </th>
+            <th> Score </th>
+            <th> Magnitude </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
+            <tr>
+              <% if survey.isAnonymous === "identifiable"%>
+                <% employee = Employee.where(id: response.employee_id).first%>
+                <td> <%= employee.first_name %> <%= employee.last_name %> </td>
+              <%end%>
+              <% if response.sentiment === "slightly_positive" or response.sentiment === "positive"%>
+                <td style="color: green;"> <%= response.sentiment %> </td>
+              <% elsif response.sentiment === "slightly_negative" or response.sentiment === "negative" %>
+                <td style="color: red;"> <%= response.sentiment %> </td>
+              <% elsif response.sentiment === "mixed" %>
+                <td style="color: #808080"> <%= response.sentiment %> </td>
+              <% else %>
+                <td> <%= response.sentiment %> </td>
+              <% end %>
+              <td> <%= response.response %> </td>
+              <td> <%= response.score %> </td>
+              <td> <%= response.magnitude %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+      <br/>
+      <br/>
+    <%end%>
   </div>
 <% end %>
 
@@ -248,69 +301,6 @@
     modal_sr.querySelector('.modal-body').innerHTML = survey_result_body.innerHTML;
     modal_sr.style.display = 'block';
   }
-
-  function show_survey_result2(index) {
-    modal_sr.style.display = 'block';
-    var btn_sr = document.getElementsByName('show_result')[index];
-    var survey_clicked_id = btn_sr.getAttribute("data-myvalue");
-    // console.log(survey_clicked_id);
-    var Survey = gon.Survey;
-    var Employee = gon.Employee;
-    var AllQuestions = gon.questions;
-    var questions = AllQuestions.filter(function(question){
-      return question.survey_id == survey_clicked_id;
-    });
-    // console.log(questions);
-    var clickedSurvey = Survey.filter(function(survey){
-      return survey.id == survey_clicked_id;
-    });
-    var isClickedAnonymous = clickedSurvey[0].isAnonymous;
-    // console.log("is it anon? ", isClickedAnonymous);
-
-    var what_to_print = "";
-    var responses = [];
-    var MoodResponse = gon.MoodResponse;
-    var OpenEndedResponse = gon.OpenEndedResponse;
-    for(var i = 0; i < questions.length; ++i){
-      what_to_print += "<br>Q"+(i+1)+". "+questions[i].prompt+" ("+questions[i].question_type+")"+"<br>";
-      if(questions[i].question_type == "mood"){
-        responses[i] = MoodResponse.filter(function(mResponse){
-          return mResponse.question_id == questions[i].id;
-        });
-        for(var j = 0; j < responses[i].length; ++j){
-          if(isClickedAnonymous == "identifiable"){
-            var employee = Employee.filter(function(employee){
-              return employee.id == responses[i][j].employee_id;
-            });
-            var employeeName = employee[0].first_name + " " + employee[0].last_name;
-            what_to_print += " - "+employeeName+": "+responses[i][j].response + "<br>";
-          }
-          else{
-            what_to_print += " - A"+(j+1)+": "+responses[i][j].response + "<br>";
-          }
-        }
-      }
-      else{
-        responses[i] = OpenEndedResponse.filter(function(oeResponse){
-          return oeResponse.question_id == questions[i].id;
-        });
-        for(var j = 0; j < responses[i].length; ++j){
-          if(isClickedAnonymous == "identifiable"){
-            var employee = Employee.filter(function(employee){
-              return employee.id == responses[i][j].employee_id;
-            });
-            var employeeName = employee[0].first_name + " " + employee[0].last_name;
-            what_to_print += " - "+employeeName+": " + "(" + responses[i][j].sentiment + ") " +responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>";
-          }
-          else{
-            what_to_print += " - A"+(j+1)+": " + "(" + responses[i][j].sentiment + ") "+responses[i][j].response + " (Score: " + responses[i][j].score + " Magnitude: " + responses[i][j].magnitude + ")" +"<br>" + "<br>";
-          }
-        }
-      }
-    };
-    document.getElementById("question1prompt").innerHTML = what_to_print;
-
-  };
 
   span_sr.onclick = function () {
     modal_sr.style.display = 'none';
