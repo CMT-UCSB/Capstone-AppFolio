@@ -8,6 +8,19 @@ class UserMailer < ApplicationMailer
     @recipients.each do |recipient|
       survey_notify(recipient, manager, survey).deliver
     end
+
+    questions = Question.where(survey_id: survey.id)
+
+    questions.each do |q|
+      if q.question_type == 'open_ended'
+        response = OpenEndedResponse.find_by(question_id: q.id)
+      else
+        response = MoodResponse.find_by(question_id: q.id)
+      end
+      if response != nil
+        response.update(elapsed: response.elapsed + 1)
+      end
+    end
   end
 
   def survey_notify(employee, manager, survey)
