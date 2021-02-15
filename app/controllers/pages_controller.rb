@@ -17,6 +17,8 @@ class PagesController < ApplicationController
   def account
     gon.questions = Question.all
     gon.MoodResponse = MoodResponse.all
+    gon.Manager = current_manager
+    gon.Surveys = Survey.all
     @surveys = Survey.where(manager_id: current_manager.id)
   end
 end
