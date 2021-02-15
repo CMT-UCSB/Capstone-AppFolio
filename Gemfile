@@ -65,5 +65,9 @@ gem 'jquery'
 gem 'jquery-rails'
 gem 'gon', '~> 6.1'
 
-gem "jqcloud-rails"
-gem "active_flag"
+gem 'jqcloud-rails'
+gem 'active_flag'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-jsTimezoneDetect'
+end
