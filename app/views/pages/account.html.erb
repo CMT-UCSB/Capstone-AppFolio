@@ -1479,11 +1479,14 @@
   $(document).ready(function()
   {
     word_list = [];
-    list_size = '<%= f_grouped.size %>';
-    group = <%=raw f_grouped %>;
 
-    for(i = 0; i < list_size; i++) {
-      word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
+    if('<%= f_grouped %>') {
+      list_size = '<%= f_grouped.size %>';
+      group = <%= raw f_grouped %>;
+
+      for(i = 0; i < list_size; i++) {
+        word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
+      }
     }
     
     $("#wordCloud").jQWCloud({
