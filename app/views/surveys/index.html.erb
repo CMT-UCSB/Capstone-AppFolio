@@ -173,7 +173,7 @@
   }
 </style>
 
-<%= render :partial => 'account_header/header' %>
+<%= render :partial => "account_header/header" %>
 <%= include_gon(:init => true) %>
 
 <div class="container">
@@ -182,7 +182,7 @@
 
   <h1 style="text-align: center;">Surveys</h1><br>
     <div class= "survey-container">
-      <%= link_to 'Create New Survey', new_survey_path, class: "btn", style: "color: black" %>
+      <%= link_to "Create New Survey", new_survey_path, class: "btn", style: "color: black" %>
       <br />
       <br />
       <% if !@surveys.empty? %>
@@ -190,7 +190,7 @@
         <div class="one-survey">
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
-          <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(', ') %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(", ") %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
           <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
           <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
           <td>
@@ -201,13 +201,13 @@
               <% end %>
             </ol>
           </td>
-          <%= link_to 'Display', survey, class: "smallBtn", style: "color: black" %>
-          <%= link_to 'Edit', edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
-          <%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: "smallBtn", style: "color: black" %>
+          <%= link_to "Display", survey, class: "smallBtn", style: "color: black" %>
+          <%= link_to "Edit", edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
+          <%= link_to "Destroy", survey, method: :delete, data: { confirm: "Are you sure?" }, class: "smallBtn", style: "color: black" %>
           <br />
           <br />
 
-          <%= link_to 'Send Reminders', pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
+          <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
           <a name="show_result" data-survey-id="<%= survey.id %>" class="smallBtn js-show-results">Show Results</a>
           <br><br>
         </tr>
@@ -233,16 +233,16 @@
 
 <% @surveys.each do |survey| %>
   <div style="display: none; text-align: center;" class="survey-results-<%= survey.id %>">
-    <% Question.where(survey_id: survey.id).each do |question|%>
+    <% Question.where(survey_id: survey.id).each do |question| %>
 
       <b style="font-size: 30px;"><%= question.prompt %> </b> <br/>
       <table class="question">
 
         <thead>
           <tr>
-            <% if survey.isAnonymous === "identifiable"%>
+            <% if survey.isAnonymous === "identifiable" %>
               <th> Name </th>
-            <%end%>
+            <% end %>
             <th> Sentiment </th>
             <th> Response </th>
             <th> Score </th>
@@ -253,11 +253,11 @@
         <tbody>
           <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
             <tr>
-              <% if survey.isAnonymous === "identifiable"%>
-                <% employee = Employee.where(id: response.employee_id).first%>
+              <% if survey.isAnonymous === "identifiable" %>
+                <% employee = Employee.where(id: response.employee_id).first %>
                 <td> <%= employee.first_name %> <%= employee.last_name %> </td>
-              <%end%>
-              <% if response.sentiment === "slightly_positive" or response.sentiment === "positive"%>
+              <% end %>
+              <% if response.sentiment === "slightly_positive" or response.sentiment === "positive" %>
                 <td style="color: green;"> <%= response.sentiment %> </td>
               <% elsif response.sentiment === "slightly_negative" or response.sentiment === "negative" %>
                 <td style="color: red;"> <%= response.sentiment %> </td>
@@ -276,11 +276,17 @@
       </table>
       <br/>
       <br/>
-    <%end%>
+    <% end %>
   </div>
 <% end %>
 
 <script>
+  // $(document).ready(function(){
+  //   // document.getElementById('user_time_zone').value = jstz.determine().name();
+  //   console.log(jstz.determine().name())
+  // })
+  console.log(jstz.determine().name())
+  // console.log(new Date())
 
   window.onclick = function (event) {
     if (event.target == modal_sr) {

@@ -2,7 +2,7 @@ class CreateOpenEndedResponses < ActiveRecord::Migration[6.0]
   def change
     create_table :open_ended_responses do |t|
       t.string :response
-      t.integer :elapsed_weeks
+      t.integer :elapsed
       t.float :score
       t.float :magnitude
       t.references :question
