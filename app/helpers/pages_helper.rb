@@ -46,6 +46,7 @@ module PagesHelper
       end
       # Rails.logger.info("\n ------- #{personName} --- his/her allScores: #{allScores}\n")
       # Rails.logger.info(" --- standard dev: #{standard_deviation(allScores)}\n")
+      # sample standard deviation
       calculated << [personName, standard_deviation(allScores)]
     end
     e_mc = calculated.sort_by(&:last).reverse
