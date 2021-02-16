@@ -4,7 +4,7 @@ class MoodResponsesController < ApplicationController
     survey = Survey.find(params[:id])
     question = Question.find(params[:question_id])
 
-    this_survey_response = MoodResponse.find_by(question_id: question.id, employee_id: params[:employee_id], elapsed: 0)
+    this_survey_response = MoodResponse.where(question_id: question.id, employee_id: params[:employee_id])
     if this_survey_response == nil
       @isFilled = false
     else

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_235130) do
   create_table "entity_nlps", force: :cascade do |t|
     t.string "name"
     t.integer "count"
+    t.integer "elapsed"
     t.decimal "sentiment_score"
     t.decimal "sentiment_mag"
     t.decimal "salience_score"

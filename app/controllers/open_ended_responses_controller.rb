@@ -24,9 +24,11 @@ class OpenEndedResponsesController < ApplicationController
       allEntities.each do |entity|
         if entity.type == :PERSON
           Rails.logger.info("\n --- \nSurvey: #{survey.id} ,OpenEndedResponse: #{this_survey_response.id} \n")
-          EntityNlp.create!(name: entity.name, count: entity.mentions.count,
+          entity.mentions.count.times do
+            EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
                             salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id)
+          end
         end
       end
     else
@@ -39,9 +41,11 @@ class OpenEndedResponsesController < ApplicationController
       end
       allEntities.each do |entity|
         if entity.type == :PERSON
-          EntityNlp.create!(name: entity.name, count: entity.mentions.count,
+          entity.mentions.count.times do
+            EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
                             salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id)
+          end
         end
       end
     end
