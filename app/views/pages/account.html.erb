@@ -1476,19 +1476,19 @@
 <!-- <script type="text/javascript" src="index.js"></script> -->
 
 <script>
-  $(document).ready(function()
-  {
-    word_list = [];
+  word_list = [];
 
-    if("<%= !(EntityNlp.all).empty? %>" === "true") {
-      list_size = '<%= f_grouped.size %>';
-      group = <%= raw f_grouped %>;
+  if("<%= !(EntityNlp.all).empty? %>" === "true") {
+    list_size = '<%= f_grouped.size %>';
+    group = <%= raw f_grouped %>;
 
-      for(i = 0; i < list_size; i++) {
-        word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
-      }
+    for(i = 0; i < list_size; i++) {
+      word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
     }
-    
+  }
+
+  $(document).ready(function()
+  {    
     $("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
