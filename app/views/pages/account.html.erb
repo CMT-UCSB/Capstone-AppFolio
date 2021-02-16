@@ -75,13 +75,13 @@
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <%# f = Survey.all %>
-    <%# f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
-    <%# f_grouped %>
+    <% f = Survey.all %>
+    <% f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
+    <% f_grouped %>
     <% if !(EntityNlp.all).empty? %>
-      <% f = EntityNlp.all %>
-      <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% f_grouped.each do |g| %>
+      <% e = EntityNlp.all %>
+      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+      <% e_grouped.each do |g| %>
         <span><%= g[0] %> : <%= g[1] %> times</span><br />
       <% end %>
       <br />
@@ -1479,18 +1479,12 @@
   $(document).ready(function()
   {
     word_list = [];
+    group = <%=raw f_grouped %>;
     
-    $("#wordCloud").load(function() {
-      if("<%= !(EntityNlp.all).empty? %>" == "true") {
-        list_size = '<%= f_grouped.size %>';
-        group = <%= raw f_grouped %>;
-
-        for(i = 0; i < list_size; i++) {
-          word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
-        }
-      }
-    })
-
+    $.each(group, function(key, value) {
+      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+    
     $("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
