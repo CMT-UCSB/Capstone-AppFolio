@@ -32,9 +32,17 @@
     <p id="analytics_data">Showing data for the first survey</p>
     <br />
     <div class="chart">
-    <% if !@surveys.empty? %>
-      <%= render partial: 'chart', locals: { chart: @surveys.first } %>
-    <% end %>
+    <div id="display" class="chart-<%= @surveys.first.id %>" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
+      font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
+        <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">    
+    </div>
+    <script>
+      init();
+    </script>
+    <!--% if !@surveys.empty? %-->
+      <!--%= render partial: 'chart', locals: { chart: @surveys.first } %-->
+    <!--% end %-->
+
     </div>
   </div>
 
