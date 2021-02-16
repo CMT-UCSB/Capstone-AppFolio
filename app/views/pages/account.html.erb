@@ -61,30 +61,36 @@
 
 <!--h4 style= "margin-left: 20px">Displaying all surveys</h4-->
 
+<br />
+<br />
+<div class="wordcloud-container">
+  <div class="wordcloud">
+    <h4>Most Mentioned Names</h4>
+    <br />
+    <% f = Survey.all %>
+    <% f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
+    <% f_grouped %>
+    <div id="wordCloud"></div>
+    <% if !(EntityNlp.all).empty? %>
+      <% e = EntityNlp.all %>
+      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+      <% e_grouped.each do |g| %>
+        <span><%= g[0] %> : <%= g[1] %> times</span><br />
+      <% end %>
+    <% else %>
+      <br />
+      <span>No data yet!</span>
+      <br/>
+      <br/>
+    <% end %>
+  </div>
+</div>
+
 
 <br />
 <br />
 <div class="analytics-container">
   <div class="insight-wrapper">
-    <div class="insight-piece">
-      <h4>Most Mentioned Names</h4>
-      <br />
-      <%# e = Survey.all %>
-      <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
-      <%# e_grouped[0][0] %>
-      <% if !(EntityNlp.all).empty? %>
-        <% e = EntityNlp.all %>
-        <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-        <% e_grouped.each do |g| %>
-          <span><%= g[0] %> : <%= g[1] %> times</span><br />
-        <% end %>
-      <% else %>
-        <span>No data yet!</span>
-        <br/>
-        <br/>
-      <% end %>
-    </div>
-
     <div class="insight-piece">
       <h4>Most Positively Viewed</h4>
       <br />
@@ -236,6 +242,25 @@
     padding-top: 10px;
     width: 1080px;
     margin: 0 auto;
+  }
+
+  .wordcloud {
+    background: #262728;
+    padding-top: 10px;
+    width: 1080px;
+    height: 500px;
+    margin: 0 auto;
+    align-items: center
+    display: flex
+  }
+
+  .wordcloud-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .modal {
@@ -967,11 +992,10 @@
 
 </script>
 
-<!-- WORD CLOUD SCRIPT AND STYLE (from jQWCloud -->
+<!-- WORD CLOUD SCRIPT AND STYLE (from jQWCloud) -->
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
 <script>
   var LB=1,  //Left Bottom
     LT=2,  //Left Top
@@ -1386,6 +1410,7 @@
                       if(Math.random()*2>1){
                         this._pushSpaceData(obj.spaceType, obj.width-w, h, obj.x+xMulS*w, obj.y);  //R
                         this._pushSpaceData(obj.spaceType, obj.width, obj.height-h, obj.x, obj.y+yMulS*h);  //T
+                        
                       }else{
                         this._pushSpaceData(obj.spaceType, obj.width-w, obj.height, obj.x+xMulS*w, obj.y);  //R
                         this._pushSpaceData(obj.spaceType, w, obj.height-h, obj.x, obj.y+yMulS*h); 		//T
@@ -1405,10 +1430,10 @@
                     $(span).css("-o-transform","rotate(270deg)").css("filter","progid:DXImageTransform.Microsoft.BasicImage(rotation=3)");
                     this.$target.append(span);
                     
-                      if(Math.random()*2>1){
+                      if(Math.random()*2>1){                        
                         this._pushSpaceData(obj.spaceType, obj.width-h, w, obj.x+xMulS*h, obj.y);  //R
                         this._pushSpaceData(obj.spaceType, obj.width, obj.height-w, obj.x, obj.y+yMulS*w);  //T
-                      }else{
+                      }else{                        
                         this._pushSpaceData(obj.spaceType, obj.width-h, obj.height, obj.x+xMulS*h, obj.y);  //R
                         this._pushSpaceData(obj.spaceType, h, obj.height-w, obj.x, obj.y+yMulS*w); 		//T
                       }
@@ -1434,15 +1459,17 @@
 
 </script>
 
+<!-- <script type="text/javascript" src="index.js"></script> -->
+
 <script>
   $(document).ready(function()
   {
     $("#wordCloud").jQWCloud({
-      document.write(parseInt('<%= f_grouped[0][1] %>'));
       words: [
           {word: '<%= f_grouped[0][0] %>', weight: parseInt('<%= f_grouped[0][1] %>') * 10},
-          {word: '<%= f_grouped[1][0] %>', weight: parseInt('<%= f_grouped[0][1] %>') * 10},
-          {word: '<%= f_grouped[2][0] %>', weight: parseInt('<%= f_grouped[0][1] %>') * 10}
+          {word: '<%= f_grouped[1][0] %>', weight: parseInt('<%= f_grouped[1][1] %>') * 20},
+          {word: '<%= f_grouped[2][0] %>', weight: parseInt('<%= f_grouped[2][1] %>') * 30}
+                            
       ],
       //cloud_color: 'yellow',		
       minFont: 30,
@@ -1453,21 +1480,9 @@
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass',		
-      /*word_mouseEnter :function(){
-        $(this).css("text-decoration","underline");
-      }*/
+      word_common_classes: 'WordClass'
     });
     
   });
 
 </script>
-
-<style>
-  #wordCloud{
-    height: 478px;
-    width: 700px;
-  }
-
-  h1 { margin:150px auto 50px auto; text-align:center;}
-</style>
