@@ -75,15 +75,9 @@
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <%# f = Survey.all %>
-    <%# f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
-    <%# f_grouped %>
     <% if !(EntityNlp.all).empty? %>
       <% f = EntityNlp.all %>
       <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% f_grouped.each do |g| %>
-        <!--<span ><%# g[0] %> : <%# g[1] %> times</span><br />-->
-      <% end %>
       <br />
       <br />
       <br />
