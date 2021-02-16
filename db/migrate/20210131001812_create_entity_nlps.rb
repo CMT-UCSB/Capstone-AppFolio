@@ -3,6 +3,7 @@ class CreateEntityNlps < ActiveRecord::Migration[6.0]
     create_table :entity_nlps do |t|
       t.string :name
       t.integer :count
+      t.integer :elapsed
       t.decimal :sentiment_score
       t.decimal :sentiment_mag
       t.decimal :salience_score

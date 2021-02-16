@@ -13,12 +13,19 @@ class UserMailer < ApplicationMailer
 
     questions.each do |q|
       if q.question_type == 'open_ended'
-        response = OpenEndedResponse.find_by(question_id: q.id)
+        response = OpenEndedResponse.where(question_id: q.id)
       else
-        response = MoodResponse.find_by(question_id: q.id)
+        response = MoodResponse.where(question_id: q.id)
       end
       if response != nil
-        response.update(elapsed: response.elapsed + 1)
+        Rails.logger.info("\n --- response: #{response}\n")
+        response.each do |r|
+          r.update(elapsed: r.elapsed + 1)
+          entityNlpForThisResp = EntityNlp.where(open_ended_response_id: r.id)
+          entityNlpForThisResp.each do |ent|
+            ent.update(elapsed: ent.elapsed + 1)
+          end
+        end
       end
     end
   end

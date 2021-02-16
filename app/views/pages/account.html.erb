@@ -69,18 +69,12 @@
     <div class="insight-piece">
       <h4>Most Mentioned Names</h4>
       <br />
-      <%# e = Survey.all %>
-      <%# e_grouped = e.group(:name).count(:name).sort_by(&:last).reverse %>
-      <%# e_grouped[0][0] %>
       <% if !(EntityNlp.all).empty? %>
-        <% e = EntityNlp.all %>
-        <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-        <% e_grouped.each do |g| %>
-          <span><%= g[0] %> : <%= g[1] %> times</span><br />
+        <% most_mentioned_name.each do |result| %>
+          <span><%= result[0] %> : <%= result[1] %> times</span><br />
         <% end %>
       <% else %>
         <span>No data yet!</span>
-        <br/>
         <br/>
       <% end %>
     </div>
@@ -88,42 +82,77 @@
     <div class="insight-piece">
       <h4>Most Positively Viewed</h4>
       <br />
-      <span>1. Tom</span><br />
-      <span>2. Amy</span><br />
-      <span>3. Calvin</span><br />
-      <span>4. Luke</span><br />
+      <% if !most_positive.empty? %>
+        <% most_positive.each_with_index do |result,index|%>
+          <% if result[1] > 0 %>
+            <span><%= index+1%>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+          <%end %>
+        <%end%>
+      <%else%>
+        <span>No data yet!</span>
+        <br/>
+      <%end%>
     </div>
 
     <div class="insight-piece">
       <h4>Most Negatively Viewed</h4>
       <br />
-      <span>1. John Doe</span><br />
-      <span>2. Tim</span><br />
-      <span>3. Bob</span><br />
+      <% if !most_positive.empty? %>
+        <% most_negative.each_with_index do |result,index|%>
+          <% if result[1] < 0 %>
+            <span><%= index+1%>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+          <%end %>
+        <%end%>
+      <%else%>
+        <span>No data yet!</span>
+        <br/>
+      <%end%>
     </div>
 
     <div class="insight-piece">
       <h4>Most Controversial</h4>
       <br />
-      <span>1. John Doe</span><br />
-      <span>2. Bob</span><br />
-      <span>3. Luke</span><br />
+      <% if !most_controversial.empty? %>
+        <% most_controversial.each_with_index do |result,index|%>
+          <% if result[1] > 0 %>
+            <span><%= index+1%>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
+          <%end %>
+        <%end%>
+      <%else%> 
+        <span>No data yet!</span>
+        <br/>
+      <%end%>
     </div>
 
     <div class="insight-piece">
-      <h4>Most Improved</h4>
+      <h4>Most Improved in Peer Review</h4>
       <br />
-      <span>1. Tom</span><br />
-      <span>2. Calvin</span><br />
-      <span>3. Luke</span><br />
+      <% if !most_improve_review.empty? %>
+        <% most_improve_review.each_with_index do |result,index| %>
+          <% if result[1] > 0 %>
+              <span><%= index+1%>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+            <%end %>
+        <%end%>
+      <%else%> 
+        <span>No one mentioned anyone twice.</span>
+        <br/>
+      <%end%>
     </div>
 
     <div class="insight-piece">
-      <h4>Most Drop in Mood</h4>
+      <h4>Most Drop in Peer Review</h4>
       <br />
-      <span>1. Bob</span><br />
-      <span>2. John Doe</span><br />
-      <span>3. Tim</span><br />
+      <% if !most_drop_review.empty? %>
+        <% most_drop_review.each_with_index do |result,index| %>
+          <% if result[1] < 0 %>
+              <span><%= index+1%>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+            <%end %>
+        <%end%>
+      <%else%> 
+        <br/>
+        <span>No one mentioned anyone twice.</span>
+        <br/>
+      <%end%>
     </div>
 
   </div>
