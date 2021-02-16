@@ -75,13 +75,13 @@
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <% f = Survey.all %>
-    <% f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
-    <% f_grouped %>
+    <%# f = Survey.all %>
+    <%# f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
+    <%# f_grouped %>
     <% if !(EntityNlp.all).empty? %>
-      <% e = EntityNlp.all %>
-      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
-      <% e_grouped.each do |g| %>
+      <% f = EntityNlp.all %>
+      <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
+      <% f_grouped.each do |g| %>
         <span><%= g[0] %> : <%= g[1] %> times</span><br />
       <% end %>
       <br />
@@ -1480,7 +1480,7 @@
   {
     word_list = [];
     group = <%=raw f_grouped %>;
-    
+
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
