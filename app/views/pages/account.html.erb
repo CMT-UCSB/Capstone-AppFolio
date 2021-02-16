@@ -1525,19 +1525,15 @@
 <!-- <script type="text/javascript" src="index.js"></script> -->
 
 <script>
-  word_list = [];
-
-  if("<%= !(EntityNlp.all).empty? %>" == "true") {
-    list_size = '<%= f_grouped.size %>';
-    group = <%= raw f_grouped %>;
-
-    for(i = 0; i < list_size; i++) {
-      word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
-    }
-  }
-
   $(document).ready(function()
   {    
+    word_list = [];
+    group = <%=raw f_grouped %>;
+
+    $.each(group, function(key, value) {
+      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+    
     $("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
