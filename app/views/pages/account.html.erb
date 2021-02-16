@@ -1480,7 +1480,7 @@
   {
     word_list = [];
 
-    if('<%= f_grouped %>') {
+    if("!(EntityNlp.all).empty?" === "true") {
       list_size = '<%= f_grouped.size %>';
       group = <%= raw f_grouped %>;
 
