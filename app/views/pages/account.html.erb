@@ -1478,7 +1478,7 @@
 <script>
   word_list = [];
 
-  if("<%= !(EntityNlp.all).empty? %>" === "true") {
+  if("<%= !(EntityNlp.all).empty? %>" == "true") {
     list_size = '<%= f_grouped.size %>';
     group = <%= raw f_grouped %>;
 
