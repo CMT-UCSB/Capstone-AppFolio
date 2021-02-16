@@ -82,7 +82,7 @@
       <% f = EntityNlp.all %>
       <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
       <% f_grouped.each do |g| %>
-        <!--<span ><%# g[0] %> : <%# g[1] %> times</span><br />-->
+        <span><%= g[0] %> : <%= g[1] %> times</span><br />
       <% end %>
       <br />
       <br />
@@ -91,7 +91,7 @@
       <div id="wordCloud" class="wordcloud-container"></div>
     <% else %>
       <br />
-      <span style="color: white;">No data yet!</span>
+      <span>No data yet!</span>
       <br/>
       <br/>
     <% end %>
@@ -306,7 +306,6 @@
 
   .wordcloud {
     background: #262728;
-    color: white;
     padding-top: 10px;
     width: 1080px;
     height: 500px;
@@ -1051,11 +1050,12 @@
 
     if("<%= @surveys.empty? %>" != "true")
     {
+    }
   }
 
 </script>
 
-<!-- WORD CLOUD SCRIPT AND STYLE (from jQWCloud) -->
+<!--WORD CLOUD SCRIPT AND STYLE (from jQWCloud)-->
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -1525,15 +1525,19 @@
 <!-- <script type="text/javascript" src="index.js"></script> -->
 
 <script>
-  $(document).ready(function()
-  {
-    word_list = [];
-    group = <%=raw f_grouped %>;
+  word_list = [];
 
-    $.each(group, function(key, value) {
-      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
-    
+  if("<%= !(EntityNlp.all).empty? %>" == "true") {
+    list_size = '<%= f_grouped.size %>';
+    group = <%= raw f_grouped %>;
+
+    for(i = 0; i < list_size; i++) {
+      word_list.push({word: group[i][0], weight: parseInt(group[i][1] * 10)});
+    }
+  }
+
+  $(document).ready(function()
+  {    
     $("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
