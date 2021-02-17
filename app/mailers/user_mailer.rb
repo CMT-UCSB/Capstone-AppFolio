@@ -3,7 +3,7 @@ require 'net/http'
 class UserMailer < ApplicationMailer
   default :from => 'synergipwdreset@gmail.com'
 
-  def self.bulk_email(manager, survey)
+  def self.bulk_email(manager, survey, shouldIncrement)
     @recipients = manager.employees
     @recipients.each do |recipient|
       survey_notify(recipient, manager, survey).deliver
@@ -17,8 +17,8 @@ class UserMailer < ApplicationMailer
       else
         response = MoodResponse.where(question_id: q.id)
       end
-      if response != nil
-        Rails.logger.info("\n --- response: #{response}\n")
+      if response != nil && shouldIncrement
+        # Rails.logger.info("\n --- response: #{response}\n")
         response.each do |r|
           r.update(elapsed: r.elapsed + 1)
           entityNlpForThisResp = EntityNlp.where(open_ended_response_id: r.id)
