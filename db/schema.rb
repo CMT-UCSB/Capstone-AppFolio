@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(version: 2021_02_04_235130) do
     t.decimal "sentiment_score"
     t.decimal "sentiment_mag"
     t.decimal "salience_score"
+    t.bigint "manager_id"
     t.uuid "survey_id"
     t.bigint "open_ended_response_id"
+    t.index ["manager_id"], name: "index_entity_nlps_on_manager_id"
     t.index ["open_ended_response_id"], name: "index_entity_nlps_on_open_ended_response_id"
     t.index ["survey_id"], name: "index_entity_nlps_on_survey_id"
   end
@@ -64,11 +66,13 @@ ActiveRecord::Schema.define(version: 2021_02_04_235130) do
   create_table "mood_responses", force: :cascade do |t|
     t.integer "response"
     t.integer "elapsed"
+    t.bigint "manager_id"
     t.bigint "question_id"
     t.uuid "employee_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employee_id"], name: "index_mood_responses_on_employee_id"
+    t.index ["manager_id"], name: "index_mood_responses_on_manager_id"
     t.index ["question_id"], name: "index_mood_responses_on_question_id"
   end
 

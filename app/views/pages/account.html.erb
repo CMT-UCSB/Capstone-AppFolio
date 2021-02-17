@@ -73,8 +73,8 @@ $(document).on('page:load', ready);
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <% if !(EntityNlp.all).empty? %>
-      <% f = EntityNlp.all %>
+    <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+      <% f = EntityNlp.where(manager_id: current_manager) %>
       <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
       <br />
       <br />
