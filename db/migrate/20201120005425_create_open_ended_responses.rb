@@ -5,6 +5,7 @@ class CreateOpenEndedResponses < ActiveRecord::Migration[6.0]
       t.integer :elapsed
       t.float :score
       t.float :magnitude
+      t.references :manager
       t.references :question
       t.references :employee, index: true, type: :uuid
       t.timestamps
