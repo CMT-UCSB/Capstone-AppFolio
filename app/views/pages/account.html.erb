@@ -22,7 +22,6 @@ ready = function()
 {
   changeAnalyticsNewer();
   changeTimeIntervalM();
-  this.counter = 0;
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);
@@ -33,8 +32,9 @@ $(document).on('page:load', ready);
   <div class="piechart">
     <h4>Analytics</h4>
     <br />
-    <button id="pco" class="linechart-btn" value='o' onclick="changeAnalyticsOlder()">Older</button>
-    <button id="pcn" class="linechart-btn" value="n" onclick="changeAnalyticsNewer()">Newer</button>
+    <button class="linechart-btn" onclick="changeAnalyticsOlder()">Older</button>
+    <input id="cntr" name="cntr" type="hidden" value="0" />
+    <button class="linechart-btn" onclick="changeAnalyticsNewer()">Newer</button>
     
     <!--select id="number" onchange="changeAnalytics()"-->
       <!--option value="current">Current Mood Survey</option-->
@@ -430,14 +430,13 @@ $(document).on('page:load', ready);
   {
     changeAnalytics();
     changeTimeIntervalM();
-    this.counter = 0;
   }
 
   function changeAnalyticsNewer() 
   {
     document.getElementById('analytics_data').innerHTML = 'Showing data for ' + ' b ' + ' survey';
     
-    //var cntr = document.getElementById('pco').value;
+    var cntr = document.getElementById('cntr').value;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
     var Manager = gon.Manager;
@@ -477,16 +476,17 @@ $(document).on('page:load', ready);
       console.log(responses);
 
       var max = responses[0][0].elapsed;
+      var counter = cntr;
 
-      if(this.counter > 0)
-        this.counter--;
+      if(counter > 0)
+        counter--;
 
       console.log(max);
-      console.log(this.counter);
+      console.log(counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
-        if(responses[0][j].elapsed == this.counter)
+        if(responses[0][j].elapsed == counter)
         {
           if(responses[0][j].response == "good")
             dummyData[0][1]++;
@@ -507,13 +507,15 @@ $(document).on('page:load', ready);
       
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
     }
+
+    document.getElementById('cntr').value = counter;
   }
 
   function changeAnalyticsOlder() 
   {
     document.getElementById('analytics_data').innerHTML = 'Showing data for ' + ' a ' + ' survey';
     
-    //var cntr = document.getElementById('pco').value;
+    var cntr = document.getElementById('cntr').value;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
     var Manager = gon.Manager;
@@ -553,16 +555,17 @@ $(document).on('page:load', ready);
       console.log(responses);
 
       var max = responses[0][0].elapsed;
+      var counter = cntr;
 
-      if(this.counter < max)
-        this.counter++;
+      if(counter < max)
+        counter++;
       
       console.log(max);
-      console.log(this.counter);
+      console.log(counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
-        if(responses[0][j].elapsed == this.counter)
+        if(responses[0][j].elapsed == counter)
         {
           if(responses[0][j].response == "good")
             dummyData[0][1]++;
@@ -583,6 +586,7 @@ $(document).on('page:load', ready);
       
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
     
+      document.getElementById('cntr').value = counter;
 
       /*
       if(MRS.length == 1)
