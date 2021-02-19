@@ -481,6 +481,9 @@ $(document).on('page:load', ready);
       if(counter > 0)
         counter--;
 
+      console.log(max);
+      console.log(counter);
+
       for(var j = 0; j < responses[0].length; j++)
       {
         if(responses[0][j].elapsed == counter)
@@ -553,6 +556,9 @@ $(document).on('page:load', ready);
 
       if(counter < max)
         counter++;
+      
+      console.log(max);
+      console.log(counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
