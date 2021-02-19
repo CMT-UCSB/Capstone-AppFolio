@@ -549,7 +549,7 @@ $(document).on('page:load', ready);
       console.log(MRS);
       console.log(responses);
 
-      var max = responses[0].first.elapsed;
+      var max = responses[0][0].elapsed;
 
       if(counter < max)
         counter++;
