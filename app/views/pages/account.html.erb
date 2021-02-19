@@ -20,7 +20,7 @@
 var ready;
 ready = function() 
 {
-  changeAnalytics();
+  changeAnalyticsNewer();
   changeTimeIntervalM();
 };
 $(document).ready(ready);
@@ -32,12 +32,15 @@ $(document).on('page:load', ready);
   <div class="piechart">
     <h4>Analytics</h4>
     <br />
-    <select id="number" onchange="changeAnalytics()">
-      <option value="current">Current Mood Survey</option>
-      <option value="recent">Recent Mood Survey</option>
-      <option value="older">Older Mood Survey</option>
-      <option selected="selected" value="first">First Mood Survey</option>
-    </select>
+    <button id="pco" class="linechart-btn" value='o' onclick="changeAnalyticsOlder()">Older</button>
+    <button id="pcn" class="linechart-btn" value="n" onclick="changeAnalyticsNewer()">Newer</button>
+    
+    <!--select id="number" onchange="changeAnalytics()"-->
+      <!--option value="current">Current Mood Survey</option-->
+      <!--option value="recent">Recent Mood Survey</option-->
+      <!--option value="older">Older Mood Survey</option-->
+      <!--option selected="selected" value="first">First Mood Survey</option-->
+    <!--/select-->
     <br />
     <p id="analytics_data">Showing data for the first survey</p>
     <br />
@@ -428,11 +431,13 @@ $(document).on('page:load', ready);
     changeTimeIntervalM();
   }
 
-  function changeAnalytics() 
+  var counter = 0;
+
+  function changeAnalyticsNewer() 
   {
-    document.getElementById('analytics_data').innerHTML = 'Showing data for ' + document.getElementById('number').value + ' survey';
+    document.getElementById('analytics_data').innerHTML = 'Showing data for ' + ' b ' + ' survey';
     
-    var num = document.getElementById('number').value;
+    //var cntr = document.getElementById('pco').value;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
     var Manager = gon.Manager;
@@ -471,6 +476,109 @@ $(document).on('page:load', ready);
       console.log(MRS);
       console.log(responses);
 
+      var max = responses[0].first.elapsed;
+
+      if(counter > 0)
+        counter--;
+
+      for(var j = 0; j < responses[0].length; j++)
+      {
+        if(responses[0][j].elapsed == counter)
+        {
+          if(responses[0][j].response == "good")
+            dummyData[0][1]++;
+          
+          else if(responses[0][j].response == "okay")
+            dummyData[1][1]++;
+
+          else if(responses[0][j].response == "bad")
+            dummyData[2][1]++;
+
+          else if(responses[0][j].response == "terrible")
+            dummyData[3][1]++;
+
+          else if(responses[0][j].response == "amazing")
+            dummyData[4][1]++;
+        }
+      }
+      
+      new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+    }
+  }
+
+  function changeAnalyticsOlder() 
+  {
+    document.getElementById('analytics_data').innerHTML = 'Showing data for ' + ' a ' + ' survey';
+    
+    //var cntr = document.getElementById('pco').value;
+    var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
+    
+    var Manager = gon.Manager;
+    var Surveys = gon.Surveys;
+    var AllQuestions = gon.questions; 
+
+    var AllSurveys = Surveys.filter(function(survey){
+      return survey.manager_id == Manager.id
+    });
+    
+    var MRS = [];
+    for(var i = 0; i < AllSurveys.length; i++)
+    {
+      MRS = AllQuestions.filter(function(question){
+        return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
+      });
+    }
+
+    if(MRS.length == 0)
+    {
+      new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+    }
+
+    else
+    {
+      var responses = [];
+      var MoodResponse = gon.MoodResponse;
+
+      for(var i = 0; i < MRS.length; i++)
+      {
+        responses[i] = MoodResponse.filter(function(mResponse){
+              return mResponse.question_id == MRS[i].id;
+            });
+      }
+
+      console.log(MRS);
+      console.log(responses);
+
+      var max = responses[0].first.elapsed;
+
+      if(counter < max)
+        counter++;
+
+      for(var j = 0; j < responses[0].length; j++)
+      {
+        if(responses[0][j].elapsed == counter)
+        {
+          if(responses[0][j].response == "good")
+            dummyData[0][1]++;
+          
+          else if(responses[0][j].response == "okay")
+            dummyData[1][1]++;
+
+          else if(responses[0][j].response == "bad")
+            dummyData[2][1]++;
+
+          else if(responses[0][j].response == "terrible")
+            dummyData[3][1]++;
+
+          else if(responses[0][j].response == "amazing")
+            dummyData[4][1]++;
+        }
+      }
+      
+      new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
+    
+
+      /*
       if(MRS.length == 1)
       {
         if(num == "current" || num == "first")
@@ -732,7 +840,9 @@ $(document).on('page:load', ready);
           new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
         }
       }
+      */
     }
+
   }
 
   /*
