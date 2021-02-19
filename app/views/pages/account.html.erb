@@ -22,6 +22,7 @@ ready = function()
 {
   changeAnalyticsNewer();
   changeTimeIntervalM();
+  this.counter = 0;
 };
 $(document).ready(ready);
 $(document).on('page:load', ready);
@@ -429,9 +430,8 @@ $(document).on('page:load', ready);
   {
     changeAnalytics();
     changeTimeIntervalM();
+    this.counter = 0;
   }
-
-  this.counter = 0;
 
   function changeAnalyticsNewer() 
   {
