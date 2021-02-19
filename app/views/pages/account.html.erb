@@ -431,7 +431,7 @@ $(document).on('page:load', ready);
     changeTimeIntervalM();
   }
 
-  var counter = 0;
+  this.counter = 0;
 
   function changeAnalyticsNewer() 
   {
@@ -478,15 +478,15 @@ $(document).on('page:load', ready);
 
       var max = responses[0][0].elapsed;
 
-      if(counter > 0)
-        counter--;
+      if(this.counter > 0)
+        this.counter--;
 
       console.log(max);
-      console.log(counter);
+      console.log(this.counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
-        if(responses[0][j].elapsed == counter)
+        if(responses[0][j].elapsed == this.counter)
         {
           if(responses[0][j].response == "good")
             dummyData[0][1]++;
@@ -554,15 +554,15 @@ $(document).on('page:load', ready);
 
       var max = responses[0][0].elapsed;
 
-      if(counter < max)
-        counter++;
+      if(this.counter < max)
+        this.counter++;
       
       console.log(max);
-      console.log(counter);
+      console.log(this.counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
-        if(responses[0][j].elapsed == counter)
+        if(responses[0][j].elapsed == this.counter)
         {
           if(responses[0][j].response == "good")
             dummyData[0][1]++;
