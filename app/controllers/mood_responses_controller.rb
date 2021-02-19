@@ -3,8 +3,9 @@ class MoodResponsesController < ApplicationController
     employee = Employee.find(params[:employee_id])
     survey = Survey.find(params[:id])
     question = Question.find(params[:question_id])
+    manager = Manager.find_by(id: employee.manager_id)
 
-    this_survey_response = MoodResponse.where(question_id: question.id, employee_id: params[:employee_id])
+    this_survey_response = MoodResponse.find_by(question_id: question.id, employee_id: params[:employee_id], elapsed: 0)
     if this_survey_response == nil
       @isFilled = false
     else
@@ -13,15 +14,15 @@ class MoodResponsesController < ApplicationController
 
     if @isFilled == false
       if params[:commit] == '😃'
-        MoodResponse.create!(employee: employee, question: question, response: 4, elapsed: 0)
+        MoodResponse.create!(manager: manager, employee: employee, question: question, response: 4, elapsed: 0)
       elsif params[:commit] == '🙂'
-        MoodResponse.create!(employee: employee, question: question, response: 3, elapsed: 0)
+        MoodResponse.create!(manager: manager, employee: employee, question: question, response: 3, elapsed: 0)
       elsif params[:commit] == '😐'
-        MoodResponse.create!(employee: employee, question: question, response: 2, elapsed: 0)
+        MoodResponse.create!(manager: manager, employee: employee, question: question, response: 2, elapsed: 0)
       elsif params[:commit] == '😟'
-        MoodResponse.create!(employee: employee, question: question, response: 1, elapsed: 0)
+        MoodResponse.create!(manager: manager, employee: employee, question: question, response: 1, elapsed: 0)
       elsif params[:commit] == '😭'
-        MoodResponse.create!(employee: employee, question: question, response: 0, elapsed: 0)
+        MoodResponse.create!(manager: manager, employee: employee, question: question, response: 0, elapsed: 0)
       end
     else
       if params[:commit] == '😃'

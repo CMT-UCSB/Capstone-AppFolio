@@ -3,6 +3,7 @@ class OpenEndedResponsesController < ApplicationController
     employee = Employee.find(params[:employee_id])
     survey = Survey.find(params[:id])
     question = Question.find(params[:question_id])
+    manager = Manager.find_by(id: employee.manager_id)
 
     this_survey_response = OpenEndedResponse.find_by(question_id: question.id, employee_id: params[:employee_id], elapsed: 0)
     if this_survey_response == nil
@@ -18,7 +19,7 @@ class OpenEndedResponsesController < ApplicationController
     allEntities = entity.getEntities
 
     if @isFilled == false
-      OpenEndedResponse.create!(employee: employee, question: question, response: params[:survey][:response], elapsed: 0,
+      OpenEndedResponse.create!(manager: manager, employee: employee, question: question, response: params[:survey][:response], elapsed: 0,
                                 score: sentiment.getScore, magnitude: sentiment.getMagnitude, sentiment: sentiment.getSentiment)
 
       allEntities.each do |entity|
@@ -27,7 +28,7 @@ class OpenEndedResponsesController < ApplicationController
           entity.mentions.count.times do
             EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
-                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id)
+                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id, manager: manager)
           end
         end
       end
@@ -44,7 +45,7 @@ class OpenEndedResponsesController < ApplicationController
           entity.mentions.count.times do
             EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
-                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id)
+                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id, manager: manager)
           end
         end
       end

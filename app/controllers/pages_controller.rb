@@ -7,11 +7,11 @@ class PagesController < ApplicationController
 
   def send_emails
     @survey = Survey.find_by(id: params[:id])
-    UserMailer.bulk_email(current_manager, @survey)
+    UserMailer.bulk_email(current_manager, @survey, false)
   end
 
   def self.send_emails_task(survey)
-    UserMailer.bulk_email(survey.manager, survey)
+    UserMailer.bulk_email(survey.manager, survey, true)
   end
 
   def account

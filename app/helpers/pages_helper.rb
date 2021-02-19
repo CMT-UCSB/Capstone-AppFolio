@@ -1,20 +1,22 @@
 module PagesHelper
 
   def most_mentioned_name
-    e = EntityNlp.where(elapsed: 0)
+    e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(elapsed: 0)
     e_mmn = e.group(:name).sum(:count).sort_by(&:last).reverse
     e_mmn
   end
 
   def most_positive
-    e = EntityNlp.where(elapsed: 0)
+    e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(elapsed: 0)
     e_pos = e.group(:name).average(:sentiment_score).sort_by(&:last).reverse
-    # Rails.logger.info("\n ------- e_pos: \n #{e_pos}")
     e_pos
   end
 
   def most_negative
-    e = EntityNlp.where(elapsed: 0)
+    e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(elapsed: 0)
     e_neg = e.group(:name).average(:sentiment_score).sort_by(&:last)
     e_neg
   end
@@ -34,7 +36,8 @@ module PagesHelper
   end
 
   def most_controversial
-    e = EntityNlp.where(elapsed: 0)
+    e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(elapsed: 0)
     calculated = []
     e.group_by(&:name).each do |person|
       allScores = []
@@ -53,8 +56,9 @@ module PagesHelper
   end
 
   def most_improve_review
-    current = EntityNlp.where(elapsed: 0)
-    last = EntityNlp.where(elapsed: 1) #change to 1
+    e = EntityNlp.where(manager_id: current_manager.id)
+    current = e.where(elapsed: 0)
+    last = e.where(elapsed: 1) #change to 1
     current_pos = current.group(:name).average(:sentiment_score).sort_by(&:last).reverse
     last_pos = last.group(:name).average(:sentiment_score).sort_by(&:last).reverse
     # Rails.logger.info(" --- current pos: #{current_pos}\n")
@@ -75,8 +79,9 @@ module PagesHelper
   end
 
   def most_drop_review
-    current = EntityNlp.where(elapsed: 0)
-    last = EntityNlp.where(elapsed: 1) #change to 1
+    e = EntityNlp.where(manager_id: current_manager.id)
+    current = e.where(elapsed: 0)
+    last = e.where(elapsed: 1) #change to 1
     current_pos = current.group(:name).average(:sentiment_score).sort_by(&:last).reverse
     last_pos = last.group(:name).average(:sentiment_score).sort_by(&:last).reverse
     

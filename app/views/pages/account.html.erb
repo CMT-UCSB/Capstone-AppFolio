@@ -15,7 +15,17 @@
 
 <h1 style="text-align: center">Account Dashboard</h1><br/>
 
-<body onload="init()"></body>
+<!--Graphs display on load-->
+<script>
+var ready;
+ready = function() 
+{
+  changeAnalytics();
+  changeTimeIntervalM();
+};
+$(document).ready(ready);
+$(document).on('page:load', ready);
+</script>
 
 <!--Anayltics -->
 <div class="analytics-container">
@@ -34,15 +44,8 @@
     <div class="chart">
     <div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
       font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
-        <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">    
+        <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
     </div>
-    <script>
-      init();
-    </script>
-    <!--% if !@surveys.empty? %-->
-      <!--%= render partial: 'chart', locals: { chart: @surveys.first } %-->
-    <!--% end %-->
-
     </div>
   </div>
 
@@ -53,9 +56,6 @@
     <div id="display2" class="chart">
       <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
     </div>
-    <script>
-      //new Chartkick.LineChart(document.getElementById("display2"), [["4",2.7],["3",2.9],["2",2.3],["1",2.5],["12/9",2.4]], {});
-    </script>
     <div class="linechart-buttons">
       <button class="linechart-btn" onclick="changeTimeIntervalM()">Past 4 Surveys</button>
       <button class="linechart-btn" onclick="changeTimeInterval2M()">Past 8 Surveys</button>
@@ -67,16 +67,14 @@
   </div>
 </div>
 
-<!--h4 style= "margin-left: 20px">Displaying all surveys</h4-->
-
 <br />
 <br />
 <div class="wordcloud-container">
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <% if !(EntityNlp.all).empty? %>
-      <% f = EntityNlp.all %>
+    <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+      <% f = EntityNlp.where(manager_id: current_manager) %>
       <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
       <br />
       <br />
@@ -424,7 +422,7 @@
   var results = [];
   function storeSurveyData(QID, responseName) {}
 
-  function init()
+  function starting()
   {
     changeAnalytics();
     changeTimeIntervalM();
