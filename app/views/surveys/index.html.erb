@@ -234,48 +234,53 @@
 <% @surveys.each do |survey| %>
   <div style="display: none; text-align: center;" class="survey-results-<%= survey.id %>">
     <% Question.where(survey_id: survey.id).each do |question| %>
+      <div class="question_container" style="display: show;">
+        <%= column_chart OpenEndedResponseChartBuilder.new(question: question).pie_chart_data, defer: true, discret: true  %>
+        <b style="font-size: 30px;"><%= question.prompt %> </b> <br/>
+        <div class="response_table">
+          <table class="question">
 
-      <b style="font-size: 30px;"><%= question.prompt %> </b> <br/>
-      <table class="question">
+            <thead>
+              <tr>
+                <% if survey.isAnonymous === "identifiable" %>
+                  <th> Name </th>
+                <% end %>
+                <th> Sentiment </th>
+                <th> Response </th>
+                <th> Score </th>
+                <th> Magnitude </th>
+              </tr>
+            </thead>
 
-        <thead>
-          <tr>
-            <% if survey.isAnonymous === "identifiable" %>
-              <th> Name </th>
-            <% end %>
-            <th> Sentiment </th>
-            <th> Response </th>
-            <th> Score </th>
-            <th> Magnitude </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
-            <tr>
-              <% if survey.isAnonymous === "identifiable" %>
-                <% employee = Employee.where(id: response.employee_id).first %>
-                <td> <%= employee.first_name %> <%= employee.last_name %> </td>
+            <tbody>
+              <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
+                <tr>
+                  <% if survey.isAnonymous === "identifiable" %>
+                    <% employee = Employee.where(id: response.employee_id).first %>
+                    <td> <%= employee.first_name %> <%= employee.last_name %> </td>
+                  <% end %>
+                  <% if response.sentiment === "slightly_positive" or response.sentiment === "positive" %>
+                    <td style="color: green;"> <%= response.sentiment %> </td>
+                  <% elsif response.sentiment === "slightly_negative" or response.sentiment === "negative" %>
+                    <td style="color: red;"> <%= response.sentiment %> </td>
+                  <% elsif response.sentiment === "mixed" %>
+                    <td style="color: #808080"> <%= response.sentiment %> </td>
+                  <% else %>
+                    <td> <%= response.sentiment %> </td>
+                  <% end %>
+                  <td> <%= response.response %> </td>
+                  <td> <%= response.score %> </td>
+                  <td> <%= response.magnitude %> </td>
+                </tr>
               <% end %>
-              <% if response.sentiment === "slightly_positive" or response.sentiment === "positive" %>
-                <td style="color: green;"> <%= response.sentiment %> </td>
-              <% elsif response.sentiment === "slightly_negative" or response.sentiment === "negative" %>
-                <td style="color: red;"> <%= response.sentiment %> </td>
-              <% elsif response.sentiment === "mixed" %>
-                <td style="color: #808080"> <%= response.sentiment %> </td>
-              <% else %>
-                <td> <%= response.sentiment %> </td>
-              <% end %>
-              <td> <%= response.response %> </td>
-              <td> <%= response.score %> </td>
-              <td> <%= response.magnitude %> </td>
-            </tr>
-          <% end %>
-        </tbody>
+            </tbody>
 
-      </table>
+          </table>
+        </div>
+      </div>
       <br/>
       <br/>
+      
     <% end %>
   </div>
 <% end %>
@@ -285,7 +290,7 @@
   //   // document.getElementById('user_time_zone').value = jstz.determine().name();
   //   console.log(jstz.determine().name())
   // })
-  console.log(jstz.determine().name())
+  //console.log(jstz.determine().name())
   // console.log(new Date())
 
   window.onclick = function (event) {
