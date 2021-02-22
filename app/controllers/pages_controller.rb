@@ -21,4 +21,7 @@ class PagesController < ApplicationController
     gon.Surveys = Survey.all
     @surveys = Survey.where(manager_id: current_manager.id)
   end
+
+  def test
+  end
 end
