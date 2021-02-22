@@ -503,7 +503,7 @@ $(document).on('page:load', ready);
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
     }
 
-    document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter) + ' survey';
+    document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter + 1) + ' survey';
 
     document.getElementById('cntr').value = counter;
   }
@@ -584,7 +584,7 @@ $(document).on('page:load', ready);
       
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
 
-      document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter) + ' survey';
+      document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter + 1) + ' survey';
     
       document.getElementById('cntr').value = counter;
     }
@@ -643,7 +643,7 @@ $(document).on('page:load', ready);
       var max = responses[0][0].elapsed;
       var negCtr = 11;
 
-      for(var i = 0; i < 11; i++)
+      for(var i = 0; i < 12; i++)
       {
         var avg = 0;
         for(var j = 0; j < responses[0].length; j++)
@@ -664,9 +664,12 @@ $(document).on('page:load', ready);
           }
         }
 
-        data[negCtr][0] = "#" + (max-i);
-        data[negCtr][1] = avg;
-        negCtr--;
+        if(max - i >= 0)
+        {
+          data[negCtr][0] = "#" + (max-i);
+          data[negCtr][1] = avg;
+          negCtr--;
+        }
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
@@ -772,7 +775,7 @@ $(document).on('page:load', ready);
       var max = responses[0][0].elapsed;
       var negCtr = 7;
 
-      for(var i = 0; i < 7; i++)
+      for(var i = 0; i < 8; i++)
       {
         var avg = 0;
         for(var j = 0; j < responses[0].length; j++)
@@ -793,9 +796,12 @@ $(document).on('page:load', ready);
           }
         }
 
-        data[negCtr][0] = "#" + (max-i);
-        data[negCtr][1] = avg;
-        negCtr--;
+        if(max - i >= 0)
+        {
+          data[negCtr][0] = "#" + (max-i);
+          data[negCtr][1] = avg;
+          negCtr--;
+        }
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
@@ -900,7 +906,7 @@ $(document).on('page:load', ready);
       var max = responses[0][0].elapsed;
       var negCtr = 3;
 
-      for(var i = 0; i < 3; i++)
+      for(var i = 0; i < 4; i++)
       {
         var avg = 0;
         for(var j = 0; j < responses[0].length; j++)
