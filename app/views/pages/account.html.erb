@@ -666,7 +666,7 @@ $(document).on('page:load', ready);
 
         if(max - i >= 0)
         {
-          data[negCtr][0] = "#" + (max-i);
+          data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
           negCtr--;
         }
@@ -798,7 +798,7 @@ $(document).on('page:load', ready);
 
         if(max - i >= 0)
         {
-          data[negCtr][0] = "#" + (max-i);
+          data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
           negCtr--;
         }
@@ -927,9 +927,12 @@ $(document).on('page:load', ready);
           }
         }
 
-        data[negCtr][0] = "#" + (max-i);
-        data[negCtr][1] = avg;
-        negCtr--;
+        if(max - i >= 0)
+        {
+          data[negCtr][0] = "#" + (max-i+1);
+          data[negCtr][1] = avg;
+          negCtr--;
+        }
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
