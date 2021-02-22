@@ -35,13 +35,6 @@ $(document).on('page:load', ready);
     <button class="linechart-btn" onclick="changeAnalyticsOlder()">Older</button>
     <input id="cntr" name="cntr" type="hidden" value="0" />
     <button class="linechart-btn" onclick="changeAnalyticsNewer()">Newer</button>
-    
-    <!--select id="number" onchange="changeAnalytics()"-->
-      <!--option value="current">Current Mood Survey</option-->
-      <!--option value="recent">Recent Mood Survey</option-->
-      <!--option value="older">Older Mood Survey</option-->
-      <!--option selected="selected" value="first">First Mood Survey</option-->
-    <!--/select-->
     <br />
     <p id="analytics_data">Showing data for the first survey</p>
     <br />
@@ -428,8 +421,6 @@ $(document).on('page:load', ready);
 
   function changeAnalyticsNewer() 
   {
-    //document.getElementById('analytics_data').innerHTML = 'Showing data for ' + ' b ' + ' survey';
-    
     var cntr = document.getElementById('cntr').value;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
@@ -466,9 +457,6 @@ $(document).on('page:load', ready);
               return mResponse.question_id == MRS[i].id;
             });
       }
-
-      //console.log(MRS);
-      console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
@@ -476,9 +464,6 @@ $(document).on('page:load', ready);
       if(counter > 0)
         counter--;
 
-      //console.log(max);
-      //console.log(counter);
-
       for(var j = 0; j < responses[0].length; j++)
       {
         if(responses[0][j].elapsed == counter)
@@ -503,15 +488,13 @@ $(document).on('page:load', ready);
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
     }
 
-    document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter + 1) + ' survey';
+    document.getElementById('analytics_data').innerHTML = 'Showing data for survey #' + (max - counter + 1);
 
     document.getElementById('cntr').value = counter;
   }
 
   function changeAnalyticsOlder() 
   {
-    //document.getElementById('analytics_data').innerHTML = 'Showing data for ' +  + ' survey';
-    
     var cntr = document.getElementById('cntr').value;
     var dummyData = [["Good", 0], ["Okay", 0], ["Bad", 0], ["Terrible", 0], ["Amazing", 0]];
     
@@ -549,17 +532,11 @@ $(document).on('page:load', ready);
             });
       }
 
-      //console.log(MRS);
-      console.log(responses);
-
       var max = responses[0][0].elapsed;
       var counter = cntr;
 
       if(counter < max)
         counter++;
-      
-      //console.log(max);
-      //console.log(counter);
 
       for(var j = 0; j < responses[0].length; j++)
       {
@@ -584,7 +561,7 @@ $(document).on('page:load', ready);
       
       new Chartkick.PieChart(document.getElementById("display"), dummyData, {});
 
-      document.getElementById('analytics_data').innerHTML = 'Showing data for #' + (max - counter + 1) + ' survey';
+      document.getElementById('analytics_data').innerHTML = 'Showing data for survey #' + (max - counter + 1);
     
       document.getElementById('cntr').value = counter;
     }
@@ -673,66 +650,6 @@ $(document).on('page:load', ready);
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      
-      /*
-      if(responses.length <= 11)
-      {
-        var negCtr = 11;
-        for(var i = responses.length - 1; i >= 0; i--)
-        {
-          var avg = 0;   
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      
-      else
-      { 
-        var negCtr = 11;
-        for(var i = responses.length - 1; i > responses.length - 13; i--)
-        {   
-          var avg = 0;
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      */
     }
   }
 
@@ -805,65 +722,6 @@ $(document).on('page:load', ready);
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      /*
-      if(responses.length <= 7)
-      {
-        var negCtr = 7;
-        for(var i = responses.length - 1; i >= 0; i--)
-        {
-          var avg = 0;   
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      
-      else
-      { 
-        var negCtr = 7;
-        for(var i = responses.length - 1; i > responses.length - 9; i--)
-        {   
-          var avg = 0;
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      */
     }
   }
   
@@ -936,65 +794,6 @@ $(document).on('page:load', ready);
       }
 
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      /*
-      if(responses.length <= 3)
-      {
-        var negCtr = 3;
-        for(var i = responses.length - 1; i >= 0; i--)
-        {
-          var avg = 0;   
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      
-      else
-      { 
-        var negCtr = 3;
-        for(var i = responses.length - 1; i > responses.length - 5; i--)
-        {   
-          var avg = 0;
-          for(var j = 0; j < responses[i].length; j++)
-          {
-            if(responses[i][j].response == "good")
-                avg += 1;
-              
-            else if(responses[i][j].response == "bad")
-                avg -= 1;
-
-            else if(responses[i][j].response == "terrible")
-                avg -= 2;
-
-            else if(responses[i][j].response == "amazing")
-                avg += 2;
-          }
-
-          data[negCtr][0] = "#" + data[negCtr][0] + " on " + MRS[i].created_at.substring(5,10);
-          data[negCtr][1] = avg;
-          negCtr--;
-        }
-
-        new Chartkick.LineChart(document.getElementById("display2"), data, {});
-      }
-      */
     }
   }
 
