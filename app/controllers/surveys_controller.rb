@@ -13,10 +13,6 @@ class SurveysController < ApplicationController
     gon.questions = Question.all
     gon.MoodResponse = MoodResponse.all
     gon.OpenEndedResponse = OpenEndedResponse.all
-  end
-
-  def survey_result
-    #@open_response = OpenEndedResponse.where()
     
   end
 
