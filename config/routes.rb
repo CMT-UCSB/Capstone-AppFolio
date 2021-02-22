@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get 'survey_responses/success' => 'survey_responses#success', as: :survey_responses_success
   get '/nlp' => 'nlp_ruby_test#nlp_ruby_test'
 
+  get 'test' => 'pages#test'
+
 
   namespace :api, defaults: { format:  :json } do
     namespace :v1 do

@@ -1,9 +1,10 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
+
+<!-- # <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+# <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+# <link
+#   rel="stylesheet"
+#   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+# /> -->
 
 <style>
   body {
@@ -81,7 +82,7 @@
     width: 1080px;
     margin: 0 auto;
   }
-
+/*
   .modal {
     display: none;
     position: fixed;
@@ -114,6 +115,7 @@
   .modal-body {
 
   }
+  */
 
   table {
     width: 100%;
@@ -124,11 +126,6 @@
     padding: 10px;
     font-size: 17px;
   }
-
-  /* commented this because this made the Sign Out text color white
-  a:visited {
-    color: rgb(255, 255, 255);
-  } */
 
   @-webkit-keyframes animatetop {
     from {
@@ -171,6 +168,13 @@
     margin-bottom: 20px;
     padding: 10px;
   }
+
+  @media (min-width: 768px) {
+    .modal-xl {
+      width: 90%;
+      max-width: 1200px;
+    }
+  }
 </style>
 
 <%= render :partial => "account_header/header" %>
@@ -208,7 +212,7 @@
           <br />
 
           <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
-          <a name="show_result" data-survey-id="<%= survey.id %>" class="smallBtn js-show-results">Show Results</a>
+          <a class="smallBtn" data-toggle="modal" data-target=".bd-<%= survey.id %>">Show Result </a>
           <br><br>
         </tr>
         </div>
@@ -222,76 +226,85 @@
   <br />
 </div>
 
-<div id="showResultModal" class="modal">
-  <div class="modal-content">
-    <span class="close_sr"> &times;</span>
-    <h2 style="text-align: center">Survey Results:</h2>
-    <div class="modal-body">
-    </div>
-  </div>
-</div>
-
 <% @surveys.each do |survey| %>
-  <div style="display: none; text-align: center;" class="survey-results-<%= survey.id %>">
-    <% Question.where(survey_id: survey.id).each do |question| %>
-      <div class="question_container" style="display: show;">
-        <%= column_chart OpenEndedResponseChartBuilder.new(question: question).pie_chart_data, defer: true, discret: true  %>
-        <b style="font-size: 30px;"><%= question.prompt %> </b> <br/>
-        <div class="response_table">
-          <table class="question">
+  <!-- Modal -->
+  <div class="modal fade bd-<%= survey.id %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="width:90% max-width:1200px">
+      <div class="modal-content" style="padding: 20px; text-align: center">
+        <h2 style="text-align: center">Results for <%= survey.name %>:</h2>
+        <div class="accordion" id="accordionCard">
+          <% Question.where(survey_id: survey.id, question_type: "open_ended").each do |question| %>
+            <div class="card">
+              <div class="card-header" id="heading-<%=question.id%>">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%=question.id%>" aria-expanded="false" aria-controls="collapse-<%=question.id%>">
+                    <b style="font-size: 30px;"><%= question.prompt %> </b>
+                  </button>
+                
+                <div id="collapse-<%=question.id%>" class="collapse" aria-labelledby="heading<%=question.id%>" data-parent="#accordionCard">
+                  <div class="card-body">
+                      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                          <div class="response_table">
+                            <table class="question">
 
-            <thead>
-              <tr>
-                <% if survey.isAnonymous === "identifiable" %>
-                  <th> Name </th>
-                <% end %>
-                <th> Sentiment </th>
-                <th> Response </th>
-                <th> Score </th>
-                <th> Magnitude </th>
-              </tr>
-            </thead>
+                              <thead>
+                                <tr>
+                                  <% if survey.isAnonymous === "identifiable" %>
+                                    <th> Name </th>
+                                  <% end %>
+                                  <th> Response </th>
+                                  <th> Sentiment </th>
+                                  <th> Score </th>
+                                  <th> Magnitude </th>
+                                </tr>
+                              </thead>
 
-            <tbody>
-              <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
-                <tr>
-                  <% if survey.isAnonymous === "identifiable" %>
-                    <% employee = Employee.where(id: response.employee_id).first %>
-                    <td> <%= employee.first_name %> <%= employee.last_name %> </td>
-                  <% end %>
-                  <% if response.sentiment === "slightly_positive" or response.sentiment === "positive" %>
-                    <td style="color: green;"> <%= response.sentiment %> </td>
-                  <% elsif response.sentiment === "slightly_negative" or response.sentiment === "negative" %>
-                    <td style="color: red;"> <%= response.sentiment %> </td>
-                  <% elsif response.sentiment === "mixed" %>
-                    <td style="color: #808080"> <%= response.sentiment %> </td>
-                  <% else %>
-                    <td> <%= response.sentiment %> </td>
-                  <% end %>
-                  <td> <%= response.response %> </td>
-                  <td> <%= response.score %> </td>
-                  <td> <%= response.magnitude %> </td>
-                </tr>
-              <% end %>
-            </tbody>
-
-          </table>
+                              <tbody>
+                                <% OpenEndedResponse.where(question_id: question.id).each do |response| %>
+                                  <tr>
+                                    <% if survey.isAnonymous === "identifiable" %>
+                                      <% employee = Employee.where(id: response.employee_id).first %>
+                                      <td> <%= employee.first_name %> <%= employee.last_name %> </td>
+                                    <% end %>
+                                    <td> <%= response.response %> </td>
+                                    <td> <%= response.score %> </td>
+                                    <td> <%= response.magnitude %> </td>
+                                    <% if response.sentiment === "positive" %>
+                                      <td style="color: #008000;"> <%= response.sentiment %> </td>
+                                    <% elsif response.sentiment === "slightly_positive"%>
+                                      <td style="color: #00ff00;"> <%= response.sentiment %> </td>
+                                    <% elsif response.sentiment === "negative" %>
+                                      <td style="color: #8b0000;"> <%= response.sentiment %> </td>
+                                    <% elsif response.sentiment === "slightly_negative"%>
+                                      <td style="color: #ff4500;"> <%= response.sentiment %> </td>
+                                    <% elsif response.sentiment === "mixed" %>
+                                      <td style="color: #041a2f;"> <%= response.sentiment %> </td>
+                                    <% else %>
+                                      <td style="color: #8e8e96;"> <%= response.sentiment %> </td>
+                                    <% end %>
+                                  </tr>
+                                <% end %>
+                              </tbody>
+                            </table>
+                          </div>
+                            <%= pie_chart OpenEndedResponseChartBuilder.new(question: question).pie_chart_data, colors: ["#8e8e96", "#041a2f", "#ff4500", "#8b0000", "#00ff00", "#008000"], library: { legend: { labels: { fontSize: 15 } } }, width: "400px"%>
+                            <br/> <br/>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
-      <br/>
-      <br/>
-      
-    <% end %>
+    </div>
   </div>
+
 <% end %>
 
 <script>
-  // $(document).ready(function(){
-  //   // document.getElementById('user_time_zone').value = jstz.determine().name();
-  //   console.log(jstz.determine().name())
-  // })
-  //console.log(jstz.determine().name())
-  // console.log(new Date())
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  }) 
 
   window.onclick = function (event) {
     if (event.target == modal_sr) {
@@ -299,29 +312,32 @@
     }
   };
 
+  {/* leaving a commented code for future reference for jquery
   var modal_sr = document.getElementById('showResultModal');
   var span_sr = document.getElementsByClassName('close_sr')[0];
   var survey_clickedOn;
+  console.log($(this).data('chart-d'));
+  console.log($(this).data('survey-id'))
 
   $(document).on('click', '.js-show-results', function() {
+    console.log($(this).data('chart-d'));
     show_survey_result($(this).data('survey-id'));
   });
 
   function show_survey_result(survey_id) {
     const survey_result_body = document.querySelector(`.survey-results-${survey_id}`);
-    modal_sr.querySelector('.modal-body').innerHTML = survey_result_body.innerHTML;
+    //modal_sr.querySelector('.modal-body').innerHTML = survey_result_body.innerHTML;
     modal_sr.style.display = 'block';
   }
 
   span_sr.onclick = function () {
     modal_sr.style.display = 'none';
-  };
+  }; */}
 
   var numMood = [];
   function recordSurveyData(moodReponse)
   {
     numMood.push(0);
-
   }
 
   var results = [];
