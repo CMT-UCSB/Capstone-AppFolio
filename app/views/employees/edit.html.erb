@@ -1,6 +1,6 @@
 <style>
 body {
-    background: black;
+    background: white;
 }
 .container{
   background: #262728;
@@ -13,7 +13,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  color: white;
+  color: black;
 }
 
 .note_nav {
@@ -21,19 +21,19 @@ h1, h2, h3, h4, h5, h6, p {
 }
 </style>
 
-<%= render partial: 'account_header/header' %>
+<%= render partial: "account_header/header" %>
 
-<div class="container">
+<div class="container card bg-light mb-3">
     <br />
     <h1>Editing Employee</h1>
     <br />
 
-    <%= render 'form', employee: @employee %>
+    <%= render "form", employee: @employee %>
 
     <br />
     <div class="note_nav">
-        <%= link_to 'Display', @employee, style: "color: white; padding: 0 10px;" %> <p> | </p>
-        <%= link_to 'Cancel', employees_path, style: "color: white; padding: 0 10px;" %>
+        <%= link_to "Display", @employee, style: "color: black; padding: 0 10px;" %> <p> | </p>
+        <%= link_to "Cancel", employees_path, style: "color: black; padding: 0 10px;" %>
     </div>
     <br />
 </div>

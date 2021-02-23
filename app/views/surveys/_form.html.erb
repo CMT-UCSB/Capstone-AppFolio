@@ -2,8 +2,8 @@
   .btn_new_survey_form {
     width: fit-content;
     border-radius: 50px;
-    background: white;
-    white-space: nowrap;
+    background: black;
+    black-space: nowrap;
     color: black;
     padding: 6px 14px;
     margin-top: 5px;
@@ -24,6 +24,9 @@
   .btn_right {
     margin-left: 20px;
   }
+  .btn-create {
+    margin-left: 39%;
+  }
 
 </style>
 
@@ -42,24 +45,24 @@
   <% end %>
 
   
-  <div><b style="color: white;">Choose survey type:</b></div>
+  <div><b style="color: black;">Choose survey type:</b></div>
   
   <div>
-    <%= link_to "Mood", {onclick: @a=0}, class: "btn_new_survey_form" %>
-    <%= link_to "Open Ended", {onclick: @a=1}, class: "btn_new_survey_form btn_right" %>
+    <%= link_to "Mood", { onclick: @a = 0 }, class: "btn btn-primary" %>
+    <%= link_to "Open Ended", { onclick: @a = 1 }, class: "btn btn-info" %>
   </div>
 
-  <% if params[:onclick].to_i == 1%>
+  <% if params[:onclick].to_i == 1 %>
     <br/>
-    <%# --------Open Ended---------- %>
+    <% # --------Open Ended---------- %>
     <div class="field">
-      <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
+      <b style="color: black;">Survey Name: </b><%= form.text_field :name %>
     </div>
     <br />
 
     <div class="field">
       <%= form.fields_for :questions do |q| %>
-          <% render 'surveys/question_fields', q: q %>
+          <% render "surveys/question_fields", q: q %>
       <% end %>
       <%= link_to_add_fields("Add Question", form, :questions) %>
     </div>
@@ -67,76 +70,76 @@
     <br />
 
     <div class="field">
-      <b style="color: white;">Remind employees every:</b><br />
-      <span style="color: white;">
-          <%# <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
-          <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, {:multiple => true} %>
+      <b style="color: black;">Remind employees every:</b><br />
+      <span style="color: black;">
+          <% # <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
+          <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, { :multiple => true } %>
       </span><br />
       <br />
-      <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+      <%= form.time_select :time_of_day, { ampm: true, minute_step: 5, default: Time.now } %>
     </div>
     
     <br />
 
     <div class="field">
-      <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
-      <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+      <b style="color: black;">Is this survey Identifiable or Anonymous?</b><br />
+      <%= form.select :isAnonymous, options_for_select([["Identifiable", "identifiable"], ["Anonymous", "anonymous"]], "identifiable") %>
     </div>
 
     <br />
     
     <div class="btn_container">
-      <%= form.submit "Create", class: "btn" %>
+      <%= form.submit "Create", class: "btn btn-primary btn-create" %>
     </div>
-    <%# --------Open Ended end---------- %>
-  <%else%>
+    <% # --------Open Ended end---------- %>
+  <% else %>
     <div style="color: red; size: 10px;">*You are only allowed to have 1 mood survey.</div><br/>
     <div id="nomood">
-      <%# ------Mood------- %>
+      <% # ------Mood------- %>
       <div class="field">
-        <b style="color: white;">Survey Name: </b><%= form.text_field :name %>
+        <b style="color: black;">Survey Name: </b><%= form.text_field :name %>
       </div>
 
       <br />
 
       <div class="field">
         <%= form.fields_for :questions do |q| %>
-            <% render 'surveys/mood_question', q: q %>
+            <% render "surveys/mood_question", q: q %>
         <% end %>
       </div>
 
       <div class="field">
-        <b style="color: white;">Remind employees every:</b><br />
-        <span style="color: white;">
-            <%# <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
-            <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, {:multiple => true} %>
+        <b style="color: black;">Remind employees every:</b><br />
+        <span style="color: black;">
+            <% # <%= form.collection_check_boxes :day_of_weeks, Survey.day_of_weeks.pairs %>
+            <%= form.select :day_of_weeks, options_for_select(Survey.day_of_weeks.pairs), {}, { :multiple => true } %>
         </span><br />
         <br />
-        <%= form.time_select :time_of_day, {ampm: true, minute_step: 5, default: Time.now} %>
+        <%= form.time_select :time_of_day, { ampm: true, minute_step: 5, default: Time.now } %>
       </div>
       
       <br />
 
       <div class="field">
-        <b style="color: white;">Is this survey Identifiable or Anonymous?</b><br />
-        <%= form.select :isAnonymous, options_for_select([['Identifiable', 'identifiable'], ['Anonymous', 'anonymous']], 'identifiable') %>
+        <b style="color: black;">Is this survey Identifiable or Anonymous?</b><br />
+        <%= form.select :isAnonymous, options_for_select([["Identifiable", "identifiable"], ["Anonymous", "anonymous"]], "identifiable") %>
       </div>
 
       <br />
       
       <div class="btn_container">
-        <%= form.submit "Create", class: "btn" %>
+        <%= form.submit "Create", class: "btn btn-primary btn-create" %>
       </div>
-      <%# ------Mood end------- %>
+      <% # ------Mood end------- %>
     </div>
     
     
-    <div style="color: white; size: 12px;" id="yesmood">
+    <div style="color: black; size: 12px;" id="yesmood">
       You have already created a mood survey. <br/>
       Please create an open-ended survey instead.
     </div>
 
-  <%end%>
+  <% end %>
 
 <% end %>
 

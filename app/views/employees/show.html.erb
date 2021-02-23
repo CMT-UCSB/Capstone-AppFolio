@@ -1,9 +1,8 @@
 <style>
 body {
-    background: black;
+    background: white;
 }
 .container{
-  background: #262728;
   display: flex;
   flex-direction: column;
   max-width: 400px;
@@ -12,7 +11,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  color: white;
+  color: black;
 }
 
 .date {
@@ -27,7 +26,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 <%= render partial: "account_header/header" %>
 
-<div class="container">
+<div class="container card bg-light mb-3">
   <p id="notice"><%= notice %></p>
 
   <p>
@@ -51,8 +50,8 @@ h1, h2, h3, h4, h5, h6, p {
   </p>
 
   <div class="show_nav">
-    <%= link_to "Edit", edit_employee_path(@employee), style: "color: white; padding: 0 10px;" %>
+    <%= link_to "Edit", edit_employee_path(@employee), style: "color: black; padding: 0 10px;" %>
     <p> | </p>
-    <%= link_to "Back", employees_path, style: "color: white; padding: 0 10px;" %>
+    <%= link_to "Back", employees_path, style: "color: black; padding: 0 10px;" %>
   </div>
 </div>

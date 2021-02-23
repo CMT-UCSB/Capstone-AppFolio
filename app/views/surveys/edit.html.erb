@@ -1,9 +1,8 @@
 <style>
 body {
-    background: black;
+    background: white;
 }
 .container{
-  background: #262728;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -13,7 +12,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  color: white;
+  color: black;
 }
 
 .note_nav {
@@ -21,19 +20,18 @@ h1, h2, h3, h4, h5, h6, p {
 }
 </style>
 
-<%= render partial: 'account_header/header' %>
+<%= render partial: "account_header/header" %>
 
-<div class="container">
+<div class="container card bg-light mb-3">
     <br />
     <h1>Editing Survey</h1>
     <br />
 
-    <%= render 'form', survey: @survey %>
+    <%= render "form", survey: @survey %>
 
     <br />
     <div class="note_nav">
-        <%= link_to 'Display', @survey, style: "color: white; padding: 0 10px;" %> <p> | </p>
-        <%= link_to 'Cancel', surveys_path, style: "color: white; padding: 0 10px;" %>
+        <%= link_to "Cancel", surveys_path, class: "btn btn-secondary" %>
     </div>
     <br />
 </div>

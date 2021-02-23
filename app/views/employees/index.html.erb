@@ -63,9 +63,9 @@ h1, tr, th, p {
           <td><%= employee.last_name %></td>
           <td><%= employee.email %></td>
           <td><%= employee.slack_id %></td>
-          <td><%= link_to "Display", employee, class: "btn btn-primary" %></td>
-          <td><%= link_to "Edit", edit_employee_path(employee), class: "btn btn-primary" %></td>
-          <td><%= link_to "Destroy", employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %></td>
+          <td><%= link_to "Display", employee, class: "btn btn-success" %></td>
+          <td><%= link_to "Edit", edit_employee_path(employee), class: "btn btn-info" %></td>
+          <td><%= link_to "Destroy", employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>

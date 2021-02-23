@@ -8,13 +8,12 @@
 
 <style>
   body {
-    background: black;
+    background: white;
   }
 
   .container {
     margin-top: 50px;
     margin-bottom: 50px;
-    background: #262728;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -23,7 +22,7 @@
   }
 
   h1, tr, th, h3, h4, p {
-    color: white;
+    color: black;
   }
 
   .survey {
@@ -57,7 +56,7 @@
   }
 
   .survey-container {
-    color: white;
+    color: black;
     align-items: center;
     flex-direction: column;
     text-align: center
@@ -180,18 +179,18 @@
 <%= render :partial => "account_header/header" %>
 <%= include_gon(:init => true) %>
 
-<div class="container">
+<div class="container card bg-light mb-3">
   <p id="notice"><%= notice %></p>
   <p class='alert'><%= alert %></p>
 
   <h1 style="text-align: center;">Surveys</h1><br>
     <div class= "survey-container">
-      <%= link_to "Create New Survey", new_survey_path, class: "btn", style: "color: black" %>
+      <%= link_to "Create New Survey", new_survey_path, class: "btn btn-primary", style: "color: white" %>
       <br />
       <br />
       <% if !@surveys.empty? %>
         <% @surveys.each_with_index do |survey, index| %>
-        <div class="one-survey">
+        <div class="one-survey card bg-light mb-3">
         <tr>
           <b><td>Name: <%= survey.name %></td></b><br>
           <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(", ") %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
@@ -205,15 +204,14 @@
               <% end %>
             </ol>
           </td>
-          <%= link_to "Display", survey, class: "smallBtn", style: "color: black" %>
-          <%= link_to "Edit", edit_survey_path(survey), class: "smallBtn", style: "color: black" %>
-          <%= link_to "Destroy", survey, method: :delete, data: { confirm: "Are you sure?" }, class: "smallBtn", style: "color: black" %>
-          <br />
-          <br />
 
-          <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "smallBtn" %>
-          <a class="smallBtn" data-toggle="modal" data-target=".bd-<%= survey.id %>">Show Result </a>
-          <br><br>
+          <div>
+          <%= link_to "Delete", survey, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm", style: "color: white" %>
+          <%= link_to "Edit", edit_survey_path(survey), class: "btn btn-info btn-sm", style: "color: white" %>
+          <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "btn btn-success btn-sm" %>
+          <a class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-<%= survey.id %>">Show Result </a>
+          </div>
+          <br>
         </tr>
         </div>
         <% end %>
@@ -236,8 +234,8 @@
           <% Question.where(survey_id: survey.id).each do |question| %>
             <% if question.question_type === "open_ended" %>
               <div class="card">
-                <div class="card-header" id="heading-<%=question.id%>">
-                  <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%=question.id%>" aria-expanded="false" aria-controls="collapse-<%=question.id%>">
+                <div class="card-header" id="heading-<%= question.id %>">
+                  <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= question.id %>" aria-expanded="false" aria-controls="collapse-<%= question.id %>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 30 30">
                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                     </svg>
@@ -247,7 +245,7 @@
                     </svg>
                   </a>
                 </div>
-                <div id="collapse-<%=question.id%>" class="collapse" aria-labelledby="heading<%=question.id%>" data-parent="#accordionCard">
+                <div id="collapse-<%= question.id %>" class="collapse" aria-labelledby="heading<%= question.id %>" data-parent="#accordionCard">
                   <div class="card-body">
                     <div style="display: flex; flex-direction: row; justify-content: space-between;">
                       <div class="response_table">
@@ -275,11 +273,11 @@
                                 <td> <%= response.magnitude %> </td>
                                 <% if response.sentiment === "positive" %>
                                   <td style="color: #008000;"> <%= response.sentiment %> </td>
-                                <% elsif response.sentiment === "slightly_positive"%>
+                                <% elsif response.sentiment === "slightly_positive" %>
                                   <td style="color: #00ff00;"> <%= response.sentiment %> </td>
                                 <% elsif response.sentiment === "negative" %>
                                   <td style="color: #8b0000;"> <%= response.sentiment %> </td>
-                                <% elsif response.sentiment === "slightly_negative"%>
+                                <% elsif response.sentiment === "slightly_negative" %>
                                   <td style="color: #ff4500;"> <%= response.sentiment %> </td>
                                 <% elsif response.sentiment === "mixed" %>
                                   <td style="color: #041a2f;"> <%= response.sentiment %> </td>
@@ -291,16 +289,16 @@
                           </tbody>
                         </table>
                       </div>
-                      <%= pie_chart OpenEndedResponseChartBuilder.new(question: question).pie_chart_data, colors: ["#8e8e96", "#041a2f", "#ff4500", "#8b0000", "#00ff00", "#008000"], library: { legend: { labels: { fontSize: 16 } } }, width: "400px"%>
+                      <%= pie_chart OpenEndedResponseChartBuilder.new(question: question).pie_chart_data, colors: ["#8e8e96", "#041a2f", "#ff4500", "#8b0000", "#00ff00", "#008000"], library: { legend: { labels: { fontSize: 16 } } }, width: "400px" %>
                       <br/> <br/>
                     </div>
                   </div>
                 </div>
               </div>
-            <%elsif question.question_type === "mood" %>
+            <% elsif question.question_type === "mood" %>
               <div class="card">
-                <div class="card-header" id="heading-<%=question.id%>">
-                  <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%=question.id%>" aria-expanded="true" aria-controls="collapse-<%=question.id%>">
+                <div class="card-header" id="heading-<%= question.id %>">
+                  <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= question.id %>" aria-expanded="true" aria-controls="collapse-<%= question.id %>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 30 30">
                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                     </svg>
@@ -310,7 +308,7 @@
                     </svg>
                   </a>
                 </div>
-                <div id="collapse-<%=question.id%>" class="collapse" aria-labelledby="heading<%=question.id%>" data-parent="#accordionCard">
+                <div id="collapse-<%= question.id %>" class="collapse" aria-labelledby="heading<%= question.id %>" data-parent="#accordionCard">
                   <div class="card-body">
                     <div style="display: flex; flex-direction: row; justify-content: space-between;">
                       <div class="response_table">
@@ -332,11 +330,11 @@
                                 <% end %>
                                 <% if response.response === "amazing" %>
                                   <td style="color: #008000;"> <%= response.response %> </td>
-                                <% elsif response.response === "good"%>
+                                <% elsif response.response === "good" %>
                                   <td style="color: #00ff00;"> <%= response.response %> </td>
                                 <% elsif response.response === "terrible" %>
                                   <td style="color: #8b0000;"> <%= response.response %> </td>
-                                <% elsif response.response === "bad"%>
+                                <% elsif response.response === "bad" %>
                                   <td style="color: #ff4500;"> <%= response.response %> </td>
                                 <% else %>
                                   <td style="color: #8e8e96;"> <%= response.response %> </td>
@@ -346,7 +344,7 @@
                           </tbody>
                         </table>
                       </div>
-                      <%= pie_chart MoodResponseChartBuilder.new(question: question).pie_chart_data, colors: [ "#8b0000", "#ff4500", "#8e8e96", "#00ff00", "#008000" ], library: { legend: { labels: { fontSize: 16 } } }, width: "400px" %>
+                      <%= pie_chart MoodResponseChartBuilder.new(question: question).pie_chart_data, colors: ["#8b0000", "#ff4500", "#8e8e96", "#00ff00", "#008000"], library: { legend: { labels: { fontSize: 16 } } }, width: "400px" %>
                     </div>
                   </div>
                 </div>
