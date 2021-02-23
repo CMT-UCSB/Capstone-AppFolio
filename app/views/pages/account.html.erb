@@ -913,12 +913,12 @@ $(document).on('page:load', ready);
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
 
-    positive_list = [];
-    positive_group = <%= raw a %>;
+    /*positive_list = [];
+    positive_group = <%# raw a %>;
 
     $.each(positive_group, function(key, value) {
       positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
+    });*/
 
     negative_list = [];
     negative_group = <%= raw b %>;
@@ -962,7 +962,7 @@ $(document).on('page:load', ready);
       word_common_classes: 'WordClass'
     });
 
-    $("#positiveCloud").jQWCloud({
+    /*$("#positiveCloud").jQWCloud({
       words: positive_list,
       //cloud_color: 'yellow',		
       minFont: 30,
@@ -974,7 +974,7 @@ $(document).on('page:load', ready);
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
       word_common_classes: 'WordClass'
-    });
+    });*/
 
     $("#negativeCloud").jQWCloud({
       words: negative_list,
