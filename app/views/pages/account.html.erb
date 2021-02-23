@@ -1,12 +1,11 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
-<%= stylesheet_pack_tag 'application' %>
+<%= stylesheet_pack_tag "application" %>
 
-<%= render :partial => 'account_header/header' %>
+<%= render :partial => "account_header/header" %>
 <%= include_gon(:init => true) %>
 
 <!-- Moved Notice here as a placeholder. Will move it after stylizing account page -->
@@ -27,36 +26,36 @@ $(document).ready(ready);
 $(document).on('page:load', ready);
 </script>
 
-<!--Anayltics -->
+<!--Analytics -->
 <div class="analytics-container">
-  <div class="piechart">
-    <h4>Analytics</h4>
-    <br />
-    <button class="linechart-btn" onclick="changeAnalyticsOlder()">Older</button>
-    <input id="cntr" name="cntr" type="hidden" value="0" />
-    <button class="linechart-btn" onclick="changeAnalyticsNewer()">Newer</button>
-    <br />
-    <p id="analytics_data">Showing data for the first survey</p>
-    <br />
+  <div class="card bg-light mb-3 card-main">
+    <div class="card-header"><h4><b>Analytics</b></h4></div>
+    <br>
     <div class="chart">
-    <div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
-      font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
-        <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
+      <div id="display" style="height: 400px; width: 400px; text-align: center; color: #fff; line-height: 300px; font-size: 14px; 
+        font-family: Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px; display: flex">
+          <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
+      </div>
     </div>
+    <p id="analytics_data">Showing data for the first survey</p>
+    <div>
+      <button class="btn btn-primary btn-sm" onclick="changeAnalyticsOlder()">Older</button>
+      <input id="cntr" name="cntr" type="hidden" value="0" />
+      <button class="btn btn-primary btn-sm" onclick="changeAnalyticsNewer()">Newer</button>
     </div>
   </div>
 
-  <%# Line plot %>
-  <div class="linechart">
-    <h4>Mood Tracker</h4>
+  <% # Line plot %>
+  <div class="card bg-light mb-3 card-main">
+    <div class="card-header"><h4><b>Mood Tracker</b></h4></div>
     <br />
     <div id="display2" class="chart">
       <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
     </div>
     <div class="linechart-buttons">
-      <button class="linechart-btn" onclick="changeTimeIntervalM()">Past 4 Surveys</button>
-      <button class="linechart-btn" onclick="changeTimeInterval2M()">Past 8 Surveys</button>
-      <button class="linechart-btn" onclick="changeTimeInterval3M()">Past 12 Surveys</button>
+      <button class="btn btn-primary btn-sm" onclick="changeTimeIntervalM()">Past 4 Surveys</button>
+      <button class="btn btn-primary btn-sm" onclick="changeTimeInterval2M()">Past 8 Surveys</button>
+      <button class="btn btn-primary btn-sm" onclick="changeTimeInterval3M()">Past 12 Surveys</button>
       <!--button class="linechart-btn" onclick="changeTimeInterval6M()">Past 24 Surveys</button-->
       <!--button class="linechart-btn" onclick="changeTimeIntervalY()">Past 48 Surveys</button-->
     </div>
@@ -67,8 +66,8 @@ $(document).on('page:load', ready);
 <br />
 <br />
 <div class="wordcloud-container">
-  <div class="wordcloud">
-    <h4>Most Mentioned Names</h4>
+  <div class="card bg-light mb-3">
+    <div class="card-header"><h4><b>Most Mentioned Names</b></h4></div>
     <br />
     <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
       <% f = EntityNlp.where(manager_id: current_manager) %>
@@ -92,8 +91,8 @@ $(document).on('page:load', ready);
 <br />
 <div class="analytics-container">
   <div class="insight-wrapper">
-    <div class="insight-piece">
-      <h4>Most Mentioned Names</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Mentioned Names</b></div>
       <br />
       <% if !(EntityNlp.all).empty? %>
         <% most_mentioned_name.each do |result| %>
@@ -105,80 +104,79 @@ $(document).on('page:load', ready);
       <% end %>
     </div>
 
-    <div class="insight-piece">
-      <h4>Most Positively Viewed</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Positively Viewed</b></div>
       <br />
       <% if !most_positive.empty? %>
-        <% most_positive.each_with_index do |result,index|%>
+        <% most_positive.each_with_index do |result, index| %>
           <% if result[1] > 0 %>
-            <span><%= index+1%>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-          <%end %>
-        <%end%>
-      <%else%>
+            <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+          <% end %>
+        <% end %>
+      <% else %>
         <span>No data yet!</span>
         <br/>
-      <%end%>
+      <% end %>
     </div>
 
-    <div class="insight-piece">
-      <h4>Most Negatively Viewed</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Negatively Viewed</b></div>
       <br />
       <% if !most_positive.empty? %>
-        <% most_negative.each_with_index do |result,index|%>
+        <% most_negative.each_with_index do |result, index| %>
           <% if result[1] < 0 %>
-            <span><%= index+1%>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-          <%end %>
-        <%end%>
-      <%else%>
+            <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+          <% end %>
+        <% end %>
+      <% else %>
         <span>No data yet!</span>
         <br/>
-      <%end%>
+      <% end %>
     </div>
 
-    <div class="insight-piece">
-      <h4>Most Controversial</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Controversial</b></div>
       <br />
       <% if !most_controversial.empty? %>
-        <% most_controversial.each_with_index do |result,index|%>
+        <% most_controversial.each_with_index do |result, index| %>
           <% if result[1] > 0 %>
-            <span><%= index+1%>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
-          <%end %>
-        <%end%>
-      <%else%> 
+            <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
+          <% end %>
+        <% end %>
+      <% else %> 
         <span>No data yet!</span>
         <br/>
-      <%end%>
+      <% end %>
     </div>
 
-    <div class="insight-piece">
-      <h4>Most Improved in Peer Review</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Improved in Peer Review</b></div>
       <br />
       <% if !most_improve_review.empty? %>
-        <% most_improve_review.each_with_index do |result,index| %>
+        <% most_improve_review.each_with_index do |result, index| %>
           <% if result[1] > 0 %>
-              <span><%= index+1%>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-            <%end %>
-        <%end%>
-      <%else%> 
+              <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+            <% end %>
+        <% end %>
+      <% else %> 
         <span>No one mentioned anyone twice.</span>
         <br/>
-      <%end%>
+      <% end %>
     </div>
 
-    <div class="insight-piece">
-      <h4>Most Drop in Peer Review</h4>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><b>Most Drop in Peer Review</b></div>
       <br />
       <% if !most_drop_review.empty? %>
-        <% most_drop_review.each_with_index do |result,index| %>
+        <% most_drop_review.each_with_index do |result, index| %>
           <% if result[1] < 0 %>
-              <span><%= index+1%>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-            <%end %>
-        <%end%>
-      <%else%> 
-        <br/>
+              <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+            <% end %>
+        <% end %>
+      <% else %> 
         <span>No one mentioned anyone twice.</span>
         <br/>
-      <%end%>
+      <% end %>
     </div>
 
   </div>
@@ -195,11 +193,11 @@ $(document).on('page:load', ready);
 <style>
   body {
     font-family: Arial, Helvetica, sans-serif;
-    background: black;
+    background: white;
   }
 
   h1, h3, h4, p {
-    color: white;
+    color: black;
   }
 
   ol {
@@ -208,7 +206,7 @@ $(document).on('page:load', ready);
   }
 
   .survey-container {
-    color: white;
+    color: black;
     margin-left: 20px;
     align-items: center;
     flex-direction: column;
@@ -218,14 +216,20 @@ $(document).on('page:load', ready);
   .analytics-container {
     /* background: #262728; */
     display: flex;
-    align-items: center;
+    border-radius: 25px;
+    /* align-items: center; */
     /* flex-direction: column; */
-    max-width: 95wv;
+    /* max-width: 95wv; */
     justify-content: center;
     position: relative;
     /* left: 23%; */
     margin: 0 auto;
     text-align: center;
+  }
+
+  .card-main {
+    margin-left: 100px;
+    margin-right: 100px;
   }
   
   .piechart {
@@ -233,6 +237,8 @@ $(document).on('page:load', ready);
     width: 500px;
     height: 600px;
     float: left;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .linechart {
@@ -240,6 +246,8 @@ $(document).on('page:load', ready);
     width: 500px;
     height: 600px;
     margin-left: 80px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .insight-wrapper{
@@ -251,10 +259,12 @@ $(document).on('page:load', ready);
   }
 
   .insight-piece {
-    background: #262728;
+    background: #6c757d;
     width: 250px;
     height: 260px;
-    color: white;
+    color: black;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   }
 
   .right-insight {
@@ -286,6 +296,11 @@ $(document).on('page:load', ready);
     text-decoration: none;
   }
 
+  .btn {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   .surveys-dashboard{
     background: #262728;
     padding-top: 10px;
@@ -299,7 +314,9 @@ $(document).on('page:load', ready);
     width: 1080px;
     height: 500px;
     margin: 0 auto;
-    align-items: center
+    align-items: center;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: flex
     vertical-align: center
     horizontal-align: center
@@ -1280,7 +1297,7 @@ $(document).on('page:load', ready);
   $(document).ready(function()
   {    
     word_list = [];
-    group = <%=raw f_grouped %>;
+    group = <%= raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});

@@ -17,7 +17,7 @@
     z-index: 1;
     width: 100%;
     padding: 0 24px;
-    max-wdith: 1100px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .logo {
@@ -64,7 +64,7 @@
     list-style: none;
 }
 
-.btn {
+/* .btn {
     border-radius: 50px;
     background: white;
     white-space: nowrap;
@@ -81,25 +81,25 @@
         transition: all 0.2s ease-in-out;
         background: var(--light);
     }
-}
+} */
 </style>
 <header>
     <nav class="nav">
         <div class="navContainer">
             <div class="logo">
-                <%= link_to 'Synergi', manager_root_path, style: "color: white;" %>
+                <%= link_to "Synergi", manager_root_path, style: "color: white;" %>
             </div>
             <div class="menu">
-                <%= link_to 'Employees', employees_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
-                <%# <%= link_to 'Notes', notes_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
-                <%= link_to 'Surveys', surveys_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
+                <%= link_to "Employees", employees_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
+                <% # <%= link_to 'Notes', notes_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
+                <%= link_to "Surveys", surveys_path, class: "menuItem", style: "color: white; font-size: 24px;" %>
             </div>
             <div class="btnContainer">
                 <% if manager_signed_in? %>
-                    <%= link_to 'Sign Out', destroy_manager_session_path, method: :delete, class: 'btn' %>
+                    <%= link_to "Sign Out", destroy_manager_session_path, method: :delete, class: "btn" %>
                 <% else %>
-                    <%= link_to 'Sign in', new_manager_session_path, class: 'btn' %>
-                    <%= link_to 'Sign up', new_manager_registration_path, class: 'btn' %>
+                    <%= link_to "Sign in", new_manager_session_path, class: "btn" %>
+                    <%= link_to "Sign up", new_manager_registration_path, class: "btn" %>
                 <% end %>
             </div>
         </div>
