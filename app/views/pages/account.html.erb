@@ -67,8 +67,8 @@ $(document).on('page:load', ready);
 <br />
 
 <div class="wordcloud-container">
-  <div class="wordcloud">
-    <ul class="nav nav-tabs" style="color: black;">
+  <div class="card bg-light mb-3 card-main">
+    <ul class="nav nav-tabs card-header wordcloud-header" style="color: black;">
       <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="#positive"><span style="color: black;">Most Positively Viewed</span></a>
       </li>
@@ -95,7 +95,7 @@ $(document).on('page:load', ready);
               <div id="positiveCloud"></div>
             <% else %>
               <br /><br /><br /><br />
-              <span style="color: white;">No data yet!</span>
+              <span style="color: black;">No data yet!</span>
               <br/><br/>
             <% end %>
           </div>
@@ -108,7 +108,7 @@ $(document).on('page:load', ready);
               <div id="negativeCloud"></div>
             <% else %>
               <br /><br /><br /><br />
-              <span style="color: white;">No data yet!</span>
+              <span style="color: black;">No data yet!</span>
               <br/><br/>
             <% end %>
           </div>
@@ -121,7 +121,7 @@ $(document).on('page:load', ready);
               <div id="controversialCloud"></div>
             <% else %>
               <br /><br /><br /><br />
-              <span style="color: white;">No data yet!</span>
+              <span style="color: black;">No data yet!</span>
               <br/><br/>
             <% end %>
           </div>
@@ -134,7 +134,7 @@ $(document).on('page:load', ready);
               <div id="improvedCloud"></div>
             <% else %>
               <br /><br /><br /><br />
-              <span style="color: white;">No data yet!</span>
+              <span style="color: black;">No data yet!</span>
               <br/><br/>
             <% end %>
           </div>
@@ -147,7 +147,7 @@ $(document).on('page:load', ready);
               <div id="dropCloud"></div>
             <% else %>
               <br /><br /><br /><br />
-              <span style="color: white;">No data yet!</span>
+              <span style="color: black;">No data yet!</span>
               <br/><br/>
             <% end %>
           </div>
@@ -172,7 +172,7 @@ $(document).on('page:load', ready);
       <div id="wordCloud" class="wordcloud-container"></div>
     <% else %>
       <br />
-      <span style="color: white;">No data yet!</span>
+      <span style="color: black;">No data yet!</span>
       <br/>
       <br/>
     <% end %>
@@ -182,6 +182,8 @@ $(document).on('page:load', ready);
 
 <br />
 <br />
+<% 
+=begin %>
 <div class="analytics-container">
   <div class="insight-wrapper">
     <div class="card bg-light mb-3">
@@ -274,6 +276,8 @@ $(document).on('page:load', ready);
 
   </div>
 </div>
+<% 
+=end %>
 
 <br/>
 <br/>
@@ -285,7 +289,7 @@ $(document).on('page:load', ready);
 
 <style>
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
     background: white;
   }
 
@@ -318,6 +322,14 @@ $(document).on('page:load', ready);
     /* left: 23%; */
     margin: 0 auto;
     text-align: center;
+  }
+
+  .wordcloud-header {
+    background-color: #f0f1f2;
+  }
+
+  .nav-link.active {
+    font-weight: bold;
   }
 
   .card-main {
@@ -916,13 +928,13 @@ $(document).on('page:load', ready);
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<%= render 'jqw_cloud.js' %>
+<%= render "jqw_cloud.js" %>
 
 <script>
   $(document).ready(function()
   {    
     /*word_list = [];
-    group = <%=raw f_grouped %>;
+    group = <%= raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
@@ -949,16 +961,8 @@ $(document).on('page:load', ready);
       controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
 
-<<<<<<< HEAD
-<script>
-  $(document).ready(function()
-  {    
-    word_list = [];
-    group = <%= raw f_grouped %>;
-=======
     improved_list = [];
     improved_group = <%= raw d %>;
->>>>>>> d3600f99dd1949105e6e7adb80bf145f1964d753
 
     $.each(improved_group, function(key, value) {
       improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});

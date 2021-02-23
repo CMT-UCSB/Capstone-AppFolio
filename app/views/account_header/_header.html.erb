@@ -96,7 +96,7 @@
             </div>
             <div class="btnContainer">
                 <% if manager_signed_in? %>
-                    <%= link_to "Sign Out", destroy_manager_session_path, method: :delete, class: "btn" %>
+                    <%= link_to "Sign Out", destroy_manager_session_path, method: :delete, class: "btn btn-outline-light" %>
                 <% else %>
                     <%= link_to "Sign in", new_manager_session_path, class: "btn" %>
                     <%= link_to "Sign up", new_manager_registration_path, class: "btn" %>

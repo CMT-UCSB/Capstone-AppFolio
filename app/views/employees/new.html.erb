@@ -1,9 +1,8 @@
 <style>
 body {
-    background: black;
+    background: white;
 }
 .container{
-  background: #262728;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -12,21 +11,21 @@ body {
   margin-top: 8%;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  color: white;
+h1, h2, h3, h4, h5, h6, p, label {
+  color: black !important;
 }
 </style>
 
-<%= render partial: 'account_header/header' %>
+<%= render partial: "account_header/header" %>
 
-<div class="container">
+<div class="container card bg-light mb-3">
     <br />
     <h1>New Employee</h1>
     <br />
 
-    <%= render 'form', employee: @employee %>
+    <%= render "form", employee: @employee %>
 
     <br />
-    <%= link_to 'Cancel', employees_path, style: "color: white;" %>
+    <%= link_to "Cancel", employees_path, class: "btn btn-secondary" %>
     <br />
 </div>
