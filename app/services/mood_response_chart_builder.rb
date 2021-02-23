@@ -1,12 +1,12 @@
 class MoodResponseChartBuilder
-    def initialize(mood_survey:)
-        @mood_survey = mood_survey
+    def initialize(question:)
+        @question = question
     end
 
     def pie_chart_data
-        if !@mood_survey.nil?
-            default_data = { "okay" => 0, "bad" => 0, "good" => 0, "terrible" => 0, "amazing" => 0 }
-            pie_chart_data = default_data.merge(MoodResponse.where(question_id: @mood_survey.questions.map(&:id)).group(:response).count)
+        if !@question.nil?
+            default_data = { "terrible" => 0, "bad" => 0, "okay" => 0, "good" => 0, "amazing" => 0 }
+            pie_chart_data = default_data.merge(MoodResponse.where(question_id: @question.id).group(:response).count)
             print "pie_chart_data"
             if pie_chart_data.values.any?(&:positive?)
                 pie_chart_data
