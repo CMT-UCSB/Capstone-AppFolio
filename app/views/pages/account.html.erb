@@ -88,7 +88,7 @@ $(document).on('page:load', ready);
 
     <div class="tab-content">
         <div class="tab-pane fade show active" id="positive">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
               <% f = EntityNlp.where(manager_id: current_manager) %>
               <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
@@ -102,7 +102,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="negative">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_negative.empty? %>
               <% b = most_negative.select { |result| result[1] < 0 } %>
               <br /><br /><br /><br />
@@ -115,7 +115,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="controversial">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_controversial.empty? %>
               <% c = most_controversial.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
@@ -128,7 +128,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="improved">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_improve_review.empty? %>
               <% d = most_improve_review.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
@@ -141,7 +141,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="drop">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_drop_review.empty? %>
               <% e = most_drop_review.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
@@ -409,17 +409,12 @@ $(document).on('page:load', ready);
   }
 
   .wordcloud {
-    background: #262728;
     padding-top: 10px;
     width: 1080px;
     height: 500px;
     margin: 0 auto;
     align-items: center;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    display: flex
-    vertical-align: center
-    horizontal-align: center
+    display: flex;
   }
 
   .wordcloud-container {
