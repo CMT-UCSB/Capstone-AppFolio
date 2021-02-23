@@ -157,16 +157,15 @@ $(document).on('page:load', ready);
   </div>  
 </div>
 
-<!-- <div class="wordcloud-container">
+<br />
+<br />
+<div class="wordcloud-container">
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
-    <% f = Survey.all %>
-    <% f_grouped = f.group(:name).count(:name).sort_by(&:last).reverse %>
-    <div id="wordCloud" class="wordcloud-container"></div>
     <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
-      <% e = EntityNlp.where(manager_id: current_manager) %>
-      <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+      <% f = EntityNlp.where(manager_id: current_manager) %>
+      <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
       <br />
       <br />
       <br />
@@ -179,7 +178,7 @@ $(document).on('page:load', ready);
       <br/>
     <% end %>
   </div>
-</div> -->
+</div>
 
 
 <br />
@@ -890,6 +889,15 @@ $(document).on('page:load', ready);
       new Chartkick.LineChart(document.getElementById("display2"), data, {});
     }
   }
+
+  function showTop3() {
+    document.getElementById('analytics_data').innerHTML = 'Showing data for ' + document.getElementById('number').value + ' survey';
+
+    if("<%= @surveys.empty? %>" != "true")
+    {
+    }
+  }
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -905,123 +913,15 @@ $(document).on('page:load', ready);
 <script>
   $(document).ready(function()
   {    
-    /* word_list = [];
+    word_list = [];
     group = <%=raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    }); */
-
-    positive_list = [];
-    positive_group = <%= raw a %>;
-
-    $.each(positive_group, function(key, value) {
-      positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
-
-    negative_list = [];
-    negative_group = <%= raw b %>;
-
-    $.each(negative_group, function(key, value) {
-      negative_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
-    });
-
-    controversial_list = [];
-    controversial_group = <%= raw c %>;
-
-    $.each(controversial_group, function(key, value) {
-      controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
-
-    improved_list = [];
-    improved_group = <%= raw d %>;
-
-    $.each(improved_group, function(key, value) {
-      improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
-
-    drop_list = [];
-    drop_group = <%= raw e %>;
-
-    $.each(drop_group, function(key, value) {
-      drop_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
-    });
-
-    /* $("#wordCloud").jQWCloud({
-      words: word_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass',
-      word_mouseOver: function(){
-        $(this).tooltip();
-		  }
-    }); */
     
-    $("#positiveCloud").jQWCloud({
-      words: positive_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#negativeCloud").jQWCloud({
-      words: negative_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#controversialCloud").jQWCloud({
-      words: controversial_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#improvedCloud").jQWCloud({
-      words: improved_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#dropCloud").jQWCloud({
-      words: drop_list,
+    $("#wordCloud").jQWCloud({
+      words: word_list,
       //cloud_color: 'yellow',		
       minFont: 30,
       maxFont: 80,
