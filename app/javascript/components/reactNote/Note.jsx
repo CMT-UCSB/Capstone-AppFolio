@@ -38,7 +38,7 @@ class Note extends React.Component {
                             <CardTitle>{note.date}</CardTitle>
                             <CardText style={{color: 'black'}}>{note.content}</CardText>
                             <div style={{position: 'absolute', bottom: '8px'}}>
-                                <Button onClick={this.handleDestroy} style={{color: 'red'}}>Delete</Button>
+                                <Button onClick={this.handleDestroy} className="btn btn-danger btn-sm">Delete</Button>
                                 <Container triggerText='View/Edit' updateNote={this.props.updateNote} note={note} create={false}/>
                             </div>
                         </CardBody>
