@@ -55,7 +55,7 @@ class ReactNote extends React.Component {
 }
 export default ReactNote
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const app = document.getElementById('react_note')
     app && ReactDOM.render(<ReactNote />, app)
 })
