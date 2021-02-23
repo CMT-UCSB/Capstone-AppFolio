@@ -88,11 +88,77 @@ $(document).on('page:load', ready);
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="positive"><div class="wordcloud-container"><br /><br /><br /><br /><div id="positiveCloud"></div></div></div>
-        <div class="tab-pane fade" id="negative"><div class="wordcloud-container"><br /><br /><br /><br /><div id="negativeCloud"></div></div></div>
-        <div class="tab-pane fade" id="controversial"><div class="wordcloud-container"><br /><br /><br /><br /><div id="controversialCloud"></div></div></div>
-        <div class="tab-pane fade" id="improved"><div class="wordcloud-container"><br /><br /><br /><br /><div id="improvedCloud"></div></div></div>
-        <div class="tab-pane fade" id="drop"><div class="wordcloud-container"><br /><br /><br /><br /><div id="dropCloud"></div></div></div>
+        <div class="tab-pane fade show active" id="positive">
+          <div class="wordcloud-container">
+            <% if !most_positive.empty? %>
+              <% most_positive.each_with_index do |result,index|%>
+                <% if result[1] > 0 %>
+                  <span><%= index+1%>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              <% end %>
+            <% else %>
+              <br /><br /><br /><br />
+              <span style="color: white;">No data yet!</span>
+              <br/><br/>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="negative">
+          <div class="wordcloud-container">
+            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+              <% e = EntityNlp.where(manager_id: current_manager) %>
+              <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+              <br /><br /><br /><br />
+              <div id="negativeCloud"></div>
+            <% else %>
+              <br /><br /><br /><br />
+              <span style="color: white;">No data yet!</span>
+              <br/><br/>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="controversial">
+          <div class="wordcloud-container">
+            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+              <% e = EntityNlp.where(manager_id: current_manager) %>
+              <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+              <br /><br /><br /><br />
+              <div id="controversialCloud"></div>
+            <% else %>
+              <br /><br /><br /><br />
+              <span style="color: white;">No data yet!</span>
+              <br/><br/>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="improved">
+          <div class="wordcloud-container">
+            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+              <% e = EntityNlp.where(manager_id: current_manager) %>
+              <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+              <br /><br /><br /><br />
+              <div id="improvedCloud"></div>
+            <% else %>
+              <br /><br /><br /><br />
+              <span style="color: white;">No data yet!</span>
+              <br/><br/>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="drop">
+          <div class="wordcloud-container">
+            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
+              <% e = EntityNlp.where(manager_id: current_manager) %>
+              <% e_grouped = e.group(:name).sum(:count).sort_by(&:last).reverse %>
+              <br /><br /><br /><br />
+              <div id="dropCloud"></div>
+            <% else %>
+              <br /><br /><br /><br />
+              <span style="color: white;">No data yet!</span>
+              <br/><br/>
+            <% end %>
+          </div>
+        </div>
     </div>
   </div>  
 </div>
@@ -848,11 +914,63 @@ $(document).on('page:load', ready);
 <script>
   $(document).ready(function()
   {    
-    positive_list = [];
+    word_list = [];
     group = <%=raw f_grouped %>;
 
     $.each(group, function(key, value) {
+      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    positive_list = [];
+    positive_group = <%=raw f_grouped %>;
+
+    $.each(positive_group, function(key, value) {
       positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    negative_list = [];
+    negative_group = <%=raw f_grouped %>;
+
+    $.each(negative_group, function(key, value) {
+      negative_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    controversial_list = [];
+    controversial_group = <%=raw f_grouped %>;
+
+    $.each(controversial_group, function(key, value) {
+      controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    improved_list = [];
+    improved_group = <%=raw f_grouped %>;
+
+    $.each(improved_group, function(key, value) {
+      improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    drop_list = [];
+    drop_group = <%=raw f_grouped %>;
+
+    $.each(drop_group, function(key, value) {
+      drop_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    $("#wordCloud").jQWCloud({
+      words: word_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass',
+      word_mouseOver: function(){
+        $(this).tooltip();
+		  }
     });
     
     $("#positiveCloud").jQWCloud({
@@ -866,7 +984,8 @@ $(document).on('page:load', ready);
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
+      word_common_classes: 'WordClass',
+      word_mouseOver
     });
 
     $("#negativeCloud").jQWCloud({
@@ -880,7 +999,8 @@ $(document).on('page:load', ready);
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
+      word_common_classes: 'WordClass',
+      word_mouseOver
     });
 
     $("#controversialCloud").jQWCloud({
@@ -894,7 +1014,8 @@ $(document).on('page:load', ready);
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
+      word_common_classes: 'WordClass',
+      word_mouseOver
     });
 
     $("#improvedCloud").jQWCloud({
@@ -908,7 +1029,8 @@ $(document).on('page:load', ready);
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
+      word_common_classes: 'WordClass',
+      word_mouseOver
     });
 
     $("#dropCloud").jQWCloud({
@@ -922,7 +1044,8 @@ $(document).on('page:load', ready);
       padding_left: 1,
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
+      word_common_classes: 'WordClass',
+      word_mouseOver
     });
     
   });
