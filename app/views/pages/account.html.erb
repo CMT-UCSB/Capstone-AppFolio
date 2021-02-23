@@ -69,7 +69,7 @@ $(document).on('page:load', ready);
 
 <div class="wordcloud-container">
   <div class="wordcloud">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" style="color: black;">
       <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="#positive">Most Positively Viewed</a>
       </li>
@@ -923,7 +923,7 @@ $(document).on('page:load', ready);
     negative_group = <%= raw b %>;
 
     $.each(negative_group, function(key, value) {
-      negative_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      negative_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
     });
 
     controversial_list = [];
@@ -944,7 +944,7 @@ $(document).on('page:load', ready);
     drop_group = <%= raw e %>;
 
     $.each(drop_group, function(key, value) {
-      drop_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      drop_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
     });
 
     /* $("#wordCloud").jQWCloud({
