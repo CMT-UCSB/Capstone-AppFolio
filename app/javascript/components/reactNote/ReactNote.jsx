@@ -42,7 +42,7 @@ class ReactNote extends React.Component {
             <>
                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '0px 50px'}}>
                     <h1>Note</h1>
-                    <Container triggerText='New' updateNote={this.getNotes} note={this.state.newNote} create={true}/>
+                    <Container triggerText='New' updateNote={this.getNotes} note={this.state.newNote} create={true} className='btn btn-success'/>
                 </div>
                 <NoteList>
                     {this.state.notes.map(note => (
