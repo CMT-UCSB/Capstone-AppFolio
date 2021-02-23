@@ -184,8 +184,7 @@ $(document).on('page:load', ready);
 
 <br />
 <br />
-<% 
-=begin %>
+
 <div class="analytics-container">
   <div class="insight-wrapper">
     <div class="card bg-light mb-3">
@@ -278,8 +277,6 @@ $(document).on('page:load', ready);
 
   </div>
 </div>
-<% 
-=end %>
 
 <br/>
 <br/>
@@ -930,13 +927,13 @@ $(document).on('page:load', ready);
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<%= render 'jqw_cloud.js' %>
+<%= render "jqw_cloud.js" %>
 
 <script>
   $(document).ready(function()
   {    
     word_list = [];
-    group = <%=raw f_grouped %>;
+    group = <%= raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
