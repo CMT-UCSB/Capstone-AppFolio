@@ -95,10 +95,6 @@ $(document).on('page:load', ready);
               <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
-            <!--<% if !most_positive.empty? %>
-              <% a = most_positive.select { |result| result[1] > 0 } %>
-              <br /><br /><br /><br />
-              <div id="positiveCloud"></div>-->
             <% else %>
               <br /><br /><br /><br />
               <span style="color: white;">No data yet!</span>
@@ -164,7 +160,9 @@ $(document).on('page:load', ready);
 <br />
 <br />
 
-<!-- <div class="wordcloud-container">
+<!-- <br />
+<br />
+<div class="wordcloud-container">
   <div class="wordcloud">
     <h4>Most Mentioned Names</h4>
     <br />
@@ -178,13 +176,12 @@ $(document).on('page:load', ready);
       <div id="wordCloud" class="wordcloud-container"></div>
     <% else %>
       <br />
-      <span style="color: white;">No data yet!</span>
+      <span>No data yet!</span>
       <br/>
       <br/>
     <% end %>
   </div>
 </div> -->
-
 
 <br />
 <br />
@@ -915,58 +912,7 @@ $(document).on('page:load', ready);
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
-
-    /*positive_list = [];
-    positive_group = [<%= raw a %>];
-
-    if(positive_group.length > 0) {
-      $.each(positive_group[0], function(key, value) {
-        positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-      });
-
-      $("#positiveCloud").jQWCloud({
-        words: positive_list,
-        //cloud_color: 'yellow',		
-        minFont: 30,
-        maxFont: 80,
-        //fontOffset: 5,
-        //cloud_font_family: 'Owned',
-        //verticalEnabled: false,
-        padding_left: 1,
-        //showSpaceDIV: true,
-        //spaceDIVColor: 'white',
-        word_common_classes: 'WordClass'
-      });
-    }
-
-    negative_list = [];
-    negative_group = <%= raw b %>;
-
-    $.each(negative_group, function(key, value) {
-      negative_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
-    });
-
-    controversial_list = [];
-    controversial_group = <%= raw c %>;
-
-    $.each(controversial_group, function(key, value) {
-      controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
-
-    improved_list = [];
-    improved_group = <%= raw d %>;
-
-    $.each(improved_group, function(key, value) {
-      improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
-
-    drop_list = [];
-    drop_group = <%= raw e %>;
-
-    $.each(drop_group, function(key, value) {
-      drop_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
-    });*/
-
+    
     $("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
@@ -980,62 +926,6 @@ $(document).on('page:load', ready);
       //spaceDIVColor: 'white',
       word_common_classes: 'WordClass'
     });
-
-    /*$("#negativeCloud").jQWCloud({
-      words: negative_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#controversialCloud").jQWCloud({
-      words: controversial_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#improvedCloud").jQWCloud({
-      words: improved_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
-
-    $("#dropCloud").jQWCloud({
-      words: drop_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });*/
     
   });
 
