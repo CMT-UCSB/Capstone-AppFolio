@@ -904,12 +904,12 @@ $(document).on('page:load', ready);
 <script>
   $(document).ready(function()
   {    
-    word_list = [];
+    /*word_list = [];
     group = <%=raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
+    });*/
 
     positive_list = [];
     positive_group = <%= raw a %>;
@@ -918,7 +918,7 @@ $(document).on('page:load', ready);
       positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
     });
 
-    negative_list = [];
+    /*negative_list = [];
     negative_group = <%= raw b %>;
 
     $.each(negative_group, function(key, value) {
@@ -946,7 +946,7 @@ $(document).on('page:load', ready);
       drop_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
     });*/
 
-    $("#wordCloud").jQWCloud({
+    /*$("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
       minFont: 30,
@@ -961,7 +961,7 @@ $(document).on('page:load', ready);
       word_mouseOver: function(){
         $(this).tooltip();
 		  }
-    });
+    });*/
     
     $("#positiveCloud").jQWCloud({
       words: positive_list,
@@ -977,7 +977,7 @@ $(document).on('page:load', ready);
       word_common_classes: 'WordClass'
     });
 
-    $("#negativeCloud").jQWCloud({
+    /*$("#negativeCloud").jQWCloud({
       words: negative_list,
       //cloud_color: 'yellow',		
       minFont: 30,
