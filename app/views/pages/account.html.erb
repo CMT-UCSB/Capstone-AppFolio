@@ -104,7 +104,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="negative">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_negative.empty? %>
               <% f_grouped = most_negative %>
               <%= f_grouped %>
@@ -118,7 +118,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="controversial">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_controversial.empty? %>
               <% f_grouped = most_controversial %>
               <%= f_grouped %>
@@ -133,7 +133,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="improved">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_improve_review.empty? %>
               <% f_grouped = most_improve_review %>
               <%# <% d = most_improve_review.select { |result| result[1] > 0 } %> %>
@@ -147,7 +147,7 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="drop">
-          <div class="wordcloud-container">
+          <div class="wordcloud wordcloud-container">
             <% if !most_drop_review.empty? %>
               <% f_grouped = most_drop_review%>
               <%# <% e = most_drop_review.select { |result| result[1] > 0 } %> %>
@@ -416,17 +416,12 @@ $(document).on('page:load', ready);
   }
 
   .wordcloud {
-    background: #262728;
     padding-top: 10px;
     width: 1080px;
     height: 500px;
     margin: 0 auto;
     align-items: center;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    display: flex
-    vertical-align: center
-    horizontal-align: center
+    display: flex;
   }
 
   .wordcloud-container {
