@@ -11,6 +11,8 @@ module PagesHelper
     e = EntityNlp.where(manager_id: current_manager.id)
     e = e.where(elapsed: 0)
     e_pos = e.group(:name).average(:sentiment_score).sort_by(&:last).reverse
+    e_pos = e_pos.select { |result| result[1] > 0 }
+    Rails.logger.info("\n --- E_POS: #{e_pos}\n")
     e_pos
   end
 
@@ -18,6 +20,8 @@ module PagesHelper
     e = EntityNlp.where(manager_id: current_manager.id)
     e = e.where(elapsed: 0)
     e_neg = e.group(:name).average(:sentiment_score).sort_by(&:last)
+    e_neg = e_neg.select { |result| result[1] < 0 }
+    Rails.logger.info("\n --- E_NEG: #{e_neg}\n")
     e_neg
   end
 
@@ -53,6 +57,7 @@ module PagesHelper
       calculated << [personName, standard_deviation(allScores)]
     end
     e_mc = calculated.sort_by(&:last).reverse
+    e_mc = e_mc.select { |result| result[1] > 0 }
   end
 
   def most_improve_review
@@ -75,6 +80,7 @@ module PagesHelper
       end
     end
     most_improve_review = same_name.sort_by(&:last).reverse
+    most_improve_review = most_improve_review.select { |result| result[1] > 0 }
     return most_improve_review
   end
 
@@ -98,6 +104,7 @@ module PagesHelper
     same_name.sort_by(&:last).reverse
 
     most_drop_review = same_name.sort_by(&:last)
+    most_drop_review = most_drop_review.select { |result| result[1] > 0 }
     return most_drop_review
   end
 

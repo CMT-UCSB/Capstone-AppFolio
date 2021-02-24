@@ -89,9 +89,11 @@ $(document).on('page:load', ready);
     <div class="tab-content">
         <div class="tab-pane fade show active" id="positive">
           <div class="wordcloud-container">
-            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
-              <% f = EntityNlp.where(manager_id: current_manager) %>
-              <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
+            <% if !most_positive.empty? %>
+              <%# <% f = EntityNlp.where(manager_id: current_manager) %> %>
+              <%# <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %> %>
+              <% f_grouped = most_positive %>
+              <%= f_grouped %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
             <% else %>
@@ -104,7 +106,8 @@ $(document).on('page:load', ready);
         <div class="tab-pane fade" id="negative">
           <div class="wordcloud-container">
             <% if !most_negative.empty? %>
-              <% b = most_negative.select { |result| result[1] < 0 } %>
+              <% f_grouped = most_negative %>
+              <%= f_grouped %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
             <% else %>
@@ -117,7 +120,9 @@ $(document).on('page:load', ready);
         <div class="tab-pane fade" id="controversial">
           <div class="wordcloud-container">
             <% if !most_controversial.empty? %>
-              <% c = most_controversial.select { |result| result[1] > 0 } %>
+              <% f_grouped = most_controversial %>
+              <%= f_grouped %>
+              <%# <% c = most_controversial.select { |result| result[1] > 0 } %> %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
             <% else %>
@@ -130,7 +135,8 @@ $(document).on('page:load', ready);
         <div class="tab-pane fade" id="improved">
           <div class="wordcloud-container">
             <% if !most_improve_review.empty? %>
-              <% d = most_improve_review.select { |result| result[1] > 0 } %>
+              <% f_grouped = most_improve_review %>
+              <%# <% d = most_improve_review.select { |result| result[1] > 0 } %> %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
             <% else %>
@@ -143,7 +149,8 @@ $(document).on('page:load', ready);
         <div class="tab-pane fade" id="drop">
           <div class="wordcloud-container">
             <% if !most_drop_review.empty? %>
-              <% e = most_drop_review.select { |result| result[1] > 0 } %>
+              <% f_grouped = most_drop_review%>
+              <%# <% e = most_drop_review.select { |result| result[1] > 0 } %> %>
               <br /><br /><br /><br />
               <div id="wordCloud" class="wordcloud-container"></div>
             <% else %>
