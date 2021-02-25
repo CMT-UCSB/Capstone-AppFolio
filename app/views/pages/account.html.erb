@@ -88,12 +88,11 @@ $(document).on('page:load', ready);
 
     <div class="tab-content">
         <div class="tab-pane fade show active" id="positive">
-          <div class="wordcloud wordcloud-container">
-            <% if !(EntityNlp.where(manager_id: current_manager)).empty? %>
-              <% f = EntityNlp.where(manager_id: current_manager) %>
-              <% f_grouped = f.group(:name).sum(:count).sort_by(&:last).reverse %>
+          <div class="wordcloud-container">
+            <% if !most_positive.empty? %>
+              <% a = most_positive.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
-              <div id="wordCloud" class="wordcloud-container"></div>
+              <div id="positiveCloud" class="wordcloud-container"></div>
             <% else %>
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
@@ -102,11 +101,11 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="negative">
-          <div class="wordcloud wordcloud-container">
+          <div class="wordcloud-container">
             <% if !most_negative.empty? %>
               <% b = most_negative.select { |result| result[1] < 0 } %>
               <br /><br /><br /><br />
-              <div id="wordCloud" class="wordcloud-container"></div>
+              <div id="negativeCloud" class="wordcloud-container"></div>
             <% else %>
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
@@ -115,11 +114,11 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="controversial">
-          <div class="wordcloud wordcloud-container">
+          <div class="wordcloud-container">
             <% if !most_controversial.empty? %>
               <% c = most_controversial.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
-              <div id="wordCloud" class="wordcloud-container"></div>
+              <div id="controversialCloud" class="wordcloud-container"></div>
             <% else %>
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
@@ -128,11 +127,11 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="improved">
-          <div class="wordcloud wordcloud-container">
+          <div class="wordcloud-container">
             <% if !most_improve_review.empty? %>
               <% d = most_improve_review.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
-              <div id="wordCloud" class="wordcloud-container"></div>
+              <div id="improvedCloud" class="wordcloud-container"></div>
             <% else %>
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
@@ -141,11 +140,11 @@ $(document).on('page:load', ready);
           </div>
         </div>
         <div class="tab-pane fade" id="drop">
-          <div class="wordcloud wordcloud-container">
+          <div class="wordcloud-container">
             <% if !most_drop_review.empty? %>
               <% e = most_drop_review.select { |result| result[1] > 0 } %>
               <br /><br /><br /><br />
-              <div id="wordCloud" class="wordcloud-container"></div>
+              <div id="dropCloud" class="wordcloud-container"></div>
             <% else %>
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
@@ -924,10 +923,45 @@ $(document).on('page:load', ready);
   $(document).ready(function()
   {    
     word_list = [];
-    group = <%= raw f_grouped %>;
+    group = <%=raw f_grouped %>;
 
     $.each(group, function(key, value) {
       word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    positive_list = [];
+    positive_group = <%= raw a %>;
+
+    $.each(positive_group, function(key, value) {
+      positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    negative_list = [];
+    negative_group = <%= raw b %>;
+
+    $.each(negative_group, function(key, value) {
+      negative_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
+    });
+
+    controversial_list = [];
+    controversial_group = <%= raw c %>;
+
+    $.each(controversial_group, function(key, value) {
+      controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    improved_list = [];
+    improved_group = <%= raw d %>;
+
+    $.each(improved_group, function(key, value) {
+      improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    });
+
+    drop_list = [];
+    drop_group = <%= raw e %>;
+
+    $.each(drop_group, function(key, value) {
+      drop_list.push({word: value[0], weight: (parseInt(value[1] * 10)).abs});
     });
     
     $("#wordCloud").jQWCloud({
@@ -942,7 +976,77 @@ $(document).on('page:load', ready);
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
       word_common_classes: 'WordClass'
-    })
+    });
+
+    $("#positiveCloud").jQWCloud({
+      words: positive_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass'
+    });
+
+    $("#negativeCloud").jQWCloud({
+      words: negative_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass'
+    });
+
+    $("#controversialCloud").jQWCloud({
+      words: controversial_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass'
+    });
+
+    $("#improvedCloud").jQWCloud({
+      words: improved_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass'
+    });
+
+    $("#dropCloud").jQWCloud({
+      words: drop_list,
+      //cloud_color: 'yellow',		
+      minFont: 30,
+      maxFont: 80,
+      //fontOffset: 5,
+      //cloud_font_family: 'Owned',
+      //verticalEnabled: false,
+      padding_left: 1,
+      //showSpaceDIV: true,
+      //spaceDIVColor: 'white',
+      word_common_classes: 'WordClass'
+    });
     
   });
 
