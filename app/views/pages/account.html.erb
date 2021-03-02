@@ -3,7 +3,7 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
-<%= stylesheet_pack_tag "application" %>
+<%# <%= stylesheet_pack_tag "application" %> %>
 
 <%= render :partial => "account_header/header" %>
 <%= include_gon(:init => true) %>
@@ -67,7 +67,21 @@ $(document).on('page:load', ready);
 
 <div class="wordcloud-container">
   <div class="card bg-light mb-3 card-main">
+
     <ul class="nav nav-tabs card-header wordcloud-header" style="color: black;">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </div>
+        
+      </li>
       <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="#positive"><span style="color: black;">Most Positively Viewed</span></a>
       </li>
@@ -339,7 +353,7 @@ $(document).on('page:load', ready);
 <div class="surveys-dashboard bg-light">
   <div id="react_note"> </div>
 </div>
-<br/>
+<br/><br/><br/>
 
 
 <style>
@@ -574,25 +588,6 @@ $(document).on('page:load', ready);
 </style>
 
 <script>
-  // var modal = document.getElementById('createSurveyModal');
-
-  // var btn = document.getElementById('create_survey');
-
-  // var span = document.getElementsByClassName('close')[0];
-
-  /*btn.onclick = function () {
-    modal.style.display = 'block';
-  };
-
-  span.onclick = function () {
-    modal.style.display = 'none';
-  };
-
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  };*/
 
   var numMood = [];
   function recordSurveyData(moodReponse)
@@ -983,9 +978,6 @@ $(document).on('page:load', ready);
   }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!--WORD CLOUD SCRIPT AND STYLE (from jQWCloud)-->
 
