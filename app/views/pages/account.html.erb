@@ -149,7 +149,6 @@ $(document).on('page:load', ready);
             <div class="row">
               <div class = "col-8 ">
                 <div class="wordcloud-container">
-                  <%# <% c = [] %> %>
                   <% c = most_controversial %>
                   <br /><br /><br /><br />
                   <div id="controversialCloud" class="wordcloud-container"></div>
@@ -173,12 +172,11 @@ $(document).on('page:load', ready);
           <% end %>
         </div>
         <div class="tab-pane fade" id="improved">
-        <% d = [] %>
+          <% d = [] %>
           <% if !most_improve_review.empty? %>
             <div class="row">
               <div class = "col-8 ">
                 <div class="wordcloud-container">
-                  <%# <% d = [] %> %>
                   <% d = most_improve_review %>
                   <br /><br /><br /><br />
                   <div id="improvedCloud" class="wordcloud-container"></div>
