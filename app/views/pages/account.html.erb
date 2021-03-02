@@ -629,6 +629,8 @@ $(document).on('page:load', ready);
       });
     }
 
+    console.log(MRS);
+
     if(MRS.length == 0)
     {
       document.getElementById('analytics_data').innerHTML = 'Showing data for ' + 'no' + ' surveys';
@@ -646,6 +648,8 @@ $(document).on('page:load', ready);
               return mResponse.question_id == MRS[i].id;
             });
       }
+
+      console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
