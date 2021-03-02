@@ -107,4 +107,17 @@ module PagesHelper
     return most_drop_review
   end
 
+  def most_recent_open_survey
+    open_survey = []
+    e = @surveys.sort_by(&:updated_at).reverse
+    Rails.logger.info(" --- most recent surveys: #{e}\n")
+    e.each do |survey|
+      if Question.find_by(survey_id: survey.id).question_type == "open_ended"
+        open_survey << survey
+      end
+    end
+    Rails.logger.info(" --- most recent open survey: #{open_survey}\n")
+    open_survey
+  end
+
 end
