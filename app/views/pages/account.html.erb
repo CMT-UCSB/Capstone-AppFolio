@@ -87,60 +87,119 @@ $(document).on('page:load', ready);
 
     <div class="tab-content">
         <div class="tab-pane fade show active" id="positive">
-          <div class="wordcloud-container">
-            <% a = [] %>
-            <% if !most_positive.empty? %>
-              <% a = most_positive %>
-              <br /><br /><br /><br />
-              <div id="positiveCloud" class="wordcloud-container"></div>
-            <% else %>
-              <br /><br /><br /><br />
-              <span style="color: black;">No data yet!</span>
-              <br/><br/>
-            <% end %>
-          </div>
+          <% a = [] %>
+          <% if !most_positive.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <%# <% a = [] %> %>
+                  <% a = most_positive %>
+                  <%# <br /> %>
+                  <div id="positiveCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_positive.each_with_index do |result, index| %>
+                  <% if result[1] > 0 %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <br /><br /><br /><br />
+            <span style="color: black;">No data yet!</span>
+            <br/><br/>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="negative">
-          <div class="wordcloud-container">
-            <% b = [] %>
-            <% if !most_negative.empty? %>
-              <% b = most_negative %>
-              <br /><br /><br /><br />
-              <div id="negativeCloud" class="wordcloud-container"></div>
-            <% else %>
-              <br /><br /><br /><br />
-              <span style="color: black;">No data yet!</span>
-              <br/><br/>
-            <% end %>
-          </div>
+          <% if !most_negative.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% b = [] %>
+                  <% b = most_negative %>
+                  <br /><br /><br /><br />
+                  <div id="negativeCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_negative.each_with_index do |result, index| %>
+                  <% if result[1] < 0 %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <br /><br /><br /><br />
+            <span style="color: black;">No data yet!</span>
+            <br/><br/>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="controversial">
-          <div class="wordcloud-container">
-            <% c = [] %>
-            <% if !most_controversial.empty? %>
-              <% c = most_controversial %>
-              <br /><br /><br /><br />
-              <div id="controversialCloud" class="wordcloud-container"></div>
-            <% else %>
-              <br /><br /><br /><br />
-              <span style="color: black;">No one was mentioned by more than two people.</span>
-              <br/><br/>
-            <% end %>
-          </div>
+          <% c = [] %>
+          <% if !most_controversial.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <%# <% c = [] %> %>
+                  <% c = most_controversial %>
+                  <br /><br /><br /><br />
+                  <div id="controversialCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_controversial.each_with_index do |result, index| %>
+                  <% if result[1] > 0 %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <br /><br /><br /><br />
+            <span style="color: black;">No data yet!</span>
+            <br/><br/>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="improved">
-          <div class="wordcloud-container">
-            <% d = []%>
-            <% if !most_improve_review.empty? %>
-              <% d = most_improve_review %>
-              <br /><br /><br /><br />
-              <div id="improvedCloud" class="wordcloud-container"></div>
-            <% else %>
-              <br /><br /><br /><br />
-              <span style="color: black;">No one was mentioned consecutively.</span>
-              <br/><br/>
-            <% end %>
-          </div>
+        <% d = [] %>
+          <% if !most_improve_review.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <%# <% d = [] %> %>
+                  <% d = most_improve_review %>
+                  <br /><br /><br /><br />
+                  <div id="improvedCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_improve_review.each_with_index do |result, index| %>
+                  <% if result[1] > 0 %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <br /><br /><br /><br />
+            <span style="color: black;">No data yet!</span>
+            <br/><br/>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="drop">
           <div class="wordcloud-container">
@@ -412,7 +471,7 @@ $(document).on('page:load', ready);
 
   .wordcloud {
     padding-top: 10px;
-    width: 1080px;
+    width: 1000px;
     margin: 0 auto;
     align-items: center;
     display: flex;
@@ -427,6 +486,19 @@ $(document).on('page:load', ready);
     margin: 0 auto;
     text-align: center;
     height: 500px;
+  }
+
+  .insight-2side{
+    display:flex;
+    width: 1000px;
+  }
+
+  /* .insight-leftside{
+    width: 756px;
+  } */
+
+  .insight-rightside{
+    width: 224px;
   }
 
   .modal {
@@ -947,8 +1019,10 @@ $(document).on('page:load', ready);
       negative_list.push({word: value[0], weight: parseInt(Math.abs(value[1]*10)) });
     });
 
+    debugger;
     controversial_list = [];
     controversial_group = <%= raw c %>;
+    debugger;
 
     $.each(controversial_group, function(key, value) {
       controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
