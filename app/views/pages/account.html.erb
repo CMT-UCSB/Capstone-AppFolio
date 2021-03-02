@@ -273,8 +273,6 @@ $(document).on('page:load', ready);
 </div> -->
 
 
-
-
 <div class="surveys-dashboard bg-light">
   <div id="react_note"> </div>
 </div>
@@ -928,56 +926,60 @@ $(document).on('page:load', ready);
 
 <!--WORD CLOUD SCRIPT AND STYLE (from jQWCloud)-->
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<%= render "jqw_cloud.js" %>
+<%# render "jqw_cloud.js" %>
+<%= render "jqcloud.css" %>
+<%= render "jqcloud.js" %>
 
 <script>
   $(document).ready(function()
   {    
-    word_list = [];
+    /*word_list = [];
     group = <%=raw f_grouped %>;
 
     $.each(group, function(key, value) {
-      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      word_list.push({text: value[0], weight: parseInt(value[1] * 10)});
     });
+
+    $("#wordCloud").jQCloud(word_list);*/
 
     positive_list = [];
     positive_group = <%= raw a %>;
 
     $.each(positive_group, function(key, value) {
-      positive_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      positive_list.push({text: value[0], weight: parseInt(value[1] * 10)});
     });
 
     negative_list = [];
     negative_group = <%= raw b %>;
 
     $.each(negative_group, function(key, value) {
-      negative_list.push({word: value[0], weight: parseInt(Math.abs(value[1]*10)) });
+      negative_list.push({text: value[0], weight: parseInt(Math.abs(value[1]*10)) });
     });
 
     controversial_list = [];
     controversial_group = <%= raw c %>;
 
     $.each(controversial_group, function(key, value) {
-      controversial_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      controversial_list.push({text: value[0], weight: parseInt(value[1] * 10)});
     });
 
     improved_list = [];
     improved_group = <%= raw d %>;
 
     $.each(improved_group, function(key, value) {
-      improved_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+      improved_list.push({text: value[0], weight: parseInt(value[1] * 10)});
     });
 
     drop_list = [];
     drop_group = <%= raw e %>;
 
     $.each(drop_group, function(key, value) {
-      drop_list.push({word: value[0], weight: parseInt(Math.abs(value[1]*10)) });
+      drop_list.push({text: value[0], weight: parseInt(Math.abs(value[1]*10)) });
     });
     
-    $("#wordCloud").jQWCloud({
+    /*$("#wordCloud").jQWCloud({
       words: word_list,
       //cloud_color: 'yellow',		
       minFont: 30,
@@ -989,11 +991,12 @@ $(document).on('page:load', ready);
       //showSpaceDIV: true,
       //spaceDIVColor: 'white',
       word_common_classes: 'WordClass'
-    });
+    });*/
 
     // console.log(" \n positive list: ", positive_list);
     if(positive_list.length > 0){
-      $("#positiveCloud").jQWCloud({
+      $("#positiveCloud").jQCloud(positive_list);
+      /*$("#positiveCloud").jQWCloud({
         words: positive_list,
         //cloud_color: 'yellow',		
         minFont: 30,
@@ -1005,49 +1008,53 @@ $(document).on('page:load', ready);
         //showSpaceDIV: true,
         //spaceDIVColor: 'white',
         word_common_classes: 'WordClass'
-      });
+      });*/
     }
 
     if(negative_list.length > 0){
-      $("#negativeCloud").jQWCloud({
+      $("#negativeCloud").jQCloud(negative_list);
+      /*$("#negativeCloud").jQWCloud({
         words: negative_list,
         //cloud_color: 'yellow',		
         minFont: 30,
         maxFont: 80,
         padding_left: 1,
         word_common_classes: 'WordClass'
-      });
+      });*/
     }
 
     if(controversial_list.length > 0){
-      $("#controversialCloud").jQWCloud({
+      $("#controversialCloud").jQCloud(controversial_list);
+      /*$("#controversialCloud").jQWCloud({
         words: controversial_list,
         //cloud_color: 'yellow',		
         minFont: 30,
         maxFont: 80,
         padding_left: 1,
         word_common_classes: 'WordClass'
-      });
+      });*/
     }
 
     if(improved_list.length > 0){
-      $("#improvedCloud").jQWCloud({
+      $("#improvedCloud").jQCloud(improved_list);
+      /*$("#improvedCloud").jQWCloud({
         words: improved_list,	
         minFont: 30,
         maxFont: 80,
         padding_left: 1,
         word_common_classes: 'WordClass'
-      });
+      });*/
     }
 
     if(drop_list.length > 0){
-      $("#dropCloud").jQWCloud({
+      $("#dropCloud").jQCloud(drop_list);
+      /*$("#dropCloud").jQWCloud({
         words: drop_list,	
         minFont: 30,
         maxFont: 80,
         padding_left: 1,
         word_common_classes: 'WordClass'
-      });
+      });*/
     }
     
   });
