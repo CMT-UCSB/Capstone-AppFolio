@@ -556,7 +556,7 @@ $(document).on('page:load', ready);
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
 
-      if(MRS != [])
+      if(MRS.length == 0)
       {
         break;
       }
@@ -641,7 +641,7 @@ $(document).on('page:load', ready);
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
 
-      if(MRS != [])
+      if(MRS.length == 0)
       {
         break;
       }
