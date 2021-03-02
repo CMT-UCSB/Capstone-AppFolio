@@ -552,7 +552,7 @@ $(document).on('page:load', ready);
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
     {
-      MRS = AllQuestions.filter(function(question){
+      MRS += AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
     }
@@ -632,7 +632,7 @@ $(document).on('page:load', ready);
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
     {
-      MRS = AllQuestions.filter(function(question){
+      MRS += AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
     }
