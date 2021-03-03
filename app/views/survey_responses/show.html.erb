@@ -25,7 +25,7 @@
       <br>
       <% @questions.each_with_index do |q, index| %>
         <%= form_with(model: @survey, url: @response_paths[index], method: :post) do |f| %>
-          <br>
+        <div style="margin-left: 20px; margin-bottom: 20px;">
           <h2>
             <% if @this_survey_responses[index] == nil %>
               🔴
@@ -43,10 +43,11 @@
             <%= f.submit "😭", :class => "emoji_button" %>
           </div>
           <% elsif q.question_type == "open_ended" %>
-            <%= f.text_area :response, value: @this_survey_responses[index] == nil ? "" : @this_survey_responses[index].response, cols: "30" %>
+            <%= f.text_area :response, value: @this_survey_responses[index] == nil ? "" : @this_survey_responses[index].response, cols: "50", rows: "4" %>
             <br>
             <%= f.submit "Submit Response" %>
           <% end %>
+        </div>
         <% end %>
       <% end %>
   </div>

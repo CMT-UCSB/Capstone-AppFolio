@@ -87,7 +87,28 @@ $(document).on('page:load', ready);
             <% end %>
           </div>
         </div>
-        
+
+      </li>
+      <li class="nav-item">
+        <div class="dropdown">
+          <% max_elapsed = OpenEndedResponse.where(manager: current_manager, question: Question.where(survey: @wordcloud_surveys)).maximum("elapsed") %>
+          <% if max_elapsed === nil %>
+            <% max_elapsed = 0 %>
+          <% end %>
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%=@selected_elapsed%> surveys ago
+            
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <% if max_elapsed === 0%>
+              <a class="dropdown-item" href="">0 surveys ago</a>
+            <%else%>
+              <% (0..max_elapsed).each do |i|%>
+                <a class="dropdown-item" href="/account?wordcloud_survey_id=<%=@selected_survey_id%>&elapsed=<%=i%>#wordcloud-box"><%=i%> surveys ago</a>
+              <%end%>
+            <%end%>
+          </div>
+        </div>
       </li>
       <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="#positive"><span style="color: black;">Most Positively Viewed</span></a>
@@ -117,13 +138,15 @@ $(document).on('page:load', ready);
                   <div id="positiveCloud" class="wordcloud-container"></div>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 border-left">
                 <br/><br/><br/>
                 <h3>Detailed Rankings</h3>
                 <br/>
-                <% most_positive.each_with_index do |result, index| %>
-                  <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-                <% end %>
+                <div class="text-left mx-2">
+                  <% most_positive.each_with_index do |result, index| %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                </div>
               </div>
             </div>
           <% else %>
@@ -144,13 +167,15 @@ $(document).on('page:load', ready);
                   <div id="negativeCloud" class="wordcloud-container"></div>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 border-left">
                 <br/><br/><br/>
                 <h3>Detailed Rankings</h3>
                 <br/>
-                <% most_negative.each_with_index do |result, index| %>
-                  <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-                <% end %>
+                <div class="text-left mx-2">
+                  <% most_negative.each_with_index do |result, index| %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                </div>
               </div>
             </div>
           <% else %>
@@ -172,13 +197,15 @@ $(document).on('page:load', ready);
                   <div id="controversialCloud" class="wordcloud-container"></div>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 border-left">
                 <br/><br/><br/>
                 <h3>Detailed Rankings</h3>
                 <br/>
-                <% most_controversial.each_with_index do |result, index| %>
-                  <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
-                <% end %>
+                <div class="text-left mx-2">
+                  <% most_controversial.each_with_index do |result, index| %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                </div>
               </div>
             </div>
           <% else %>
@@ -200,13 +227,15 @@ $(document).on('page:load', ready);
                   <div id="improvedCloud" class="wordcloud-container"></div>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 border-left">
                 <br/><br/><br/>
                 <h3>Detailed Rankings</h3>
                 <br/>
-                <% most_improve_review.each_with_index do |result, index| %>
-                  <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-                <% end %>
+                <div class="text-left mx-2">
+                  <% most_improve_review.each_with_index do |result, index| %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                </div>
               </div>
             </div>
           <% else %>
@@ -228,13 +257,15 @@ $(document).on('page:load', ready);
                   <div id="dropCloud" class="wordcloud-container"></div>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 border-left">
                 <br/><br/><br/>
-                <h3>Detailed Rankings</h3>
+                <h3>Detailed1 Rankings</h3>
                 <br/>
-                <% most_drop_review.each_with_index do |result, index| %>
-                  <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-                <% end %>
+                <div class="text-left mx-2">
+                  <% most_drop_review.each_with_index do |result, index| %>
+                    <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+                  <% end %>
+                </div>
               </div>
             </div>
           <% else %>
@@ -276,9 +307,10 @@ $(document).on('page:load', ready);
 
 
 
-
-<div class="surveys-dashboard bg-light">
-  <div id="react_note"> </div>
+<div style="display: flex; align-items: center; justify-content: center; position: relative; margin: 0 auto;">
+  <div class="card bg-light mb-3 card-main" style="padding-top:20px; width: 1040px;">
+    <div id="react_note"> </div>
+  </div>
 </div>
 <br/><br/><br/>
 
@@ -322,6 +354,7 @@ $(document).on('page:load', ready);
 
   .wordcloud-header {
     background-color: #f0f1f2;
+    width: 1000px;
   }
 
   .nav-link.active {
