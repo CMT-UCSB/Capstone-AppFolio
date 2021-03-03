@@ -54,12 +54,13 @@ module PagesHelper
         personName = mention.name
         allScores << mention.sentiment_score.round(4)
       end
-      # Rails.logger.info("\n ------- #{personName} --- his/her allScores: #{allScores}\n")
-      # Rails.logger.info(" --- standard dev: #{standard_deviation(allScores)}\n")
+      Rails.logger.info("\n ------- #{personName} --- his/her allScores: #{allScores}\n")
+      Rails.logger.info(" --- standard dev: #{standard_deviation(allScores)}\n")
       # sample standard deviation
       calculated << [personName, standard_deviation(allScores)]
     end
     e_mc = calculated.sort_by(&:last).reverse
+    # Rails.logger.info(" --- most controversial list: #{e_mc}\n")
     e_mc = e_mc.select { |result| result[1] > 0 }
     e_mc
   end
