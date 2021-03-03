@@ -874,16 +874,17 @@ $(document).on('page:load', ready);
       return survey.manager_id == Manager.id
     });
     
+    var temp = [];
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
     {
-      MRS = AllQuestions.filter(function(question){
+      temp = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
 
-      if(MRS.length != 0)
+      if(temp.length != 0)
       {
-        break;
+        MRS += temp;
       }
     }
 
