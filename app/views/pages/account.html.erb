@@ -538,6 +538,8 @@ $(document).on('page:load', ready);
     var AllSurveys = Surveys.filter(function(survey){
       return survey.manager_id == Manager.id
     });
+
+    console.log(AllSurveys);
     
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
@@ -545,7 +547,14 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
+
+    console.log(MRS);
 
     if(MRS.length == 0)
     {
@@ -564,6 +573,8 @@ $(document).on('page:load', ready);
               return mResponse.question_id == MRS[i].id;
             });
       }
+
+      console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
@@ -612,6 +623,8 @@ $(document).on('page:load', ready);
     var AllSurveys = Surveys.filter(function(survey){
       return survey.manager_id == Manager.id
     });
+
+    console.log(AllSurveys);
     
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
@@ -619,7 +632,14 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
+
+    console.log(MRS);
 
     if(MRS.length == 0)
     {
@@ -638,6 +658,8 @@ $(document).on('page:load', ready);
               return mResponse.question_id == MRS[i].id;
             });
       }
+
+      console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
@@ -704,6 +726,11 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
 
     if(MRS.length == 0)
@@ -776,6 +803,11 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
 
     if(MRS.length == 0)
@@ -842,12 +874,18 @@ $(document).on('page:load', ready);
       return survey.manager_id == Manager.id
     });
     
+    var temp = [];
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
     {
-      MRS = AllQuestions.filter(function(question){
+      temp = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(temp.length != 0)
+      {
+        MRS = MRS.concat(temp);
+      }
     }
 
     if(MRS.length == 0)

@@ -175,6 +175,13 @@
       max-width: 1800px;
     }
   }
+
+  .alert{
+    display: none;
+    /* padding: 0; */
+    margin: 0;
+    border: 0;
+  }
 </style>
 
 <%= render :partial => "account_header/header" %>
@@ -209,7 +216,7 @@
           <div>
           <%= link_to "Delete", survey, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm", style: "color: white" %>
           <%= link_to "Edit", edit_survey_path(survey), class: "btn btn-info btn-sm", style: "color: white" %>
-          <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "btn btn-success btn-sm" %>
+          <%= link_to "Send Reminders", pages_send_emails_path(id: survey), method: :send_emails, class: "btn btn-success btn-sm email-button" %>
           <a class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-<%= survey.id %>">Show Result </a>
           </div>
           <br>
@@ -219,6 +226,9 @@
       <% else %>
         <tr>You don't have any surveys yet!</tr>
       <% end %>
+    </div>
+    <div class="alert alert-warning email-alert">
+        Sending out emails...
     </div>
   
 
@@ -239,10 +249,10 @@
               <% max_elapsed = 0 %>
             <% end %>
           <% end %>
-          <% for i in 0..max_elapsed do %>
+          <% for i in 0..max_elapsed %>
             <div class="card">
-              <div class="card-header" id="heading-<%= survey.id %>-elapsed-<%=i%>">
-                <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%=i%>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%=i%>">
+              <div class="card-header" id="heading-<%= survey.id %>-elapsed-<%= i %>">
+                <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%= i %>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%= i %>">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 30 30">
                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                   </svg>
@@ -260,13 +270,13 @@
                   </svg>
                 </a>
               </div>
-              <div id="collapse-<%= survey.id %>-elapsed-<%=i%>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%=i%>" data-parent="#accordion">
-                <div class="card-body" id="child-<%= survey.id %>-elapsed-<%=i%>">
+              <div id="collapse-<%= survey.id %>-elapsed-<%= i %>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%= i %>" data-parent="#accordion">
+                <div class="card-body" id="child-<%= survey.id %>-elapsed-<%= i %>">
                   <% Question.where(survey_id: survey.id).each do |question| %>
                     <% if question.question_type === "open_ended" %>
                       <div class="card">
-                        <div class="card-header" id="heading<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>">
-                          <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>">
+                        <div class="card-header" id="heading<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>">
+                          <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 30 30">
                               <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                             </svg>
@@ -276,7 +286,7 @@
                             </svg>
                           </a>
                         </div>
-                        <div id="collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" data-parent="#child-<%= survey.id %>-elapsed-<%=i%>">
+                        <div id="collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" data-parent="#child-<%= survey.id %>-elapsed-<%= i %>">
                           <div class="card-body">
                             <div style="display: flex; flex-direction: row; justify-content: space-between;">
                               <div class="response_table">
@@ -329,7 +339,7 @@
                     <% elsif question.question_type === "mood" %>
                       <div class="card">
                         <div class="card-header" id="heading-<%= question.id %>">
-                          <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>">
+                          <a class="btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" aria-expanded="false" aria-controls="collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 30 30">
                               <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                             </svg>
@@ -339,7 +349,7 @@
                             </svg>
                           </a>
                         </div>
-                        <div id="collapse-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%=i%>-<%= question.id %>" data-parent="#child-<%= survey.id %>-elapsed-<%=i%>">
+                        <div id="collapse-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" class="collapse" aria-labelledby="heading-<%= survey.id %>-elapsed-<%= i %>-<%= question.id %>" data-parent="#child-<%= survey.id %>-elapsed-<%= i %>">
                           <div class="card-body">
                             <div style="display: flex; flex-direction: row; justify-content: space-between;">
                               <div class="response_table">
@@ -396,6 +406,17 @@
   $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
   }) 
+
+  $(document).ready(function(){
+    $('.email-button').click(function(){
+        $('.alert').show()
+        setTimeout(() => {
+          $('.email-alert').text('Emails sent out!')
+          $('.email-alert').removeClass("alert-warning")
+          $('.email-alert').addClass("alert-success")
+        }, 2000);
+    }) 
+});
 
   {/*window.onclick = function (event) {
     if (event.target == modal_sr) {
