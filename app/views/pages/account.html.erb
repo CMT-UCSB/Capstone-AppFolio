@@ -539,7 +539,7 @@ $(document).on('page:load', ready);
       return survey.manager_id == Manager.id
     });
 
-    console.log(AllSurveys);
+    //console.log(AllSurveys);
     
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
@@ -554,7 +554,7 @@ $(document).on('page:load', ready);
       }
     }
 
-    console.log(MRS);
+    //console.log(MRS);
 
     if(MRS.length == 0)
     {
@@ -574,7 +574,7 @@ $(document).on('page:load', ready);
             });
       }
 
-      console.log(responses);
+      //console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
@@ -624,7 +624,7 @@ $(document).on('page:load', ready);
       return survey.manager_id == Manager.id
     });
 
-    console.log(AllSurveys);
+    //console.log(AllSurveys);
     
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
@@ -639,7 +639,7 @@ $(document).on('page:load', ready);
       }
     }
 
-    console.log(MRS);
+    //console.log(MRS);
 
     if(MRS.length == 0)
     {
@@ -659,7 +659,7 @@ $(document).on('page:load', ready);
             });
       }
 
-      console.log(responses);
+      //console.log(responses);
 
       var max = responses[0][0].elapsed;
       var counter = cntr;
@@ -873,6 +873,9 @@ $(document).on('page:load', ready);
     var AllSurveys = Surveys.filter(function(survey){
       return survey.manager_id == Manager.id
     });
+
+    console.log("All Surveys");
+    console.log(AllSurveys);
     
     var temp = [];
     var MRS = [];
@@ -882,15 +885,24 @@ $(document).on('page:load', ready);
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
 
+      console.log("Temp");
+      console.log(temp);
+
       if(temp.length != 0)
       {
-        MRS = MRS.concat(temp);
+        temp2 = MRS
+        console.log("temp2");
+        console.log(temp2);
+        MRS = [...temp, ...temp2];
       }
     }
 
+    console.log("MRS");
+    console.log(MRS);
+
     if(MRS.length == 0)
     {
-      new Chartkick.LineChart(document.getElementById("display2"), [["4",0],["3",0],["2",0],["1",0]], {});
+      new Chartkick.LineChart(document.getElementById("display2"), [["4",0],["3",0],["2",0],["1",0]], {legend: true, legend: "top"});
     }
 
     else 
