@@ -200,17 +200,24 @@
         <% @surveys.each_with_index do |survey, index| %>
         <div class="one-survey card bg-light mb-3">
         <tr>
-          <b><td>Name: <%= survey.name %></td></b><br>
-          <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(", ") %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <b><td>Survey Name: <%= survey.name %></td></b><br/>
+          <%if !survey.day_of_weeks.empty?%>
+            <td>Notifications sent every <%= survey.day_of_weeks.to_human.join(", ") %> @ <%= survey.time_of_day.strftime("%I:%M %p") %></td><br>
+          <%else%>
+            <td>Auto Notifications Off</td><br>
+          <%end%>
           <td>Visibility: <%= survey.isAnonymous.capitalize %></td><br>
           <td>Created on <%= survey.created_at.strftime("%b %d") %> at <%= survey.created_at.strftime("%I:%M %p") %> UTC</td><br>
+          <hr>
           <td>
-            Questions:
-            <ol>
+            <b>Questions:</b>
+            <div style="text-align: center;">
+            <ol style="text-align: left; margin-left: 100px;">
               <% survey.questions.each do |q| %>
                   <li><%= q.prompt %> (<%= q.question_type.dasherize.capitalize %>)</li>
               <% end %>
             </ol>
+            </div>
           </td>
 
           <div>
