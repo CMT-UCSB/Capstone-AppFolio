@@ -945,6 +945,7 @@ $(document).on('page:load', ready);
       {
         var count = 0;
         var avg = 0;
+
         for(var j = 0; j < responses[0].length; j++)
         {
           if(responses[0][j].elapsed == i)
@@ -967,7 +968,10 @@ $(document).on('page:load', ready);
 
         if(max - i >= 0)
         {
-          avg = avg / count;
+          max_x = count * 2;
+          min_x = count * -2;
+          avg = 2((avg - min_x) / (max_x - min_x)) - 1
+
           data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
           negCtr--;
