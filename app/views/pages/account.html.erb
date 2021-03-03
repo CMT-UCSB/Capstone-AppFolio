@@ -906,32 +906,19 @@ $(document).on('page:load', ready);
     var AllSurveys = Surveys.filter(function(survey){
       return survey.manager_id == Manager.id
     });
-
-    console.log("All Surveys");
-    console.log(AllSurveys);
     
-    var temp = [];
     var MRS = [];
     for(var i = 0; i < AllSurveys.length; i++)
     {
-      temp = AllQuestions.filter(function(question){
+      MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
 
-      console.log("Temp");
-      console.log(temp);
-
-      if(temp.length != 0)
+      if(MRS.length != 0)
       {
-        temp2 = MRS
-        console.log("temp2");
-        console.log(temp2);
-        MRS = [...temp, ...temp2];
+        break;
       }
     }
-
-    console.log("MRS");
-    console.log(MRS);
 
     if(MRS.length == 0)
     {
@@ -956,11 +943,14 @@ $(document).on('page:load', ready);
 
       for(var i = 0; i < 4; i++)
       {
+        var count = 0;
         var avg = 0;
         for(var j = 0; j < responses[0].length; j++)
         {
           if(responses[0][j].elapsed == i)
           {
+            count++;
+
             if(responses[0][j].response == "good")
                 avg += 1;
               
@@ -977,6 +967,7 @@ $(document).on('page:load', ready);
 
         if(max - i >= 0)
         {
+          avg = avg / count;
           data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
           negCtr--;
