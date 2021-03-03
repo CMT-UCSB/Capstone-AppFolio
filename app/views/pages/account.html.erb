@@ -734,6 +734,11 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
 
     if(MRS.length == 0)
@@ -806,6 +811,11 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
 
     if(MRS.length == 0)
@@ -878,6 +888,11 @@ $(document).on('page:load', ready);
       MRS = AllQuestions.filter(function(question){
         return question.survey_id == AllSurveys[i].id && question.question_type == "mood";
       });
+
+      if(MRS.length != 0)
+      {
+        break;
+      }
     }
 
     if(MRS.length == 0)
