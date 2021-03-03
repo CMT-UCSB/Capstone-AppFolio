@@ -794,10 +794,10 @@ $(document).on('page:load', ready);
 
         for(var j = 0; j < responses[0].length; j++)
         {
-          count++;
-
           if(responses[0][j].elapsed == i)
           {
+            count++;
+            
             if(responses[0][j].response == "good")
                 avg += 1;
               
@@ -879,10 +879,10 @@ $(document).on('page:load', ready);
 
         for(var j = 0; j < responses[0].length; j++)
         {
-          count++;
-
           if(responses[0][j].elapsed == i)
-          {
+          {          
+            count++;
+            
             if(responses[0][j].response == "good")
                 avg += 1;
               
