@@ -2,6 +2,7 @@ module PagesHelper
 
   def most_mentioned_name
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     e = e.where(elapsed: 0)
     e_mmn = e.group(:name).sum(:count).sort_by(&:last).reverse
     e_mmn
@@ -9,14 +10,17 @@ module PagesHelper
 
   def most_positive
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     e = e.where(elapsed: 0)
     e_pos = e.group(:name).average(:sentiment_score).sort_by(&:last).reverse
     e_pos = e_pos.select { |result| result[1] > 0 }
+    # Rails.logger.info(" --- e4: #{e_pos}\n")
     e_pos
   end
 
   def most_negative
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     e = e.where(elapsed: 0)
     e_neg = e.group(:name).average(:sentiment_score).sort_by(&:last)
     e_neg = e_neg.select { |result| result[1] < 0 }
@@ -39,6 +43,7 @@ module PagesHelper
 
   def most_controversial
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     e = e.where(elapsed: 0)
     calculated = []
     e.group_by(&:name).each do |person|
@@ -61,6 +66,7 @@ module PagesHelper
 
   def most_improve_review
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     current = e.where(elapsed: 0)
     last = e.where(elapsed: 1) #change to 1
     current_pos = current.group(:name).average(:sentiment_score).sort_by(&:last).reverse
@@ -85,6 +91,7 @@ module PagesHelper
 
   def most_drop_review
     e = EntityNlp.where(manager_id: current_manager.id)
+    e = e.where(survey_id: @wordcloud_surveys)
     current = e.where(elapsed: 0)
     last = e.where(elapsed: 1) #change to 1
     current_pos = current.group(:name).average(:sentiment_score).sort_by(&:last).reverse
@@ -106,5 +113,6 @@ module PagesHelper
     most_drop_review = most_drop_review.select { |result| result[1] > 0 }
     return most_drop_review
   end
+
 
 end

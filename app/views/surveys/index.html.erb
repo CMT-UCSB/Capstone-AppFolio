@@ -178,7 +178,7 @@
 
   .alert{
     display: none;
-    padding: 0;
+    /* padding: 0; */
     margin: 0;
     border: 0;
   }
@@ -220,15 +220,15 @@
           <a class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-<%= survey.id %>">Show Result </a>
           </div>
           <br>
-          <div class="alert alert-warning email-alert">
-              Sending out emails...
-          </div>
         </tr>
         </div>
         <% end %>
       <% else %>
         <tr>You don't have any surveys yet!</tr>
       <% end %>
+    </div>
+    <div class="alert alert-warning email-alert">
+        Sending out emails...
     </div>
   
 

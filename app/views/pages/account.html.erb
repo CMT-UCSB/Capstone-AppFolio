@@ -3,7 +3,6 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
-<%= stylesheet_pack_tag "application" %>
 
 <%= render :partial => "account_header/header" %>
 <%= include_gon(:init => true) %>
@@ -65,9 +64,31 @@ $(document).on('page:load', ready);
 
 <br/><br/><br/><br/>
 
-<div class="wordcloud-container">
+<div class="wordcloud-container" id="wordcloud-box">
   <div class="card bg-light mb-3 card-main">
+
     <ul class="nav nav-tabs card-header wordcloud-header" style="color: black;">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% mros = [] %>
+            <% if !@wordcloud_surveys.empty? %>
+              <% mros = @wordcloud_surveys%>
+              <%= mros[0].name%>
+            <% else %>
+              Open Ended Survey
+            <% end %>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <% @surveys.each do |survey| %>
+              <% if Question.find_by(survey_id: survey.id).question_type == "open_ended"%>
+                <a class="dropdown-item" href="/account?wordcloud_survey_id=<%=survey.id%>#wordcloud-box"><%=survey.name%></a>
+              <%end%>
+            <% end %>
+          </div>
+        </div>
+        
+      </li>
       <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="#positive"><span style="color: black;">Most Positively Viewed</span></a>
       </li>
@@ -87,74 +108,143 @@ $(document).on('page:load', ready);
 
     <div class="tab-content">
         <div class="tab-pane fade show active" id="positive">
-          <div class="wordcloud-container">
-            <% a = [] %>
-            <% if !most_positive.empty? %>
-              <% a = most_positive %>
-              <br /><br /><br /><br />
-              <div id="positiveCloud" class="wordcloud-container"></div>
-            <% else %>
+          <% a = [] %>
+          <% if !most_positive.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% a = most_positive %>
+                  <div id="positiveCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_positive.each_with_index do |result, index| %>
+                  <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="wordcloud-container">
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
               <br/><br/>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="negative">
-          <div class="wordcloud-container">
-            <% b = [] %>
-            <% if !most_negative.empty? %>
-              <% b = most_negative %>
-              <br /><br /><br /><br />
-              <div id="negativeCloud" class="wordcloud-container"></div>
-            <% else %>
+          <% b = [] %>
+          <% if !most_negative.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% b = most_negative %>
+                  <div id="negativeCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_negative.each_with_index do |result, index| %>
+                  <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="wordcloud-container">
               <br /><br /><br /><br />
               <span style="color: black;">No data yet!</span>
               <br/><br/>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="controversial">
-          <div class="wordcloud-container">
-            <% c = [] %>
-            <% if !most_controversial.empty? %>
-              <% c = most_controversial %>
+          <% c = [] %>
+          <% if !most_controversial.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% c = most_controversial %>
+                  <br /><br /><br /><br />
+                  <div id="controversialCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_controversial.each_with_index do |result, index| %>
+                  <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="wordcloud-container">
               <br /><br /><br /><br />
-              <div id="controversialCloud" class="wordcloud-container"></div>
-            <% else %>
-              <br /><br /><br /><br />
-              <span style="color: black;">No one was mentioned by more than two people.</span>
+              <span style="color: black;">No one was mentioned by two or more people.</span>
               <br/><br/>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="improved">
-          <div class="wordcloud-container">
-            <% d = []%>
-            <% if !most_improve_review.empty? %>
-              <% d = most_improve_review %>
-              <br /><br /><br /><br />
-              <div id="improvedCloud" class="wordcloud-container"></div>
-            <% else %>
+          <% d = [] %>
+          <% if !most_improve_review.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% d = most_improve_review %>
+                  <br /><br /><br /><br />
+                  <div id="improvedCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_improve_review.each_with_index do |result, index| %>
+                  <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="wordcloud-container">
               <br /><br /><br /><br />
               <span style="color: black;">No one was mentioned consecutively.</span>
               <br/><br/>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="drop">
-          <div class="wordcloud-container">
-            <% e = []%>
-            <% if !most_drop_review.empty? %>
-              <% e = most_drop_review %>
-              <br /><br /><br /><br />
-              <div id="dropCloud" class="wordcloud-container"></div>
-            <% else %>
+          <% e = [] %>
+          <% if !most_drop_review.empty? %>
+            <div class="row">
+              <div class = "col-8 ">
+                <div class="wordcloud-container">
+                  <% e = most_drop_review %>
+                  <br /><br /><br /><br />
+                  <div id="dropCloud" class="wordcloud-container"></div>
+                </div>
+              </div>
+              <div class="col-3">
+                <br/><br/><br/>
+                <h3>Detailed Rankings</h3>
+                <br/>
+                <% most_drop_review.each_with_index do |result, index| %>
+                  <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="wordcloud-container">
               <br /><br /><br /><br />
               <span style="color: black;">No one was mentioned consecutively.</span>
               <br/><br/>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
+
         </div>
     </div>
   </div>  
@@ -184,105 +274,13 @@ $(document).on('page:load', ready);
   </div>
 </div> -->
 
-<div class="analytics-container">
-  <div class="insight-wrapper">
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Mentioned Names</b></div>
-      <br />
-      <% if !(EntityNlp.all).empty? %>
-        <% most_mentioned_name.each do |result| %>
-          <span><%= result[0] %> : <%= result[1] %> times</span><br />
-        <% end %>
-      <% else %>
-        <span>No data yet!</span>
-        <br/>
-      <% end %>
-    </div>
 
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Positively Viewed</b></div>
-      <br />
-      <% if !most_positive.empty? %>
-        <% most_positive.each_with_index do |result, index| %>
-          <% if result[1] > 0 %>
-            <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-          <% end %>
-        <% end %>
-      <% else %>
-        <span>No data yet!</span>
-        <br/>
-      <% end %>
-    </div>
 
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Negatively Viewed</b></div>
-      <br />
-      <% if !most_positive.empty? %>
-        <% most_negative.each_with_index do |result, index| %>
-          <% if result[1] < 0 %>
-            <span><%= index + 1 %>. <%= result[0] %>  (score: <%= result[1].round(2) %>) </span><br />
-          <% end %>
-        <% end %>
-      <% else %>
-        <span>No data yet!</span>
-        <br/>
-      <% end %>
-    </div>
 
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Controversial</b></div>
-      <br />
-      <% if !most_controversial.empty? %>
-        <% most_controversial.each_with_index do |result, index| %>
-          <% if result[1] > 0 %>
-            <span><%= index + 1 %>. <%= result[0] %>  (std dev: <%= result[1].round(2) %>) </span><br />
-          <% end %>
-        <% end %>
-      <% else %> 
-        <span>No one was mentioned twice.</span>
-        <br/>
-      <% end %>
-    </div>
-
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Improved in Peer Review</b></div>
-      <br />
-      <% if !most_improve_review.empty? %>
-        <% most_improve_review.each_with_index do |result, index| %>
-          <% if result[1] > 0 %>
-              <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-            <% end %>
-        <% end %>
-      <% else %> 
-        <span>No one mentioned anyone twice.</span>
-        <br/>
-      <% end %>
-    </div>
-
-    <div class="card bg-light mb-3">
-      <div class="card-header"><b>Most Drop in Peer Review</b></div>
-      <br />
-      <% if !most_drop_review.empty? %>
-        <% most_drop_review.each_with_index do |result, index| %>
-          <% if result[1] < 0 %>
-              <span><%= index + 1 %>. <%= result[0] %>  (score-change: <%= result[1].round(2) %>) </span><br />
-            <% end %>
-        <% end %>
-      <% else %> 
-        <span>No one mentioned anyone twice.</span>
-        <br/>
-      <% end %>
-    </div>
-
-  </div>
-</div>
-
-<br/>
-<br/>
 <div class="surveys-dashboard bg-light">
   <div id="react_note"> </div>
 </div>
-<br/>
+<br/><br/><br/>
 
 
 <style>
@@ -412,7 +410,7 @@ $(document).on('page:load', ready);
 
   .wordcloud {
     padding-top: 10px;
-    width: 1080px;
+    width: 1000px;
     margin: 0 auto;
     align-items: center;
     display: flex;
@@ -427,6 +425,19 @@ $(document).on('page:load', ready);
     margin: 0 auto;
     text-align: center;
     height: 500px;
+  }
+
+  .insight-2side{
+    display:flex;
+    width: 1000px;
+  }
+
+  /* .insight-leftside{
+    width: 756px;
+  } */
+
+  .insight-rightside{
+    width: 224px;
   }
 
   .modal {
@@ -504,25 +515,6 @@ $(document).on('page:load', ready);
 </style>
 
 <script>
-  // var modal = document.getElementById('createSurveyModal');
-
-  // var btn = document.getElementById('create_survey');
-
-  // var span = document.getElementsByClassName('close')[0];
-
-  /*btn.onclick = function () {
-    modal.style.display = 'block';
-  };
-
-  span.onclick = function () {
-    modal.style.display = 'none';
-  };
-
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  };*/
 
   var numMood = [];
   function recordSurveyData(moodReponse)
@@ -950,9 +942,6 @@ $(document).on('page:load', ready);
   }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!--WORD CLOUD SCRIPT AND STYLE (from jQWCloud)-->
 
