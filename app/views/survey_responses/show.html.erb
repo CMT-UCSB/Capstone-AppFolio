@@ -24,7 +24,7 @@
       </div>
       <br>
       <% @questions.each_with_index do |q, index| %>
-        <%= form_with(model: @survey, url: @response_paths[index], method: :post) do |f| %>
+        <%= form_with(model: @survey, url: @response_paths[index], method: :post, local: true) do |f| %>
         <div style="margin-left: 20px; margin-bottom: 20px;">
           <h2>
             <% if @this_survey_responses[index] == nil %>

@@ -1009,12 +1009,12 @@ $(document).on('page:load', ready);
 <script>
   $(document).ready(function()
   {    
-    word_list = [];
-    group = <%=raw f_grouped %>;
+    // word_list = [];
+    // group = <%=raw f_grouped %>;
 
-    $.each(group, function(key, value) {
-      word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
-    });
+    // $.each(group, function(key, value) {
+    //   word_list.push({word: value[0], weight: parseInt(value[1] * 10)});
+    // });
 
     positive_list = [];
     positive_group = <%= raw a %>;
@@ -1051,19 +1051,6 @@ $(document).on('page:load', ready);
       drop_list.push({word: value[0], weight: parseInt(Math.abs(value[1]*10)) });
     });
     
-    $("#wordCloud").jQWCloud({
-      words: word_list,
-      //cloud_color: 'yellow',		
-      minFont: 30,
-      maxFont: 80,
-      //fontOffset: 5,
-      //cloud_font_family: 'Owned',
-      //verticalEnabled: false,
-      padding_left: 1,
-      //showSpaceDIV: true,
-      //spaceDIVColor: 'white',
-      word_common_classes: 'WordClass'
-    });
 
     // console.log(" \n positive list: ", positive_list);
     if(positive_list.length > 0){
