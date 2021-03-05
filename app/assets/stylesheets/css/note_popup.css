@@ -4,7 +4,7 @@
   box-sizing: inherit;
 }
 
-.modal-cover {
+.popup-cover {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
   
-  .modal-area {
+  .popup-area {
     position: fixed;
     top: 0;
     left: 0;
@@ -29,8 +29,8 @@
   }
   
   @media screen and (min-width: 500px) {
-    /* Center the Modal! */
-    .modal-area {
+    /* Center the popup! */
+    .popup-area {
       left: 50%;
       top: 50%;
       height: auto;
@@ -40,7 +40,7 @@
     }
   }
   
-  ._modal-close {
+  ._popup-close {
     position: absolute;
     top: 0;
     right: 0;
@@ -52,7 +52,7 @@
     cursor: pointer;
   }
   
-  ._modal-close-icon {
+  ._popup-close-icon {
     width: 25px;
     height: 25px;
     fill: transparent;
@@ -61,7 +61,7 @@
     stroke-width: 2;
   }
   
-  .modal-body {
+  .popup-body {
     padding-top: 0.25em;
   }
   ._hide-visual {
