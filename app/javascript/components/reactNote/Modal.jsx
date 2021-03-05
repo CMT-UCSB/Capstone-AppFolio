@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import NoteForm from './NoteForm'
 import FocusTrap from 'focus-trap-react'
 
+import "../../../assets/stylesheets/css/note_popup.css"
+
 export const Modal = ({
     onClickOutside,
     onKeyDown,
@@ -20,26 +22,26 @@ export const Modal = ({
                 role="dialog"
                 tabIndex="-1"
                 aria-modal="true"
-                className="popup-cover"
+                className="modal-cover"
                 onClick={onClickOutside}
                 onKeyDown={onKeyDown}
             >
-                <div className="popup-area" ref={modalRef}>
+                <div className="modal-area" ref={modalRef}>
                     <button
                         ref={buttonRef}
                         aria-label="Close Modal"
                         aria-labelledby="close-modal"
-                        className="_popup-close"
+                        className="_modal-close"
                         onClick={closeModal}
                     >
                         <span id="close-modal" className="_hide-visual">
                             Close
                         </span>
-                        <svg className="_popup-close-icon" viewBox="0 0 40 40">
+                        <svg className="_modal-close-icon" viewBox="0 0 40 40">
                             <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
                         </svg>
                     </button>
-                    <div className="popup-body">
+                    <div className="modal-body">
                         <NoteForm updateNote={updateNote} closeModal={closeModal} note={note} create={create}/>
                     </div>
                 </div>
