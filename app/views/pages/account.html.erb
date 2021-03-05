@@ -51,6 +51,7 @@ $(document).on('page:load', ready);
     <div id="display2" class="chart">
       <canvas width="1162" height="375" class="chartjs-render-monitor" style="display: block; height: 300px; width: 930px;">
     </div>
+    <p> 0 is the most negative and 1 the most positive </p>
     <div class="linechart-buttons">
       <button class="btn btn-primary btn-sm" onclick="changeTimeIntervalM()">Past 4 Surveys</button>
       <button class="btn btn-primary btn-sm" onclick="changeTimeInterval2M()">Past 8 Surveys</button>
@@ -816,7 +817,7 @@ $(document).on('page:load', ready);
         {
           max_x = count * 2;
           min_x = count * -2;
-          avg = 2 * ((avg - min_x) / (max_x - min_x)) - 1; 
+          avg = (avg - min_x) / (max_x - min_x); 
 
           data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
@@ -901,7 +902,7 @@ $(document).on('page:load', ready);
         {
           max_x = count * 2;
           min_x = count * -2;
-          avg = 2 * ((avg - min_x) / (max_x - min_x)) - 1; 
+          avg = (avg - min_x) / (max_x - min_x); 
 
           data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
@@ -986,7 +987,7 @@ $(document).on('page:load', ready);
         {
           max_x = count * 2;
           min_x = count * -2;
-          avg = 2 * ((avg - min_x) / (max_x - min_x)) - 1; 
+          avg = (avg - min_x) / (max_x - min_x); 
 
           data[negCtr][0] = "#" + (max-i+1);
           data[negCtr][1] = avg;
