@@ -22,7 +22,7 @@ export const Modal = ({
                 role="dialog"
                 tabIndex="-1"
                 aria-modal="true"
-                className="modal-cover"
+                className="modal-cover1"
                 onClick={onClickOutside}
                 onKeyDown={onKeyDown}
             >
