@@ -14,7 +14,7 @@ class OpenEndedResponsesController < ApplicationController
 
     sentiment = GoogleNlpSentiment.new(input_text: params[:survey][:response])
 
-    Rails.logger.info("\n@sentiment: #{sentiment.inspect}")
+    # Rails.logger.info("\n@sentiment: #{sentiment.inspect}")
     entity = GoogleNlpEntity.new(input_text: params[:survey][:response])
     allEntities = entity.getEntities
 
@@ -23,8 +23,9 @@ class OpenEndedResponsesController < ApplicationController
                                 score: sentiment.getScore, magnitude: sentiment.getMagnitude, sentiment: sentiment.getSentiment)
 
       allEntities.each do |entity|
-        if entity.type == :PERSON
-          Rails.logger.info("\n --- \nSurvey: #{survey.id} ,OpenEndedResponse: #{this_survey_response.id} \n")
+        if entity.type == :PERSON && is_upper_case(entity.name.to_s[0,1])
+          Rails.logger.info("\n --- \n entity name: #{entity.name.to_s}, is upper? left: -#{is_upper_case(entity.name.to_s[0,1])}-\n")
+          # Rails.logger.info("\n --- \nSurvey: #{survey.id} ,OpenEndedResponse: #{this_survey_response.id} \n")
           entity.mentions.count.times do
             EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
@@ -36,12 +37,13 @@ class OpenEndedResponsesController < ApplicationController
       this_survey_response.update(response: params[:survey][:response], score: sentiment.getScore, magnitude: sentiment.getMagnitude, sentiment: sentiment.getSentiment)
 
       @OldEntityNlp = EntityNlp.where(open_ended_response_id: this_survey_response.id)
-      Rails.logger.info("\n --- \nOld Answers: #{@OldEntityNlp} \n")
+      # Rails.logger.info("\n --- \nOld Answers: #{@OldEntityNlp} \n")
       @OldEntityNlp.each do |e|
         e.destroy
       end
       allEntities.each do |entity|
-        if entity.type == :PERSON
+        if entity.type == :PERSON && is_upper_case(entity.name.to_s[0,1])
+          Rails.logger.info("\n --- \n entity name: #{entity.name.to_s}, is upper? left: -#{is_upper_case(entity.name.to_s[0,1])}-\n")
           entity.mentions.count.times do
             EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
@@ -51,5 +53,13 @@ class OpenEndedResponsesController < ApplicationController
       end
     end
     redirect_back(fallback_location: root_path)
+  end
+
+  def is_upper_case(letter)
+    case letter
+    when /[[:upper:]]/ then return true
+    when /[[:lower:]]/ then return false
+    else return false
+    end
   end
 end
