@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import NoteForm from './NoteForm'
 import FocusTrap from 'focus-trap-react'
 
-import "../../../assets/stylesheets/css/note_popup.css"
+import "/app/assets/stylesheets/css/note_popup.css"
 
 export const Modal = ({
     onClickOutside,

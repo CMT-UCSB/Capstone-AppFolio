@@ -9,7 +9,7 @@ require("channels")
 require("chartkick")
 require("chart.js")
 require("../components/reactNote/ReactNote")
-require("../../assets/stylesheets/css/note_popup.css")
+require("/app/assets/stylesheets/css/note_popup.css")
 require("jquery")
 import jstz from 'jstz';
 window.jstz = jstz;
