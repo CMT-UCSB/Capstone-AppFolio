@@ -111,7 +111,7 @@ module PagesHelper
     same_name.sort_by(&:last).reverse
 
     most_drop_review = same_name.sort_by(&:last)
-    most_drop_review = most_drop_review.select { |result| result[1] > 0 }
+    most_drop_review = most_drop_review.select { |result| result[1] < 0 }
     return most_drop_review
   end
 
