@@ -19,7 +19,7 @@ class OpenEndedResponsesController < ApplicationController
     allEntities = entity.getEntities
 
     if @isFilled == false
-      OpenEndedResponse.create!(manager: manager, employee: employee, question: question, response: params[:survey][:response], elapsed: 0,
+      newlyCreatedOER = OpenEndedResponse.create!(manager: manager, employee: employee, question: question, response: params[:survey][:response], elapsed: 0,
                                 score: sentiment.getScore, magnitude: sentiment.getMagnitude, sentiment: sentiment.getSentiment)
 
       allEntities.each do |entity|
@@ -29,7 +29,7 @@ class OpenEndedResponsesController < ApplicationController
           entity.mentions.count.times do
             EntityNlp.create!(name: entity.name, count: 1, elapsed: 0, 
                             sentiment_score: entity.sentiment.score, sentiment_mag: entity.sentiment.magnitude,
-                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: this_survey_response.id, manager: manager)
+                            salience_score: entity.salience, survey_id: survey.id, open_ended_response_id: newlyCreatedOER.id, manager: manager)
           end
         end
       end
